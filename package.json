@@ -19,7 +19,8 @@
     "redux": "^4.0.4",
     "redux-form": "^8.2.6",
     "redux-thunk": "^2.3.0",
-    "typeface-roboto": "^0.0.75"
+    "typeface-roboto": "^0.0.75",
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "start": "PORT=8080 react-scripts start",
