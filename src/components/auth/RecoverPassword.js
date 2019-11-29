@@ -8,10 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -41,21 +38,21 @@ const renderTextField = ({
   input,
   ...custom
 }) => (
-    <TextField
-      label={label}
-      placeholder={label}
-      required={required}
-      variant={variant}
-      margin={margin}
-      fullWidth={fullWidth}
-      id={id}
-      name={name}
-      autoComplete={autoComplete}
-      autoFocus={autoFocus}
-      {...input}
-      {...custom}
-    />
-  )
+  <TextField
+    label={label}
+    placeholder={label}
+    required={required}
+    variant={variant}
+    margin={margin}
+    fullWidth={fullWidth}
+    id={id}
+    name={name}
+    autoComplete={autoComplete}
+    autoFocus={autoFocus}
+    {...input}
+    {...custom}
+  />
+)
 
 const styles = theme => ({
   paper: {
@@ -79,23 +76,23 @@ const styles = theme => ({
     color: 'red',
     marginTop: 20
   },
+  greenText: {
+    textAlign: "center",
+    color: 'green',
+    marginTop: 20
+  },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  centeredText: {
+    textAlign: "center"
+  }
 });
 
-class SignIn extends Component {
-
-  componentDidUpdate() {
-    if (this.props.authenticated) {
-      this.props.history.push('/dashboard');
-    }
-  }
+class RecoverPassword extends Component {
 
   onSubmit = formProps => {
-    this.props.signin(formProps, () => {
-      this.props.history.push('/dashboard');
-    });
+    this.props.recoverpassword(formProps);
   };
 
   render() {
@@ -110,51 +107,29 @@ class SignIn extends Component {
             <img height="60px" width="60px" alt="DoItRight" src="/images/doitright.png" />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign In
+            Recover Password
           </Typography>
-          <div className={classes.redText}> {this.props.errorAuthMessage} </div>
+          <div className={classes.redText}> {this.props.recoverPasswordErrorMessage} </div>
+          <div className={classes.greenText}> {this.props.recoverPasswordSucessMessage} </div>
           <form className={classes.form} onSubmit={handleSubmit(this.onSubmit)}>
-            <Field
-              name="email"
-              type="text"
-              label="Email"
-              component={renderTextField}
-              autoComplete="none"
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="email"
-              autoFocus
-            />
-            <Field
-              name="password"
-              type="password"
-              label="Password"
-              component={renderTextField}
-              autoComplete="none"
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="password"
-            />
-
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>Sign In</Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/recover-password" variant="body2">
-                  Forgot password?
+              <Field 
+                name="email"
+                type="text"
+                label="Email"
+                component={renderTextField}
+                autoComplete="none"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="email"
+                autoFocus
+              />
+            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>Recover</Button>
+            <div className={classes.centeredText}>
+              <Link href="/" variant="body2">
+                {"Received the new password? Log In"}
               </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            </div>
           </form>
         </div>
         <Box mt={8}>
@@ -166,14 +141,14 @@ class SignIn extends Component {
 };
 
 function mapStateToProps(state) {
-  return {
-    errorAuthMessage: state.auth.errorAuthMessage,
-    authenticated: state.auth.authenticated
+  return { 
+    recoverPasswordSucessMessage: state.auth.recoverPasswordSucessMessage,
+    recoverPasswordErrorMessage: state.auth.recoverPasswordErrorMessage
   };
 }
 
 export default compose(
   connect(mapStateToProps, actions),
-  reduxForm({ form: 'signin' }),
+  reduxForm({ form: 'recoverpassword' }),
   withStyles(styles)
-)(SignIn);
+)(RecoverPassword);

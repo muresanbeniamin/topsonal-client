@@ -1,8 +1,10 @@
-import { AUTH_USER, AUTH_ERROR } from '../actions/types';
+import { AUTH_USER, AUTH_ERROR, RECOVER_PASSWORD_SUCCESS, RECOVER_PASSWORD_ERROR } from '../actions/types';
 
 const INITIAL_STATE = {
-  authenticated: '',
-  errorMessage: ''
+  authenticated: {},
+  errorAuthMessage: '',
+  recoverPasswordSucessMessage: '',
+  recoverPasswordErrorMessage: ''
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -10,7 +12,11 @@ export default function(state = INITIAL_STATE, action) {
     case AUTH_USER:
       return { ...state, authenticated: action.payload }
     case AUTH_ERROR:
-        return { ...state, errorMessage: action.payload }
+        return { ...state, errorAuthMessage: action.payload }
+    case RECOVER_PASSWORD_SUCCESS:
+      return { ...state, recoverPasswordSucessMessage: action.payload }
+    case RECOVER_PASSWORD_ERROR:
+      return { ...state, recoverPasswordErrorMessage: action.payload }
     default:
       return state;
   }

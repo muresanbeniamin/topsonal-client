@@ -50,7 +50,7 @@ const styles = theme => ({
     marginTop: 20
   },
   centeredText: {
-    textAlign: "center !important"
+    textAlign: "center"
   }
 });
 
@@ -105,10 +105,10 @@ class SignUp extends Component {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <div className={classes.redText}> {this.props.errorMessage} </div>
+          <div className={classes.redText}> {this.props.errorAuthMessage} </div>
 
           <form className={classes.form} onSubmit={handleSubmit(this.onSubmit)}>
-          <Field
+            <Field
               name="full_name"
               type="text"
               label="Full Name"
@@ -170,7 +170,7 @@ class SignUp extends Component {
 };
 
 function mapStateToProps(state) {
-  return { errorMessage: state.auth.errorMessage };
+  return { errorAuthMessage: state.auth.errorAuthMessage };
 }
 
 export default compose(
