@@ -4,6 +4,8 @@
     "/**": "index.html"
   },
   "proxies": {
-    "origin": "${API_URL}"
+    "/api/v1/": {
+      "origin": "${API_URL}"
+    }
   }
 }
