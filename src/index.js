@@ -4,6 +4,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from './components/theme';
 
 import reducers from './reducers';
 import App from './components/App';
@@ -21,12 +23,14 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App>
-        <Route path="/" exact component={SignIn} />
-        <Route path="/signup" exact component={SignUp} />
-        <Route path="/signout" exact component={SignOut} />
-        <Route path="/dashboard" exact component={Dashboard} />
-      </App>
+      <MuiThemeProvider theme={theme}>
+        <App>
+          <Route path="/" exact component={SignIn} />
+          <Route path="/signup" exact component={SignUp} />
+          <Route path="/signout" exact component={SignOut} />
+          <Route path="/dashboard" exact component={Dashboard} />
+        </App>
+      </MuiThemeProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
