@@ -103,7 +103,7 @@ class SignUp extends Component {
             <img height="60px" width="60px" alt="DoItRight" src="/images/doitright.png" />
           </Avatar>
           <Typography component="h1" variant="h5">
-            DoItRight
+            Sign Up
           </Typography>
           <div className={classes.redText}> {this.props.errorMessage} </div>
 

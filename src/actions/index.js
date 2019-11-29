@@ -8,7 +8,8 @@ export const signup = (formProps, callback) => async dispatch => {
     localStorage.setItem('token', response.data.auth_token);
     callback();
   } catch (e) {
-    dispatch({ type: AUTH_ERROR, payload: "Email already taken" })
+    const errorMessage = e.response.data.errors.join(', ');
+    dispatch({ type: AUTH_ERROR, payload: errorMessage })
   }
 };
 
@@ -19,7 +20,8 @@ export const signin = (formProps, callback) => async dispatch => {
     localStorage.setItem('token', response.data.auth_token);
     callback();
   } catch (e) {
-    dispatch({ type: AUTH_ERROR, payload: "Invalid login credentials" })
+    const errorMessage = e.response.data.error.user_authentication;
+    dispatch({ type: AUTH_ERROR, payload: errorMessage })
   }
 };
 
