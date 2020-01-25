@@ -86,6 +86,14 @@ const styles = theme => ({
 
 class SignIn extends Component {
 
+  componentDidMount() {
+    if (this.props.authenticated) {
+      if(this.props.history) {
+        this.props.history.push('/dashboard');
+      }
+    }
+  }
+
   componentDidUpdate() {
     if (this.props.authenticated) {
       this.props.history.push('/dashboard');

@@ -1,0 +1,95 @@
+import React, { Component } from 'react';
+import requireAuth from './requireAuth';
+import * as actions from '../actions';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  }
+});
+
+class MyLists extends Component {
+
+  componentDidMount() {
+    this.props.getprofile(this.props.auth);
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item xs={12}>
+          <Grid container justify="center" spacing={2}>
+            {[0, 1, 2].map(value => (
+              <Grid key={value} item>
+                <Card className={classes.card}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image="/static/images/cards/contemplative-reptile.jpg"
+                      title="Contemplative Reptile"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Lizard
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                        across all continents except Antarctica
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button size="small" color="primary">
+                      Share
+                    </Button>
+                    <Button size="small" color="primary">
+                      Learn More
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      </Grid>
+    )
+  }
+}
+
+function mapStateToProps(state) {
+  return { 
+    profile: state.profile.profile,
+    profileError: state.profile.profileError
+  };
+}
+
+export default compose(
+  connect(mapStateToProps, actions),
+  withStyles(styles),
+)(requireAuth(MyLists));
