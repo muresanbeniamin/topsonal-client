@@ -1,8 +1,9 @@
-import { GET_PROFILE, GET_PROFILE_ERROR } from '../actions/types';
+import { GET_PROFILE, GET_PROFILE_ERROR, CURRENT_USER_LISTS } from '../actions/types';
 
 const INITIAL_STATE = {
   profile: {},
-  profileError: ''
+  profileError: '',
+  currentUserLists: []
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -11,6 +12,8 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, profile: action.payload }
     case GET_PROFILE_ERROR:
         return { ...state, profileError: action.payload }
+    case CURRENT_USER_LISTS:
+      return { ...state, currentUserLists: action.payload }
     default:
       return state;
   }

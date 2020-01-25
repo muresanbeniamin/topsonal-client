@@ -89,20 +89,20 @@ class SignIn extends Component {
   componentDidMount() {
     if (this.props.authenticated) {
       if(this.props.history) {
-        this.props.history.push('/dashboard');
+        this.props.history.push('/my-lists');
       }
     }
   }
 
   componentDidUpdate() {
     if (this.props.authenticated) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/my-lists');
     }
   }
 
   onSubmit = formProps => {
     this.props.signin(formProps, () => {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/my-lists');
     });
   };
 

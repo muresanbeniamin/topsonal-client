@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { AUTH_USER, AUTH_ERROR, RECOVER_PASSWORD_SUCCESS, RECOVER_PASSWORD_ERROR } from './types';
-import { GET_PROFILE, GET_PROFILE_ERROR } from './types';
+import { GET_PROFILE, GET_PROFILE_ERROR, CURRENT_USER_LISTS } from './types';
+
 
 export const signup = (formProps, callback) => async dispatch => {
   try {
@@ -52,6 +53,7 @@ export const getprofile = authToken => async dispatch => {
     const config = {headers: {'Authorization': authToken}}
     const response = await axios.get('api/v1/users/profile', config);
     dispatch({ type: GET_PROFILE, payload: response.data });
+    dispatch({ type: CURRENT_USER_LISTS, payload: response.data.lists });
   } catch (e) {
     const errorMessage = e.response.data.error;
     dispatch({ type: GET_PROFILE_ERROR, payload: errorMessage });

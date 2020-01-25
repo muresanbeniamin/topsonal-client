@@ -8,7 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    marginTop: theme.spacing(5)
   },
   paper: {
     height: 140,
@@ -40,27 +41,25 @@ class MyLists extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
-            {[0, 1, 2].map(value => (
-              <Grid key={value} item>
+            {this.props.currentUserLists.map((list) => (
+              <Grid key={list.id} item>
                 <Card className={classes.card}>
                   <CardActionArea>
-                    <CardMedia
+                    {/* <CardMedia
                       className={classes.media}
                       image="/static/images/cards/contemplative-reptile.jpg"
                       title="Contemplative Reptile"
-                    />
+                    /> */}
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
-                        Lizard
+                        {list.name}
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
+                        {list.description}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
@@ -85,7 +84,8 @@ class MyLists extends Component {
 function mapStateToProps(state) {
   return { 
     profile: state.profile.profile,
-    profileError: state.profile.profileError
+    profileError: state.profile.profileError,
+    currentUserLists: state.profile.currentUserLists
   };
 }
 
