@@ -5,31 +5,29 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
+import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: theme.spacing(5)
   },
-  paper: {
-    height: 140,
-    width: 100,
-  },
-  control: {
-    padding: theme.spacing(2),
-  },
   card: {
-    maxWidth: 345,
+    width: 345,
   },
-  media: {
-    height: 140,
+  rightAlignedButton: {
+    marginLeft: 'auto',
+    fontSize: 14
+  },
+  centerText: {
+    textAlign: 'center'
   }
 });
 
@@ -48,32 +46,35 @@ class MyLists extends Component {
             {this.props.currentUserLists.map((list) => (
               <Grid key={list.id} item>
                 <Card className={classes.card}>
-                  <CardActionArea>
-                    {/* <CardMedia
-                      className={classes.media}
-                      image="/static/images/cards/contemplative-reptile.jpg"
-                      title="Contemplative Reptile"
-                    /> */}
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {list.name}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        {list.description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {list.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {list.description}
+                    </Typography>
+                  </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
-                      Share
-                    </Button>
-                    <Button size="small" color="primary">
-                      Learn More
-                    </Button>
+                    <IconButton size="small" color="primary">
+                      <FavoriteTwoToneIcon/> {list.likes}
+                    </IconButton>
+                    <IconButton className={classes.rightAlignedButton} size="small" color="primary">
+                      OPEN <ArrowForwardIosTwoToneIcon/>
+                    </IconButton>
                   </CardActions>
                 </Card>
               </Grid>
             ))}
+
+            <Grid key='addButton' item>
+              <Card className={classes.card}>
+                  <CardContent className={classes.centerText}>
+                    <IconButton size="small" color="primary">
+                      <AddIcon style={{fontSize: 70}}/>
+                    </IconButton>
+                  </CardContent>
+                </Card>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

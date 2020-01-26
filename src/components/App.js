@@ -1,11 +1,14 @@
 import React from 'react';
-import Header from './Header';
+import AppBar from './navigation/AppBar';
+import Container from '@material-ui/core/Container';
 
 export default ({ children }) => {
   return (
     <div>
-      <Header />
-      {children}
+      <Container maxWidth="xl">
+        <AppBar />
+        {children}
+      </Container>
     </div>
   );
 };

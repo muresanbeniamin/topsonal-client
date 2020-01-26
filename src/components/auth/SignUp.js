@@ -3,7 +3,6 @@ import { reduxForm, Field } from 'redux-form';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
