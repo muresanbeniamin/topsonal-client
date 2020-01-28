@@ -82,6 +82,7 @@ const renderTextField = ({
       {...custom}
     />
   )
+
 class SignUp extends Component {
 
   onSubmit = formProps => {

@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
-import AddIcon from '@material-ui/icons/Add';
+import CreateList from './list-actions/CreateList';
 
 const styles = theme => ({
   root: {
@@ -67,13 +67,7 @@ class MyLists extends Component {
             ))}
 
             <Grid key='addButton' item>
-              <Card className={classes.card}>
-                  <CardContent className={classes.centerText}>
-                    <IconButton size="small" color="primary">
-                      <AddIcon style={{fontSize: 70}}/>
-                    </IconButton>
-                  </CardContent>
-                </Card>
+              <CreateList/>
             </Grid>
           </Grid>
         </Grid>

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { AUTH_USER, AUTH_ERROR, RECOVER_PASSWORD_SUCCESS, RECOVER_PASSWORD_ERROR } from './types';
 import { GET_PROFILE, GET_PROFILE_ERROR, CURRENT_USER_LISTS } from './types';
 
-
 export const signup = (formProps, callback) => async dispatch => {
   try {
     const response = await axios.post('/api/v1/users/signup', formProps);
@@ -57,5 +56,15 @@ export const getprofile = authToken => async dispatch => {
   } catch (e) {
     const errorMessage = e.response.data.error;
     dispatch({ type: GET_PROFILE_ERROR, payload: errorMessage });
+  }
+};
+
+
+export const createlist = (formProps, authToken) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    const response = await axios.post('api/v1/lists', formProps, config);
+    dispatch({ type: CURRENT_USER_LISTS, payload: [...response.data] });
+  } catch (e) {
   }
 }; 
