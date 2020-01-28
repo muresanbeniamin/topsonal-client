@@ -63,8 +63,8 @@ export const getprofile = authToken => async dispatch => {
 export const createlist = (formProps, authToken) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    const response = await axios.post('api/v1/lists', formProps, config);
-    dispatch({ type: CURRENT_USER_LISTS, payload: [...response.data] });
+    await axios.post('api/v1/lists', formProps, config);
+    dispatch(getprofile(authToken));
   } catch (e) {
   }
 }; 

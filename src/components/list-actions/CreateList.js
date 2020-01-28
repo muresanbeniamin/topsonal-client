@@ -65,14 +65,19 @@ let CreateList = props => {
     setOpen(true);
   };
 
-  const handleClose = data => {
+  const handleClose = () => {
     dispatch(reset('create-list-form'));
     setOpen(false);
   };
 
-  const onSubmit = formProps => {
-    dispatch(createlist(formProps, authToken))
-    console.log(formProps);
+  const onSubmit = async formProps => {
+    try {
+      await dispatch(createlist(formProps, authToken))
+      setOpen(false);
+      dispatch(reset('create-list-form'));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -100,6 +105,7 @@ let CreateList = props => {
               fullWidth
               id="name"
               autoFocus
+              required
             />
             <Field
               name="description"
@@ -111,6 +117,7 @@ let CreateList = props => {
               margin="normal"
               fullWidth
               id="description"
+              required
             />
             <DialogActions>
               <Button onClick={handleClose} color="primary">
