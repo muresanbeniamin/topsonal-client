@@ -12,6 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
+import Divider from '@material-ui/core/Divider';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -24,8 +27,20 @@ const useStyles = makeStyles(theme => ({
   rightAligned: {
     marginLeft: 'auto',
   },
-  buttonFontSize: {
+  fontSize: {
     fontSize: 14
+  },
+  listText: {
+    paddingLeft: 10
+  },
+  listDescription: {
+    paddingTop: 20,
+    paddingRight: 20,
+    paddingLeft: 20
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   }
 }));
 
@@ -36,7 +51,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function ViewEditList(list) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const curentList = list.list;
+  const currentList = list.list;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,7 +63,7 @@ export default function ViewEditList(list) {
 
   return (
     <div className={classes.rightAligned}>
-      <IconButton className={classes.buttonFontSize} onClick={handleClickOpen} size="small" color="primary">
+      <IconButton className={classes.fontSize} onClick={handleClickOpen} size="small" color="primary">
         OPEN/EDIT <ArrowForwardIosTwoToneIcon/>
       </IconButton>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -58,21 +73,29 @@ export default function ViewEditList(list) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              {curentList.name}
+              {currentList.name}
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
             </Button>
           </Toolbar>
         </AppBar>
-        <List>
-        
-        {curentList.items.map((item) => (
-          <ListItem key={item.id} button>
-            <ListItemText primary={item.name} secondary={item.description} />
-          </ListItem>
-        ))}
 
+        <Typography className={classes.listDescription} variant="h6" gutterBottom>
+          {currentList.description}
+        </Typography>
+        
+        <Divider />
+
+        <List>
+          {currentList.items.map((item, index) => (
+            <ListItem alignItems="flex-start" key={item.id} button>
+              <ListItemAvatar>
+                <Avatar alt={item.name} className={classes.large} src={item.url} />
+              </ListItemAvatar>
+              <ListItemText className={classes.listText} primary={`${index + 1}. ${item.name}`} secondary={item.description} />
+            </ListItem>
+          ))}
         </List>
       </Dialog>
     </div>
