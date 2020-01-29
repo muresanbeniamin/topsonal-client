@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import requireAuth from './requireAuth';
-import * as actions from '../actions';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import requireAuth from '../auth/requireAuth';
+import * as actions from '../../actions';
 
 class Dashboard extends Component {
 

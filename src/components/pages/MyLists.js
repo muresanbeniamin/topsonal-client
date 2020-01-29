@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import requireAuth from './requireAuth';
-import * as actions from '../actions';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,8 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
-import ArrowForwardIosTwoToneIcon from '@material-ui/icons/ArrowForwardIosTwoTone';
-import CreateList from './list-actions/CreateList';
+import CreateList from '../list-actions/CreateList';
+import ViewEditList from '../list-actions/ViewEditList';
+import requireAuth from '../auth/requireAuth';
+import * as actions from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -21,6 +21,7 @@ const styles = theme => ({
   },
   card: {
     width: 345,
+    height: 137
   },
   rightAlignedButton: {
     marginLeft: 'auto',
@@ -28,6 +29,9 @@ const styles = theme => ({
   },
   centerText: {
     textAlign: 'center'
+  },
+  likeIcon: {
+    paddingRight: 4
   }
 });
 
@@ -47,20 +51,18 @@ class MyLists extends Component {
               <Grid key={list.id} item>
                 <Card className={classes.card}>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h6" component="h3">
                       {list.name}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography noWrap variant="body2" color="textSecondary" component="p">
                       {list.description}
                     </Typography>
                   </CardContent>
                   <CardActions>
                     <IconButton size="small" color="primary">
-                      <FavoriteTwoToneIcon/> {list.likes}
+                      <FavoriteTwoToneIcon className={classes.likeIcon}/> {list.likes}
                     </IconButton>
-                    <IconButton className={classes.rightAlignedButton} size="small" color="primary">
-                      OPEN <ArrowForwardIosTwoToneIcon/>
-                    </IconButton>
+                    <ViewEditList list={list}/>
                   </CardActions>
                 </Card>
               </Grid>

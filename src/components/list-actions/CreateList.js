@@ -13,6 +13,10 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from "@material-ui/core/styles";
 import { reduxForm, Field, reset } from 'redux-form';
 import { createlist } from '../../actions';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const renderTextField = ({
   label,
@@ -28,28 +32,54 @@ const renderTextField = ({
   input,
   ...custom
 }) => (
-    <TextField
-      label={label}
-      placeholder={label}
-      required={required}
-      variant={variant}
-      margin={margin}
-      fullWidth={fullWidth}
-      id={id}
-      name={name}
-      autoComplete={autoComplete}
-      autoFocus={autoFocus}
+  <TextField
+    label={label}
+    placeholder={label}
+    required={required}
+    variant={variant}
+    margin={margin}
+    fullWidth={fullWidth}
+    id={id}
+    name={name}
+    autoComplete={autoComplete}
+    autoFocus={autoFocus}
+    {...input}
+    {...custom}
+  />
+)
+
+const renderSelectField = ({
+  input,
+  label,
+  children,
+  className,
+  ...custom
+}) => (
+  <FormControl className={className}>
+    <InputLabel htmlFor="category">Category</InputLabel>
+    <Select
       {...input}
       {...custom}
-    />
-  )
+      inputProps={{
+        name: 'category',
+        id: 'category'
+      }}
+    >
+      {children}
+    </Select>
+  </FormControl>
+)
 
 const useStyles = makeStyles(theme => ({
   card: {
     width: 345,
+    height: 137
   },
   centerText: {
     textAlign: 'center'
+  },
+  formControl: {
+    minWidth: 396,
   }
 }));
 
@@ -59,7 +89,7 @@ let CreateList = props => {
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
 
-  const { handleSubmit } = props
+  const { handleSubmit } = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -82,15 +112,15 @@ let CreateList = props => {
 
   return (
     <div>
-      <Card className={classes.card}>
+      <Card className={classes.card} onClick={handleSubmit(handleClickOpen)}>
         <CardContent className={classes.centerText}>
-          <IconButton size="small" color="primary" onClick={handleSubmit(handleClickOpen)}>
-            <AddIcon style={{fontSize: 70}}/>
+          <IconButton size="small" color="primary">
+            <AddIcon style={{fontSize: 85}}/>
           </IconButton>
         </CardContent>
       </Card>
 
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={handleClose} maxWidth='xs'>
         <DialogTitle id="form-dialog-title">Create a new list</DialogTitle>
         <DialogContent>
           <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -100,7 +130,6 @@ let CreateList = props => {
               label="Name of the list"
               component={renderTextField}
               autoComplete="none"
-              variant="outlined"
               margin="normal"
               fullWidth
               id="name"
@@ -108,12 +137,21 @@ let CreateList = props => {
               required
             />
             <Field
+              className={classes.formControl}
+              name="category"
+              component={renderSelectField}
+              label="Category"
+            >
+              <MenuItem value={'books'}>Books</MenuItem>
+              <MenuItem value={'movies'}>Movies</MenuItem>
+              <MenuItem value={'travel'}>Travel</MenuItem>
+            </Field>
+            <Field
               name="description"
               type="text"
               label="Description"
               component={renderTextField}
               autoComplete="none"
-              variant="outlined"
               margin="normal"
               fullWidth
               id="description"

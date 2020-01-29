@@ -10,11 +10,11 @@ import theme from './components/theme';
 import reducers from './reducers';
 import App from './components/App';
 import SignUp from './components/auth/SignUp';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/pages/Dashboard';
 import SignOut from './components/auth/SignOut';
 import SignIn from './components/auth/SignIn';
 import RecoverPassword from './components/auth/RecoverPassword';
-import MyLists from './components/MyLists';
+import MyLists from './components/pages/MyLists';
 
 const store = createStore(
   reducers, {

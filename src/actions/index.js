@@ -50,9 +50,10 @@ export const signout = () => {
 export const getprofile = authToken => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    const response = await axios.get('api/v1/users/profile', config);
-    dispatch({ type: GET_PROFILE, payload: response.data });
-    dispatch({ type: CURRENT_USER_LISTS, payload: response.data.lists });
+    const profile = await axios.get('api/v1/users/profile', config);
+    dispatch({ type: GET_PROFILE, payload: profile.data });
+    const usersList = await axios.get('api/v1/lists', config);
+    dispatch({ type: CURRENT_USER_LISTS, payload: usersList.data });
   } catch (e) {
     const errorMessage = e.response.data.error;
     dispatch({ type: GET_PROFILE_ERROR, payload: errorMessage });
