@@ -8,13 +8,13 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useSelector } from 'react-redux'
+import LeftSideMenu from './LeftSideMenu';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-  },
+  }
 }));
 
 export default function PrimarySearchAppBar() {
@@ -162,14 +162,7 @@ export default function PrimarySearchAppBar() {
       <div className={classes.grow}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer"
-            >
-              <MenuIcon />
-            </IconButton>
+            <LeftSideMenu/>
             <Typography className={classes.title} variant="h6" noWrap>
               DoItRight
             </Typography>
@@ -178,7 +171,7 @@ export default function PrimarySearchAppBar() {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Search lists"
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,

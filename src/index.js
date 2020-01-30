@@ -15,6 +15,7 @@ import SignOut from './components/auth/SignOut';
 import SignIn from './components/auth/SignIn';
 import RecoverPassword from './components/auth/RecoverPassword';
 import MyLists from './components/pages/MyLists';
+import MyFriends from './components/pages/MyFriends';
 
 const store = createStore(
   reducers, {
@@ -32,6 +33,7 @@ ReactDOM.render(
           <Route path="/signout" exact component={SignOut} />
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/my-lists" exact component={MyLists} />
+          <Route path="/my-friends" exact component={MyFriends} />
           <Route path="/recover-password" exact component={RecoverPassword} />
         </App>
       </MuiThemeProvider>

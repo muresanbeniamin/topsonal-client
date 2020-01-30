@@ -41,6 +41,11 @@ const useStyles = makeStyles(theme => ({
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
+  },
+  listItem: {
+    maxWidth: '70%',
+    marginLeft: '15%',
+    marginRight: '15%'
   }
 }));
 
@@ -87,9 +92,9 @@ export default function ViewEditList(list) {
         
         <Divider />
 
-        <List>
+        <List className={classes.list}>
           {currentList.items.map((item, index) => (
-            <ListItem alignItems="flex-start" key={item.id} button>
+            <ListItem className={classes.listItem} alignItems="flex-start" key={item.id} button>
               <ListItemAvatar>
                 <Avatar alt={item.name} className={classes.large} src={item.url} />
               </ListItemAvatar>
