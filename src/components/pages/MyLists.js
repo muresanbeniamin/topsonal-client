@@ -13,6 +13,10 @@ import CreateList from '../list-actions/CreateList';
 import ViewEditList from '../list-actions/ViewEditList';
 import requireAuth from '../auth/requireAuth';
 import * as actions from '../../actions';
+import CardHeader from '@material-ui/core/CardHeader';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Avatar from '@material-ui/core/Avatar';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const styles = theme => ({
   root: {
@@ -21,7 +25,11 @@ const styles = theme => ({
   },
   card: {
     width: 345,
-    height: 137
+    height: 400
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
   },
   rightAlignedButton: {
     marginLeft: 'auto',
@@ -50,9 +58,27 @@ class MyLists extends Component {
             {this.props.currentUserLists.map((list) => (
               <Grid key={list.id} item>
                 <Card className={classes.card}>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe" className={classes.avatar}>
+                        R
+                      </Avatar>
+                    }
+                    action={
+                      <IconButton aria-label="settings">
+                        <MoreVertIcon />
+                      </IconButton>
+                    }
+                    title={list.name}
+                    subheader="September 14, 2016"
+                  />
+                  <CardMedia
+                    className={classes.media}
+                    image={`/images/${list.category}.jpg`}
+                    title="Paella dish"
+                  />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="h3">
-                      {list.name}
                     </Typography>
                     <Typography noWrap variant="body2" color="textSecondary" component="p">
                       {list.description}

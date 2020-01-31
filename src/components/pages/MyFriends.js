@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Avatar from '@material-ui/core/Avatar';
 import { deepOrange } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
+import SearchFriend from '../friends/SearchFriend';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,6 +36,7 @@ export default function MyFriends() {
 
   return (
     <div className={classes.root}>
+      <SearchFriend/>
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <div className={classes.avatar}>

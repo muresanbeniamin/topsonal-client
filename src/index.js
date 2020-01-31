@@ -4,9 +4,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './components/theme';
-
 import reducers from './reducers';
 import App from './components/App';
 import SignUp from './components/auth/SignUp';
