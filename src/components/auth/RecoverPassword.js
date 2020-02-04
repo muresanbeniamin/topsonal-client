@@ -65,7 +65,7 @@ const styles = theme => ({
     margin: theme.spacing(1),
     width: 70,
     height: 70,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -124,7 +124,7 @@ class RecoverPassword extends Component {
                 id="email"
                 autoFocus
               />
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>Recover</Button>
+            <Button type="submit" fullWidth variant="contained" color="secondary" className={classes.submit}>Recover</Button>
             <div className={classes.centeredText}>
               <Link href="/" variant="body2">
                 {"Received the new password? Log In"}

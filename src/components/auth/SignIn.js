@@ -68,7 +68,7 @@ const styles = theme => ({
     margin: theme.spacing(1),
     width: 70,
     height: 70,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -147,10 +147,10 @@ class SignIn extends Component {
             />
 
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="secondary" />}
               label="Remember me"
             />
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>Sign In</Button>
+            <Button type="submit" fullWidth variant="contained" color="secondary" className={classes.submit}>Sign In</Button>
             <Grid container>
               <Grid item xs>
                 <Link href="/recover-password" variant="body2">

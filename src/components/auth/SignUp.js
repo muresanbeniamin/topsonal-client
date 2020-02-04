@@ -34,7 +34,7 @@ const styles = theme => ({
     margin: theme.spacing(1),
     width: 70,
     height: 70,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%',
@@ -153,7 +153,7 @@ class SignUp extends Component {
               fullWidth
               id="password_confirmation"
             />
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>Sign Up</Button>
+            <Button type="submit" fullWidth variant="contained" color="secondary" className={classes.submit}>Sign Up</Button>
             <div className={classes.centeredText}>
               <Link href="/" variant="body2">
                 {"Already have an account? Sign In"}

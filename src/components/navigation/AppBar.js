@@ -4,11 +4,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -28,6 +26,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+    color: '#fff'
   },
   search: {
     position: 'relative',
@@ -103,12 +102,10 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
@@ -131,20 +128,15 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={1} color="secondary">
+        <IconButton color="secondary">
+          {/* <Badge badgeContent={1} color="secondary"> */}
             <NotificationsIcon />
-          </Badge>
+          {/* </Badge> */}
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
+        <IconButton aria-haspopup="true" color="inherit">
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
@@ -166,39 +158,23 @@ export default function PrimarySearchAppBar() {
             <Typography className={classes.title} variant="h6" noWrap>
               DoItRight
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search lists"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton aria-label="show 17 new notifications" color="inherit">
-                <Badge badgeContent={1} color="secondary">
+              <IconButton color="secondary">
+                {/* <Badge badgeContent={1} color="secondary"> */}
                   <NotificationsIcon />
-                </Badge>
+                {/* </Badge> */}
               </IconButton>
               <IconButton
-                aria-label="account of current user"
-                aria-controls={menuId}
+                color="secondary"
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
               >
                 <AccountCircle />
               </IconButton>
               <IconButton 
+                color="secondary"
                 href="signout"
-                aria-label="show 4 new mails"
-                color="inherit"
                 edge="end">
                 <Badge color="secondary">
                   <ExitToAppIcon />

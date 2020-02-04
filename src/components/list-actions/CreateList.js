@@ -114,7 +114,7 @@ let CreateList = props => {
     <div>
       <Card className={classes.card} onClick={handleSubmit(handleClickOpen)}>
         <CardContent className={classes.centerText}>
-          <IconButton size="small" color="primary">
+          <IconButton size="small" color="secondary">
             <AddIcon style={{fontSize: 85}}/>
           </IconButton>
         </CardContent>
@@ -158,10 +158,10 @@ let CreateList = props => {
               required
             />
             <DialogActions>
-              <Button onClick={handleClose} color="primary">
+              <Button onClick={handleClose} color="secondary">
                 Cancel
               </Button>
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="secondary">
                 Create
               </Button>
             </DialogActions>

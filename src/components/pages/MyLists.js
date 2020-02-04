@@ -56,7 +56,7 @@ class MyLists extends Component {
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
             {this.props.currentUserLists.map((list) => (
-              <Grid key={list.id} item>
+              <Grid key={`${list.id}-list`} item>
                 <Card className={classes.card}>
                   <CardHeader
                     avatar={
@@ -74,7 +74,7 @@ class MyLists extends Component {
                   />
                   <CardMedia
                     className={classes.media}
-                    image={`/images/${list.category}.jpg`}
+                    image="/images"
                     title="Paella dish"
                   />
                   <CardContent>
@@ -85,7 +85,7 @@ class MyLists extends Component {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <IconButton size="small" color="primary">
+                    <IconButton size="small" color="secondary">
                       <FavoriteTwoToneIcon className={classes.likeIcon}/> {list.likes}
                     </IconButton>
                     <ViewEditList list={list}/>

@@ -13,7 +13,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import GroupIcon from '@material-ui/icons/Group';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   list: {
     width: 250,
   },
@@ -23,9 +23,9 @@ const useStyles = makeStyles({
   link: {
     textDecoration: 'none',
     textTransform: 'none',
-    color: '#000'
+    color: theme.palette.primary.main,
   }
-});
+}));
 
 export default function LeftSideMenu() {
   const classes = useStyles();
@@ -48,25 +48,33 @@ export default function LeftSideMenu() {
       <List>
         <Link className={classes.link} href="/profile">
           <ListItem button key="profile">
-            <ListItemIcon> <AccountCircleIcon /> </ListItemIcon>
+            <ListItemIcon>
+              <AccountCircleIcon color="secondary" />
+            </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
         </Link>
         <Link className={classes.link} href="/dashboard">
           <ListItem button key="dashboard">
-            <ListItemIcon> <DashboardIcon /> </ListItemIcon>
+            <ListItemIcon>
+              <DashboardIcon color="secondary" />
+            </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
         </Link>
         <Link className={classes.link} href="/my-lists">
           <ListItem button key="my-lists">
-            <ListItemIcon> <PlaylistAddCheckIcon /> </ListItemIcon>
+            <ListItemIcon>
+              <PlaylistAddCheckIcon color="secondary" />
+              </ListItemIcon>
             <ListItemText primary="My lists" />
           </ListItem>
         </Link>
         <Link className={classes.link} href="/my-friends">
           <ListItem button key="my-friends">
-            <ListItemIcon> <GroupIcon /> </ListItemIcon>
+            <ListItemIcon>
+              <GroupIcon color="secondary" />
+            </ListItemIcon>
             <ListItemText primary="My friends" />
           </ListItem>
         </Link>
@@ -81,9 +89,8 @@ export default function LeftSideMenu() {
         edge="start"
         className={classes.menuButton}
         color="inherit"
-        aria-label="open drawer"
         >
-        <MenuIcon />
+        <MenuIcon color="secondary"/>
       </IconButton>
       <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
         {sideList('left')}

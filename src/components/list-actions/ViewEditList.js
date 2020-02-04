@@ -94,11 +94,11 @@ export default function ViewEditList(list) {
 
         <List className={classes.list}>
           {currentList.items.map((item, index) => (
-            <ListItem className={classes.listItem} alignItems="flex-start" key={item.id} button>
+            <ListItem className={classes.listItem} alignItems="flex-start" key={`${item.id}-list`} button>
               <ListItemAvatar>
                 <Avatar alt={item.name} className={classes.large} src={item.url} />
               </ListItemAvatar>
-              <ListItemText className={classes.listText} primary={`${index + 1}. ${item.name}`} secondary={item.description} />
+              <ListItemText className={classes.listText} secondary={`${index + 1}. ${item.name}`} secondary={item.description} />
             </ListItem>
           ))}
         </List>

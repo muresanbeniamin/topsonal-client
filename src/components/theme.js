@@ -3,10 +3,11 @@ import { createMuiTheme } from '@material-ui/core/styles';
 export default createMuiTheme({
   palette: {
     primary: {
-      main: '#009688'
+      main: '#5F5F60'
     },
     secondary: {
-      main: '#00897B'
+      main: '#E0E722'
     }
   }
 });
+
