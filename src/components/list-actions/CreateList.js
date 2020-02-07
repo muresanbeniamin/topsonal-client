@@ -17,6 +17,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import FormGroup from '@material-ui/core/FormGroup';
 
 const renderTextField = ({
   label,
@@ -88,8 +91,12 @@ let CreateList = props => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
-
   const { handleSubmit } = props;
+  const [state, setState] = React.useState({wantBackground: false});
+
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked });
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -110,6 +117,14 @@ let CreateList = props => {
     }
   };
 
+  let backgroundUrl = null;
+  if (state.wantBackground) {
+    backgroundUrl = <Field name="background_url" type="text"
+                      label="Background Url" component={renderTextField}
+                      autoComplete="none" margin="normal" fullWidth
+                      id="background_url"/>
+  }
+    
   return (
     <div>
       <Card className={classes.card} onClick={handleSubmit(handleClickOpen)}>
@@ -157,6 +172,21 @@ let CreateList = props => {
               id="description"
               required
             />
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Switch checked={state.wantBackground} onChange={handleChange('wantBackground')} value="wantBackground" />
+                }
+                label="Background"
+              />
+              <FormControlLabel
+                control={
+                  <Switch checked={state.wantBackground} onChange={handleChange('wantBackground')} value="wantBackground" />
+                }
+                label="Background"
+              />
+            </FormGroup>
+            {backgroundUrl}
             <DialogActions>
               <Button onClick={handleClose} color="secondary">
                 Cancel
