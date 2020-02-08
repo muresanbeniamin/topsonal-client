@@ -20,6 +20,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
+import Avatar from '@material-ui/core/Avatar';
+import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 
 const renderTextField = ({
   label,
@@ -83,6 +85,13 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     minWidth: 396,
+  },
+  avatar: {
+    width: '100%',
+    height: '200px'
+  },
+  floatRight: {
+    float: 'right'
   }
 }));
 
@@ -92,7 +101,7 @@ let CreateList = props => {
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   const { handleSubmit } = props;
-  const [state, setState] = React.useState({wantBackground: false});
+  const [state, setState] = React.useState({addLinkImage: false});
 
   const handleChange = name => event => {
     setState({ ...state, [name]: event.target.checked });
@@ -117,17 +126,17 @@ let CreateList = props => {
     }
   };
 
-  let backgroundUrl = null;
-  if (state.wantBackground) {
-    backgroundUrl = <Field name="background_url" type="text"
-                      label="Background Url" component={renderTextField}
-                      autoComplete="none" margin="normal" fullWidth
-                      id="background_url"/>
+  let imageUrlField;
+  if (state.addLinkImage) {
+    imageUrlField = <Field name="image_url" type="text"
+                           label="Image Url" component={renderTextField}
+                           autoComplete="none" margin="normal" fullWidth
+                           id="image_url" />
   }
-    
+ 
   return (
     <div>
-      <Card className={classes.card} onClick={handleSubmit(handleClickOpen)}>
+      <Card className={classes.card} onClick={handleClickOpen}>
         <CardContent className={classes.centerText}>
           <IconButton size="small" color="secondary">
             <AddIcon style={{fontSize: 85}}/>
@@ -172,21 +181,25 @@ let CreateList = props => {
               id="description"
               required
             />
+            <Avatar className={classes.avatar} variant='square' src={props.image_url}>Image</Avatar>
+
             <FormGroup row>
               <FormControlLabel
                 control={
-                  <Switch checked={state.wantBackground} onChange={handleChange('wantBackground')} value="wantBackground" />
+                  <Switch checked={state.addLinkImage} onChange={handleChange('addLinkImage')} value="addLinkImage" />
                 }
-                label="Background"
+                label="Add image link"
               />
-              <FormControlLabel
-                control={
-                  <Switch checked={state.wantBackground} onChange={handleChange('wantBackground')} value="wantBackground" />
-                }
-                label="Background"
-              />
+              <Button
+                color="primary"
+                className={classes.button}
+                startIcon={<ImageSearchIcon />}
+              >
+                Shuffle image
+              </Button>
             </FormGroup>
-            {backgroundUrl}
+     
+            {imageUrlField}
             <DialogActions>
               <Button onClick={handleClose} color="secondary">
                 Cancel

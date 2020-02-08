@@ -98,7 +98,7 @@ export default function ViewEditList(list) {
               <ListItemAvatar>
                 <Avatar alt={item.name} className={classes.large} src={item.url} />
               </ListItemAvatar>
-              <ListItemText className={classes.listText} secondary={`${index + 1}. ${item.name}`} secondary={item.description} />
+              <ListItemText className={classes.listText} secondary={`${index + 1}. ${item.name}`} />
             </ListItem>
           ))}
         </List>
