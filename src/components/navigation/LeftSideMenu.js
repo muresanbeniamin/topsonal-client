@@ -75,7 +75,7 @@ export default function LeftSideMenu() {
             <ListItemIcon>
               <GroupIcon color="secondary" />
             </ListItemIcon>
-            <ListItemText primary="My friends" />
+            <ListItemText primary="Friends" />
           </ListItem>
         </Link>
       </List>

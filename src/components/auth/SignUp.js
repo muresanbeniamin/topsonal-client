@@ -109,18 +109,6 @@ class SignUp extends Component {
 
           <form className={classes.form} onSubmit={handleSubmit(this.onSubmit)}>
             <Field
-              name="full_name"
-              type="text"
-              label="Full Name"
-              component={renderTextField}
-              autoComplete="none"
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="full_name"
-              autoFocus
-            />
-            <Field
               name="email"
               type="text"
               label="Email"
@@ -130,6 +118,7 @@ class SignUp extends Component {
               margin="normal"
               fullWidth
               id="email"
+              autoFocus
             />
             <Field
               name="password"
@@ -145,7 +134,7 @@ class SignUp extends Component {
             <Field
               name="password_confirmation"
               type="password"
-              label="Password Confirmation"
+              label="Confirm Password"
               component={renderTextField}
               autoComplete="none"
               variant="outlined"

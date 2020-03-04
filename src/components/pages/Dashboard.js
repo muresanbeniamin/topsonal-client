@@ -13,8 +13,8 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="lists-container">
-        Activity of my friends
+      <div className="friend-lists">
+
       </div>
     )
   }
@@ -22,8 +22,7 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
   return { 
-    profile: state.profile.profile,
-    profileError: state.profile.profileError
+
   };
 }
 
