@@ -22,6 +22,7 @@ import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import Avatar from '@material-ui/core/Avatar';
 import ImageSearchIcon from '@material-ui/icons/ImageSearch';
+import { getImageUrls } from '../../actions';
 
 const renderTextField = ({
   label,
@@ -115,6 +116,12 @@ let CreateList = props => {
     setOpen(true);
   };
 
+  const handleChangeNameOfTheList = () => event => {
+    if (event.target.value.length > 5) {
+      dispatch(getImageUrls(authToken, event.target.value))
+    }
+  }
+
   const handleClose = () => {
     dispatch(reset('create-list-form'));
     setOpen(false);
@@ -163,6 +170,7 @@ let CreateList = props => {
               id="name"
               autoFocus
               required
+              onBlur={handleChangeNameOfTheList()}
             />
             <Field
               className={classes.formControl}
