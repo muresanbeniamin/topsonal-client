@@ -101,10 +101,14 @@ let CreateList = props => {
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   const { handleSubmit } = props;
-  const [state, setState] = React.useState({addLinkImage: false});
+  const [state, setState] = React.useState({addLinkImage: false, linkImage: ''});
 
   const handleChange = name => event => {
     setState({ ...state, [name]: event.target.checked });
+  };
+
+  const handleChangeImageUrl = name => event => {
+    setState({ ...state, [name]: event.target.value });
   };
 
   const handleClickOpen = () => {
@@ -131,7 +135,7 @@ let CreateList = props => {
     imageUrlField = <Field name="image_url" type="text"
                            label="Image Url" component={renderTextField}
                            autoComplete="none" margin="normal" fullWidth
-                           id="image_url" />
+                           id="image_url" onChange={handleChangeImageUrl('linkImage')}/>
   }
  
   return (
@@ -181,7 +185,7 @@ let CreateList = props => {
               id="description"
               required
             />
-            <Avatar className={classes.avatar} variant='square' src={props.image_url}>Image</Avatar>
+            <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
 
             <FormGroup row>
               <FormControlLabel
