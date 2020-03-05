@@ -101,19 +101,12 @@ let CreateList = props => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
-  let imageUrls = useSelector(state => state.google_search.imageUrls);
+  const imageUrls = useSelector(state => state.google_search.imageUrls);
   const { handleSubmit } = props;
   const [state, setState] = React.useState({addLinkImage: false, linkImage: ''});
 
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
-  };
-
-  const handleChangeImageUrl = name => event => {
-    setState({ ...state, [name]: event.target.value });
-  };
-
-  const handleClickOpen = () => {
+  const handleOpenModal = () => {
+    setState({ ...state, 'linkImage': '' });
     setOpen(true);
   };
 
@@ -123,21 +116,12 @@ let CreateList = props => {
     }
   }
 
-  const handleClose = () => {
-    dispatch(reset('create-list-form'));
-    setOpen(false);
-    setState({ ...state, 'linkImage': '' });
+  const handleChangeCheckbox = name => event => {
+    setState({ ...state, [name]: event.target.checked });
   };
 
-  const onSubmit = async formProps => {
-
-    try {
-      await dispatch(createlist(formProps, authToken))
-      setOpen(false);
-      dispatch(reset('create-list-form'));
-    } catch (e) {
-      console.log(e);
-    }
+  const handleChangeImageUrl = name => event => {
+    setState({ ...state, [name]: event.target.value });
   };
 
   const handleOnShuffleImageClick = () => {
@@ -148,10 +132,26 @@ let CreateList = props => {
       props.change('image_url', imageUrl);
     }
   };
+
+  const onSubmit = formProps => {
+    try {
+      dispatch(createlist(formProps, authToken))
+      setOpen(false);
+      dispatch(reset('create-list-form'));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleCloseModal = () => {
+    dispatch(reset('create-list-form'));
+    setOpen(false);
+    setState({ ...state, 'linkImage': '' });
+  };
  
   return (
     <div>
-      <Card className={classes.card} onClick={handleClickOpen}>
+      <Card className={classes.card} onClick={handleOpenModal}>
         <CardContent className={classes.centerText}>
           <IconButton size="small" color="secondary">
             <AddIcon style={{fontSize: 85}}/>
@@ -159,7 +159,7 @@ let CreateList = props => {
         </CardContent>
       </Card>
 
-      <Dialog open={open} onClose={handleClose} maxWidth='xs'>
+      <Dialog open={open} onClose={handleCloseModal} maxWidth='xs'>
         <DialogTitle id="form-dialog-title">Create a new list</DialogTitle>
         <DialogContent>
           <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -198,13 +198,12 @@ let CreateList = props => {
               required
             />
             <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
-
             <FormGroup row>
               <FormControlLabel
                 control={
-                  <Switch checked={state.addLinkImage} onChange={handleChange('addLinkImage')} value="addLinkImage" />
+                  <Switch checked={state.addLinkImage} onChange={handleChangeCheckbox('addLinkImage')} value="addLinkImage" />
                 }
-                label="Add image link"
+                label="Add image manually"
               />
               <Button
                 color="primary"
@@ -215,7 +214,6 @@ let CreateList = props => {
                 Shuffle image
               </Button>
             </FormGroup>
-     
             <Field 
               name="image_url"
               type="text"
@@ -229,7 +227,7 @@ let CreateList = props => {
               fullWidth
             />
             <DialogActions>
-              <Button onClick={handleClose} color="secondary">
+              <Button onClick={handleCloseModal} color="secondary">
                 Cancel
               </Button>
               <Button type="submit" variant="contained" color="secondary">
