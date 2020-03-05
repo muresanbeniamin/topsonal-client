@@ -61,7 +61,7 @@ class MyLists extends Component {
                   <CardHeader
                     avatar={
                       <Avatar aria-label="recipe" className={classes.avatar}>
-                        R
+                        {list.user.full_name.split(' ').map(name => name[0]).join('')}
                       </Avatar>
                     }
                     action={
@@ -70,12 +70,12 @@ class MyLists extends Component {
                       </IconButton>
                     }
                     title={list.name}
-                    subheader="September 14, 2016"
+                    subheader={list.created_date}
                   />
                   <CardMedia
                     className={classes.media}
-                    image="/images"
-                    title="Paella dish"
+                    image={list.image_url}
+                    title={list.name}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="h3">

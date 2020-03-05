@@ -11,7 +11,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from "@material-ui/core/styles";
-import { reduxForm, Field, reset } from 'redux-form';
+import { reduxForm, Field, reset, change } from 'redux-form';
 import { createlist } from '../../actions';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -101,6 +101,7 @@ let CreateList = props => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
+  let imageUrls = useSelector(state => state.google_search.imageUrls);
   const { handleSubmit } = props;
   const [state, setState] = React.useState({addLinkImage: false, linkImage: ''});
 
@@ -116,18 +117,20 @@ let CreateList = props => {
     setOpen(true);
   };
 
-  const handleChangeNameOfTheList = () => event => {
+  const handleChangeNameOfTheList = () => async event => {
     if (event.target.value.length > 5) {
-      dispatch(getImageUrls(authToken, event.target.value))
+      dispatch(getImageUrls(authToken, event.target.value));
     }
   }
 
   const handleClose = () => {
     dispatch(reset('create-list-form'));
     setOpen(false);
+    setState({ ...state, 'linkImage': '' });
   };
 
   const onSubmit = async formProps => {
+
     try {
       await dispatch(createlist(formProps, authToken))
       setOpen(false);
@@ -137,13 +140,14 @@ let CreateList = props => {
     }
   };
 
-  let imageUrlField;
-  if (state.addLinkImage) {
-    imageUrlField = <Field name="image_url" type="text"
-                           label="Image Url" component={renderTextField}
-                           autoComplete="none" margin="normal" fullWidth
-                           id="image_url" onChange={handleChangeImageUrl('linkImage')}/>
-  }
+  const handleOnShuffleImageClick = () => {
+    if (imageUrls.length > 0) {
+      // get a random image url
+      const imageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)].src;
+      setState({ ...state, 'linkImage': imageUrl });
+      props.change('image_url', imageUrl);
+    }
+  };
  
   return (
     <div>
@@ -206,12 +210,24 @@ let CreateList = props => {
                 color="primary"
                 className={classes.button}
                 startIcon={<ImageSearchIcon />}
+                onClick={handleOnShuffleImageClick}
               >
                 Shuffle image
               </Button>
             </FormGroup>
      
-            {imageUrlField}
+            <Field 
+              name="image_url"
+              type="text"
+              label="Image Url"
+              component={renderTextField}
+              disabled={!state.addLinkImage}
+              autoComplete="none"
+              margin="normal"
+              id="image_url" 
+              onChange={handleChangeImageUrl('linkImage')}
+              fullWidth
+            />
             <DialogActions>
               <Button onClick={handleClose} color="secondary">
                 Cancel
