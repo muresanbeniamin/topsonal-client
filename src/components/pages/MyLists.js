@@ -31,11 +31,14 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     width: 345,
-    height: 400
+    height: 280
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    marginLeft: '15px',
+    marginRight: '15px',
+    paddingTop: '56.25%',
+    cursor: 'pointer'
   },
   rightAlignedButton: {
     marginLeft: 'auto',
@@ -66,6 +69,17 @@ const myLists = function MyLists() {
     popupState.close();
   }
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
@@ -75,23 +89,23 @@ const myLists = function MyLists() {
               <Card className={classes.card}>
                 <CardHeader
                   avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
+                    <Avatar aria-label="recipe">
                       {list.user.full_name.split(' ').map(name => name[0]).join('')}
                     </Avatar>
                   }
                   action={
-                      <PopupState variant="popover" popupId="demo-popup-menu">
-                        {popupState => (
-                          <React.Fragment>
-                            <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
-                              <MoreVertIcon />
-                            </IconButton>
-                            <Menu {...bindMenu(popupState)}>
-                              <MenuItem onClick={handleDeleteList(list.id, popupState)}>Delete</MenuItem>
-                            </Menu>
-                          </React.Fragment>
-                        )}
-                      </PopupState>
+                    <PopupState variant="popover">
+                      {popupState => (
+                        <React.Fragment>
+                          <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
+                            <MoreVertIcon />
+                          </IconButton>
+                          <Menu {...bindMenu(popupState)}>
+                            <MenuItem onClick={handleDeleteList(list.id, popupState)}>Delete</MenuItem>
+                          </Menu>
+                        </React.Fragment>
+                      )}
+                    </PopupState>
                   }
                   title={list.name}
                   subheader={list.created_date}
@@ -100,21 +114,10 @@ const myLists = function MyLists() {
                   className={classes.media}
                   image={list.image_url}
                   title={list.name}
+                  onClick={handleClickOpen}
                 />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h3">
-                  </Typography>
-                  <Typography noWrap variant="body2" color="textSecondary" component="p">
-                    {list.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <IconButton size="small" color="secondary">
-                    <FavoriteTwoToneIcon className={classes.likeIcon}/> {list.likes}
-                  </IconButton>
-                  <ViewEditList list={list}/>
-                </CardActions>
               </Card>
+              <ViewEditList list={list} open={open} handleClose={handleClose} />
             </Grid>
           ))}
 
