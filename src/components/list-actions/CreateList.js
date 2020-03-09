@@ -11,7 +11,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from "@material-ui/core/styles";
-import { reduxForm, Field, reset, change } from 'redux-form';
+import { reduxForm, Field, reset } from 'redux-form';
 import { createlist } from '../../actions';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';

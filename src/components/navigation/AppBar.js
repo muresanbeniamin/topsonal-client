@@ -105,9 +105,9 @@ export default function PrimarySearchAppBar() {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'left' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >

@@ -91,4 +91,13 @@ export const createlist = (formProps, authToken) => async dispatch => {
     dispatch(getprofile(authToken));
   } catch (e) {
   }
+};
+
+export const deleteList = (authToken, listId) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    await axios.delete(`api/v1/lists/${listId}`, config);
+    dispatch(getprofile(authToken));
+  } catch (e) {
+  }
 }; 

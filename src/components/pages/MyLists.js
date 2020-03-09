@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -17,8 +17,14 @@ import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Avatar from '@material-ui/core/Avatar';
 import CardMedia from '@material-ui/core/CardMedia';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import { getprofile, deleteList } from '../../actions';
+import { useDispatch, useSelector } from "react-redux";
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
-const styles = theme => ({
+
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     marginTop: theme.spacing(5)
@@ -41,67 +47,84 @@ const styles = theme => ({
   likeIcon: {
     paddingRight: 4
   }
-});
+}));
 
-class MyLists extends Component {
+const myLists = function MyLists() {
+  const dispatch = useDispatch();
+  const authToken = useSelector(state => state.auth.authenticated);
+  useEffect(() => {
+    function fetchProfile() {
+      dispatch(getprofile(authToken));
+    }
+    fetchProfile();
+  }, []);
+  const curentUserLists = useSelector(state => state.profile.currentUserLists);
+  const classes = useStyles();
 
-  componentDidMount() {
-    this.props.getprofile(this.props.auth);
+  const handleDeleteList = (listId, popupState) => event => {
+    dispatch(deleteList(authToken, listId));
+    popupState.close();
   }
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            {this.props.currentUserLists.map((list) => (
-              <Grid key={`${list.id}-list`} item>
-                <Card className={classes.card}>
-                  <CardHeader
-                    avatar={
-                      <Avatar aria-label="recipe" className={classes.avatar}>
-                        {list.user.full_name.split(' ').map(name => name[0]).join('')}
-                      </Avatar>
-                    }
-                    action={
-                      <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
-                    title={list.name}
-                    subheader={list.created_date}
-                  />
-                  <CardMedia
-                    className={classes.media}
-                    image={list.image_url}
-                    title={list.name}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h6" component="h3">
-                    </Typography>
-                    <Typography noWrap variant="body2" color="textSecondary" component="p">
-                      {list.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <IconButton size="small" color="secondary">
-                      <FavoriteTwoToneIcon className={classes.likeIcon}/> {list.likes}
-                    </IconButton>
-                    <ViewEditList list={list}/>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-
-            <Grid key='addButton' item>
-              <CreateList/>
+  return (
+    <Grid container className={classes.root} spacing={2}>
+      <Grid item xs={12}>
+        <Grid container justify="center" spacing={2}>
+          {curentUserLists.map((list) => (
+            <Grid key={`${list.id}-list`} item>
+              <Card className={classes.card}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      {list.user.full_name.split(' ').map(name => name[0]).join('')}
+                    </Avatar>
+                  }
+                  action={
+                      <PopupState variant="popover" popupId="demo-popup-menu">
+                        {popupState => (
+                          <React.Fragment>
+                            <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
+                              <MoreVertIcon />
+                            </IconButton>
+                            <Menu {...bindMenu(popupState)}>
+                              <MenuItem onClick={handleDeleteList(list.id, popupState)}>Delete</MenuItem>
+                            </Menu>
+                          </React.Fragment>
+                        )}
+                      </PopupState>
+                  }
+                  title={list.name}
+                  subheader={list.created_date}
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={list.image_url}
+                  title={list.name}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h3">
+                  </Typography>
+                  <Typography noWrap variant="body2" color="textSecondary" component="p">
+                    {list.description}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <IconButton size="small" color="secondary">
+                    <FavoriteTwoToneIcon className={classes.likeIcon}/> {list.likes}
+                  </IconButton>
+                  <ViewEditList list={list}/>
+                </CardActions>
+              </Card>
             </Grid>
+          ))}
+
+          <Grid key='addButton' item>
+            <CreateList/>
           </Grid>
         </Grid>
       </Grid>
-    )
-  }
+    </Grid>
+  );
 }
 
 function mapStateToProps(state) {
@@ -114,5 +137,4 @@ function mapStateToProps(state) {
 
 export default compose(
   connect(mapStateToProps, actions),
-  withStyles(styles),
-)(requireAuth(MyLists));
+)(requireAuth(myLists));
