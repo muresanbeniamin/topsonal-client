@@ -49,10 +49,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Slide direction="right" ref={ref} {...props} />;
 });
 
-export default function ViewEditList(props) {
+export default function ViewList(props) {
   const classes = useStyles();
   const currentList = props.list;
 
@@ -81,7 +81,7 @@ export default function ViewEditList(props) {
 
         <List className={classes.list}>
           {currentList.items.map((item, index) => (
-            <ListItem className={classes.listItem} alignItems="flex-start" key={`${item.id}-item`} button>
+            <ListItem className={classes.listItem} alignItems="flex-start" key={`${index}-item`} button>
               <ListItemAvatar>
                 <Avatar alt={item.name} className={classes.large} src={item.url} />
               </ListItemAvatar>

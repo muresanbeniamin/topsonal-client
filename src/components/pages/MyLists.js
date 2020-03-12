@@ -6,7 +6,7 @@ import Card from '@material-ui/core/Card';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import CreateList from '../list-actions/CreateList';
-import ViewEditList from '../list-actions/ViewEditList';
+import ViewList from '../list-actions/ViewList';
 import requireAuth from '../auth/requireAuth';
 import * as actions from '../../actions';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -66,18 +66,17 @@ const myLists = function MyLists() {
   }
 
   const [open, setOpen] = React.useState(false);
-  const [selectedItem, setSelectedItem] = React.useState(null);
+  const [selectedList, setSelectedList] = React.useState(null);
 
   const handleClickOpen = list => event => {
-    setSelectedItem(list)
+    setSelectedList(list)
     setOpen(true);
   };
 
   const handleClose = () => {
-    setSelectedItem(null)
+    setSelectedList(null)
     setOpen(false);
   };
-
 
   return (
     <Grid container className={classes.root} spacing={2}>
@@ -116,12 +115,10 @@ const myLists = function MyLists() {
                     title={list.name}
                   />
                 </div>
-                {/* <ViewEditList list={list} open={open} handleClose={handleClose} /> */}
               </Card>
             </Grid>
           ))}
-               {selectedItem && <ViewEditList list={selectedItem} open={open} handleClose={handleClose} />}
-
+          {selectedList && <ViewList list={selectedList} open={open} handleClose={handleClose} />}
           <Grid key='addButton' item>
             <CreateList/>
           </Grid>
