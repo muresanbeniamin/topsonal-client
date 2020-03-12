@@ -81,7 +81,7 @@ export default function ViewEditList(props) {
 
         <List className={classes.list}>
           {currentList.items.map((item, index) => (
-            <ListItem className={classes.listItem} alignItems="flex-start" key={`${item.id}-list`} button>
+            <ListItem className={classes.listItem} alignItems="flex-start" key={`${item.id}-item`} button>
               <ListItemAvatar>
                 <Avatar alt={item.name} className={classes.large} src={item.url} />
               </ListItemAvatar>

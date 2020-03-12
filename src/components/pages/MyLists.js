@@ -60,18 +60,21 @@ const myLists = function MyLists() {
   const curentUserLists = useSelector(state => state.profile.currentUserLists);
   const classes = useStyles();
 
-  const handleDeleteList = (listId, popupState) => event => {
+  const handleDeleteList = (listId, popupState) => () => {
     dispatch(deleteList(authToken, listId));
     popupState.close();
   }
 
   const [open, setOpen] = React.useState(false);
+  const [selectedItem, setSelectedItem] = React.useState(null);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = list => event => {
+    setSelectedItem(list)
     setOpen(true);
   };
 
   const handleClose = () => {
+    setSelectedItem(null)
     setOpen(false);
   };
 
@@ -106,16 +109,18 @@ const myLists = function MyLists() {
                   title={list.name}
                   subheader={list.created_date}
                 />
-                <CardMedia
-                  className={classes.media}
-                  image={list.image_url}
-                  title={list.name}
-                  onClick={handleClickOpen}
-                />
+                <div onClick={handleClickOpen(list)}>
+                  <CardMedia
+                    className={classes.media}
+                    image={list.image_url}
+                    title={list.name}
+                  />
+                </div>
+                {/* <ViewEditList list={list} open={open} handleClose={handleClose} /> */}
               </Card>
-              <ViewEditList list={list} open={open} handleClose={handleClose} />
             </Grid>
           ))}
+               {selectedItem && <ViewEditList list={selectedItem} open={open} handleClose={handleClose} />}
 
           <Grid key='addButton' item>
             <CreateList/>
