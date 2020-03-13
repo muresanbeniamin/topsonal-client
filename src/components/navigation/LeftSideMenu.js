@@ -46,14 +46,6 @@ export default function LeftSideMenu() {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        <Link className={classes.link} href="/profile">
-          <ListItem button key="profile">
-            <ListItemIcon>
-              <AccountCircleIcon color="secondary" />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItem>
-        </Link>
         <Link className={classes.link} href="/dashboard">
           <ListItem button key="dashboard">
             <ListItemIcon>
@@ -76,6 +68,14 @@ export default function LeftSideMenu() {
               <GroupIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary="Friends" />
+          </ListItem>
+        </Link>
+        <Link className={classes.link} href="/profile">
+          <ListItem button key="profile">
+            <ListItemIcon>
+              <AccountCircleIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
           </ListItem>
         </Link>
       </List>

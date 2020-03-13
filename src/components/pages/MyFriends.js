@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -28,6 +27,9 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
   },
+  panels: {
+    marginTop: '20px;'
+  }
 }));
 
 export default function MyFriends() {
@@ -36,7 +38,7 @@ export default function MyFriends() {
   return (
     <div className={classes.root}>
       <SearchFriend/>
-      <ExpansionPanel>
+      <div className={classes.panels}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <div className={classes.avatar}>
             <Avatar className={classes.orange}>BM</Avatar>
@@ -44,94 +46,22 @@ export default function MyFriends() {
           <Grid container className={classes.root} spacing={10}>
             <Grid item xs={12}>
               <Grid container justify="space-between" >
-                  <Grid key="1" item>
-                    <Typography className={classes.heading}>Bob Marian</Typography>
-                  </Grid>
-                  <Grid key="2" item>
-                    <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
-                  </Grid>
-                  <Grid key="3" item>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
-                  <Grid key="4" item>
-                  </Grid>
+                <Grid key="1" item>
+                  <Typography className={classes.heading}>Bob Marian</Typography>
+                </Grid>
+                <Grid key="2" item>
+                  <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
+                </Grid>
+                <Grid key="3" item>
+                  <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
+                </Grid>
+                <Grid key="4" item>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </ExpansionPanelSummary>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <div className={classes.avatar}>
-            <Avatar className={classes.orange}>BM</Avatar>
-          </div>
-          <Grid container className={classes.root} spacing={10}>
-            <Grid item xs={12}>
-              <Grid container justify="space-between" >
-                  <Grid key="1" item>
-                    <Typography className={classes.heading}>Bob Marian</Typography>
-                  </Grid>
-                  <Grid key="2" item>
-                    <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
-                  </Grid>
-                  <Grid key="3" item>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
-                  <Grid key="4" item>
-                  </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </ExpansionPanelSummary>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <div className={classes.avatar}>
-            <Avatar className={classes.orange}>BM</Avatar>
-          </div>
-          <Grid container className={classes.root} spacing={10}>
-            <Grid item xs={12}>
-              <Grid container justify="space-between" >
-                  <Grid key="1" item>
-                    <Typography className={classes.heading}>Bob Marian</Typography>
-                  </Grid>
-                  <Grid key="2" item>
-                    <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
-                  </Grid>
-                  <Grid key="3" item>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
-                  <Grid key="4" item>
-                  </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </ExpansionPanelSummary>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <div className={classes.avatar}>
-            <Avatar className={classes.orange}>BM</Avatar>
-          </div>
-          <Grid container className={classes.root} spacing={10}>
-            <Grid item xs={12}>
-              <Grid container justify="space-between" >
-                  <Grid key="1" item>
-                    <Typography className={classes.heading}>Bob Marian</Typography>
-                  </Grid>
-                  <Grid key="2" item>
-                    <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
-                  </Grid>
-                  <Grid key="3" item>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
-                  <Grid key="4" item>
-                  </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </ExpansionPanelSummary>
-      </ExpansionPanel>
+      </div>
     </div>
   );
 }
