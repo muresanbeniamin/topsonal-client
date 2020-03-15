@@ -13,6 +13,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useSelector } from 'react-redux'
 import LeftSideMenu from './LeftSideMenu';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -77,7 +78,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PrimarySearchAppBar() {
+export default function Navbar() {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -101,6 +103,11 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleSignOut = event => {
+    history.push('/signout');
+    handleMenuClose();
+  }
 
   const renderMenu = (
     <Menu
@@ -141,8 +148,8 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton href="signout" aria-label="show 4 new mails" color="inherit">
+      <MenuItem onClick={handleSignOut}>
+        <IconButton color="inherit">
           <ExitToAppIcon />
         </IconButton>
         <p>Log Out</p>
