@@ -13,10 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,7 +59,13 @@ const useStyles = makeStyles(theme => ({
     display: 'flex-inline',
     '& > *': {
       margin: theme.spacing(1),
-    },
+    }
+  },
+  addFriendButton: {
+    marginTop: 5
+  },
+  addFriendIcon: {
+    marginTop: 10
   }
 }));
 
@@ -79,7 +83,9 @@ export default function SearchFriend(props) {
     setOpen(false);
   };
   const searchFriendChanged = value => {
-    dispatch(getusers(authToken, value));
+    if (value) {
+      dispatch(getusers(authToken, value));
+    }
   };
 
   return (
@@ -90,8 +96,9 @@ export default function SearchFriend(props) {
       <Dialog fullScreen open={open} onClose={handleCloseSearchFriendModal} maxWidth='xs'>
         <AppBar className={classes.appBar}>
           <Toolbar>
+            <PersonAddIcon/>
             <Typography variant="h6" className={classes.title}>
-            <PersonAddIcon/>Add New Friends 
+              Add New Friends 
             </Typography>
             <IconButton edge="start" color="inherit" onClick={handleCloseSearchFriendModal} aria-label="close">
               <CloseIcon />
@@ -99,30 +106,31 @@ export default function SearchFriend(props) {
           </Toolbar>
         </AppBar>
         <DialogContent>
-          <TextField fullWidth label="Search friends" autoFocus onChange={e => searchFriendChanged(e.target.value)} />
+          <TextField fullWidth label="Search friends by name..." autoFocus onChange={e => searchFriendChanged(e.target.value)} />
           {filteredUsers.map((user, index) => (
-            <div>
-              <div className={classes.avatar}>
-                <Avatar className={classes.orange}>BM</Avatar>
-              </div>
-              <Grid container className={classes.root} spacing={7}>
-                <Grid item xs={12}>
-                  <Grid container justify="space-between" >
-                    <Grid key="1" item>
-                      <Typography className={classes.heading}>{user.full_name}</Typography>
-                    </Grid>
-                    <Grid key="2" item>
-                      <Typography className={classes.heading}>{user.email}</Typography>
-                    </Grid>
-                    <Grid key="3" item>
-                      <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                    </Grid>
-                    <Grid key="4" item>
-                    </Grid>
-                  </Grid>
-                </Grid>
+            <Grid key={`${index}-friend`} container direction="row">
+              <Grid item sm={1} xs={2}>
+                <div className={classes.avatar}>
+                  <Avatar>{user.full_name[0]}</Avatar>
+                </div>
               </Grid>
-            </div>
+              <Grid item sm xs={10}>
+                <Typography className={classes.heading}>{user.full_name}</Typography>
+              </Grid>
+              <Grid item sm xs={12}>
+                <Typography className={classes.heading}>{user.email}</Typography>
+              </Grid>
+              <Grid item sm xs={12}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.addFriendButton}
+                  startIcon={<PersonAddIcon />}
+                >
+                  Add Friend
+                </Button>
+              </Grid>
+            </Grid>
           ))}
         </DialogContent>
       </Dialog>
