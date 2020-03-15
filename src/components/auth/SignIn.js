@@ -59,7 +59,7 @@ const renderTextField = ({
 
 const styles = theme => ({
   paper: {
-    marginTop: theme.spacing(20),
+    marginTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
