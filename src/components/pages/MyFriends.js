@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +7,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { deepOrange } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
 import SearchFriend from '../friends/SearchFriend';
+import { useSelector, useDispatch } from "react-redux";
+import { getprofile } from '../../actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,24 +35,35 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function MyFriends() {
+  const authToken = useSelector(state => state.auth.authenticated);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    function fetchProfile() {
+      dispatch(getprofile(authToken));
+    }
+    fetchProfile();
+  }, []);
   const classes = useStyles();
+  const profile = useSelector(state => state.profile.profile);
+  const friends = profile.friends;
 
   return (
     <div className={classes.root}>
       <SearchFriend/>
       <div className={classes.panels}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      {friends && friends.map((friend) => (
+        <ExpansionPanelSummary key={friend.id} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.avatar}>
-            <Avatar className={classes.orange}>BM</Avatar>
+            <Avatar className={classes.orange}>{friend.full_name.split(' ').map(name => name[0]).join('')}</Avatar>
           </div>
           <Grid container className={classes.root} spacing={10}>
             <Grid item xs={12}>
               <Grid container justify="space-between" >
                 <Grid key="1" item>
-                  <Typography className={classes.heading}>Bob Marian</Typography>
+                  <Typography className={classes.heading}>{friend.full_name}</Typography>
                 </Grid>
                 <Grid key="2" item>
-                  <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
+                  <Typography className={classes.heading}>{friend.email}</Typography>
                 </Grid>
                 <Grid key="3" item>
                   <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
@@ -61,6 +74,8 @@ export default function MyFriends() {
             </Grid>
           </Grid>
         </ExpansionPanelSummary>
+      ))}
+
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from "react-redux";
-import { getusers } from '../../actions';
+import { searchFriends, friendRequest } from '../../actions';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Dialog from '@material-ui/core/Dialog';
@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import { getprofile } from '../../actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -70,9 +71,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SearchFriend(props) {
+  useEffect(() => {
+    function fetchProfile() {
+      dispatch(getprofile(authToken));
+    }
+    fetchProfile();
+  }, []);
   const classes = useStyles();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
+  const profile = useSelector(state => state.profile.profile);
   const [open, setOpen] = React.useState(false);
   let filteredUsers = useSelector(state => state.users.users);
 
@@ -84,9 +92,13 @@ export default function SearchFriend(props) {
   };
   const searchFriendChanged = value => {
     if (value) {
-      dispatch(getusers(authToken, value));
+      dispatch(searchFriends(authToken, value));
     }
   };
+
+  const handleAddFriend = userId => event => {
+    dispatch(friendRequest(authToken, userId));
+  }
 
   return (
     <div style={{ maxWidth: '200px', marginTop: '10px', marginRight: 'auto', marginLeft: 'auto' }}>
@@ -111,7 +123,7 @@ export default function SearchFriend(props) {
             <Grid key={`${index}-friend`} container direction="row">
               <Grid item sm={1} xs={2}>
                 <div className={classes.avatar}>
-                  <Avatar>{user.full_name[0]}</Avatar>
+                  <Avatar>{user.full_name.split(' ').map(name => name[0]).join('')}</Avatar>
                 </div>
               </Grid>
               <Grid item sm xs={10}>
@@ -126,6 +138,7 @@ export default function SearchFriend(props) {
                   color="secondary"
                   className={classes.addFriendButton}
                   startIcon={<PersonAddIcon />}
+                  onClick={handleAddFriend(user.id)}
                 >
                   Add Friend
                 </Button>

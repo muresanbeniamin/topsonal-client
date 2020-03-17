@@ -62,10 +62,10 @@ export const getprofile = authToken => async dispatch => {
 };
 
 
-export const getusers = (authToken, name) => async dispatch => {
+export const searchFriends = (authToken, name) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    const users = await axios.get(`api/v1/users?by_name=${name}`, config);
+    const users = await axios.get(`api/v1/search_friends?by_name=${name}`, config);
     dispatch({ type: GET_USERS, payload: users.data });
   } catch (e) {
     const errorMessage = e.response.data.error;
@@ -100,4 +100,13 @@ export const deleteList = (authToken, listId) => async dispatch => {
     dispatch(getprofile(authToken));
   } catch (e) {
   }
-}; 
+};
+
+export const friendRequest = (authToken, userId) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    await axios.post(`api/v1/friends/${userId}/request_friend`, {}, config);
+    // dispatch(getprofile(authToken));
+  } catch (e) {
+  }
+};
