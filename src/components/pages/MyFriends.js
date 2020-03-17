@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -8,6 +7,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { deepOrange } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
 import SearchFriend from '../friends/SearchFriend';
+import { useSelector, useDispatch } from "react-redux";
+import { getprofile } from '../../actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,110 +29,54 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
   },
+  panels: {
+    marginTop: '20px;'
+  }
 }));
 
 export default function MyFriends() {
+  const authToken = useSelector(state => state.auth.authenticated);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    function fetchProfile() {
+      dispatch(getprofile(authToken));
+    }
+    fetchProfile();
+  }, []);
   const classes = useStyles();
+  const profile = useSelector(state => state.profile.profile);
+  const friends = profile.friends;
 
   return (
     <div className={classes.root}>
       <SearchFriend/>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <div className={classes.panels}>
+      {friends && friends.map((friend) => (
+        <ExpansionPanelSummary key={friend.id} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.avatar}>
-            <Avatar className={classes.orange}>BM</Avatar>
+            <Avatar className={classes.orange}>{friend.full_name.split(' ').map(name => name[0]).join('')}</Avatar>
           </div>
           <Grid container className={classes.root} spacing={10}>
             <Grid item xs={12}>
               <Grid container justify="space-between" >
-                  <Grid key="1" item>
-                    <Typography className={classes.heading}>Bob Marian</Typography>
-                  </Grid>
-                  <Grid key="2" item>
-                    <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
-                  </Grid>
-                  <Grid key="3" item>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
-                  <Grid key="4" item>
-                  </Grid>
+                <Grid key="1" item>
+                  <Typography className={classes.heading}>{friend.full_name}</Typography>
+                </Grid>
+                <Grid key="2" item>
+                  <Typography className={classes.heading}>{friend.email}</Typography>
+                </Grid>
+                <Grid key="3" item>
+                  <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
+                </Grid>
+                <Grid key="4" item>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </ExpansionPanelSummary>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <div className={classes.avatar}>
-            <Avatar className={classes.orange}>BM</Avatar>
-          </div>
-          <Grid container className={classes.root} spacing={10}>
-            <Grid item xs={12}>
-              <Grid container justify="space-between" >
-                  <Grid key="1" item>
-                    <Typography className={classes.heading}>Bob Marian</Typography>
-                  </Grid>
-                  <Grid key="2" item>
-                    <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
-                  </Grid>
-                  <Grid key="3" item>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
-                  <Grid key="4" item>
-                  </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </ExpansionPanelSummary>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <div className={classes.avatar}>
-            <Avatar className={classes.orange}>BM</Avatar>
-          </div>
-          <Grid container className={classes.root} spacing={10}>
-            <Grid item xs={12}>
-              <Grid container justify="space-between" >
-                  <Grid key="1" item>
-                    <Typography className={classes.heading}>Bob Marian</Typography>
-                  </Grid>
-                  <Grid key="2" item>
-                    <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
-                  </Grid>
-                  <Grid key="3" item>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
-                  <Grid key="4" item>
-                  </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </ExpansionPanelSummary>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <div className={classes.avatar}>
-            <Avatar className={classes.orange}>BM</Avatar>
-          </div>
-          <Grid container className={classes.root} spacing={10}>
-            <Grid item xs={12}>
-              <Grid container justify="space-between" >
-                  <Grid key="1" item>
-                    <Typography className={classes.heading}>Bob Marian</Typography>
-                  </Grid>
-                  <Grid key="2" item>
-                    <Typography className={classes.heading}>bob.marian@hotmail.com</Typography>
-                  </Grid>
-                  <Grid key="3" item>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
-                  <Grid key="4" item>
-                  </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </ExpansionPanelSummary>
-      </ExpansionPanel>
+      ))}
+
+      </div>
     </div>
   );
 }
