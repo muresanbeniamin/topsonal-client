@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from "react-redux";
-import { searchFriends, friendRequest } from '../../actions';
+import { searchFriends, getprofile } from '../../actions';
+import { friendRequest, acceptFriendRequest, unfriendRequest, withdrawFriendRequest } from '../../actions';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,9 +14,9 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import { getprofile } from '../../actions';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -85,7 +86,17 @@ export default function SearchFriend(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
-  // const profile = useSelector(state => state.profile.profile);
+  const profile = useSelector(state => state.profile.profile);
+
+  let friendsIds, friendRequestsIds, friendRequestingIds, blockingFriendsIds, allUsersIds;
+  if (profile.id) {
+    friendsIds = profile.friends.map(user => user.id);
+    friendRequestsIds = profile.friend_requests.map(user => user.id);
+    friendRequestingIds = profile.friend_requesting.map(user => user.id);
+    blockingFriendsIds = profile.blocking_friends.map(user => user.id);
+    allUsersIds = friendsIds.concat(friendRequestsIds).concat(friendRequestingIds).concat(blockingFriendsIds);
+  }
+
   const [open, setOpen] = React.useState(false);
   let filteredUsers = useSelector(state => state.users.users);
 
@@ -100,9 +111,20 @@ export default function SearchFriend(props) {
       dispatch(searchFriends(authToken, value));
     }
   };
-
   const handleAddFriend = userId => event => {
     dispatch(friendRequest(authToken, userId));
+  }
+
+  const handleAcceptFriendRequest = userId => event => {
+    dispatch(acceptFriendRequest(authToken, userId));
+  }
+
+  const handleUnfriendRequest = userId => event => {
+    dispatch(unfriendRequest(authToken, userId));
+  }
+
+  const handleWithdrawFriendRequest = userId => event => {
+    dispatch(withdrawFriendRequest(authToken, userId));
   }
 
   return (
@@ -137,15 +159,31 @@ export default function SearchFriend(props) {
                   <Typography className={classes.heading}>{user.email}</Typography>
                 </Grid>
                 <Grid item sm xs={12}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className={classes.addFriendButton}
-                    startIcon={<PersonAddIcon />}
-                    onClick={handleAddFriend(user.id)}
-                  >
-                    Add Friend
-                  </Button>
+                  {friendsIds.includes(user.id) && 
+                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddDisabledIcon />} onClick={handleAddFriend(user.id)}>
+                      Unfriend
+                    </Button>
+                  }
+                  {friendRequestsIds.includes(user.id) && 
+                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddIcon />} onClick={handleAcceptFriendRequest(user.id)}>
+                      Accept Friend Request
+                    </Button>
+                  }
+                  {friendRequestingIds.includes(user.id) && 
+                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddDisabledIcon />} onClick={handleWithdrawFriendRequest(user.id)}>
+                      Withdraw Request
+                    </Button>
+                  }
+                  {blockingFriendsIds.includes(user.id) && 
+                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddDisabledIcon />} onClick={handleAddFriend(user.id)}>
+                      Unblock
+                    </Button>
+                  }
+                  {!allUsersIds.includes(user.id) && 
+                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddIcon />} onClick={handleAddFriend(user.id)}>
+                      Add Friend
+                    </Button>
+                  }
                 </Grid>
               </Grid>
             </ExpansionPanelSummary>

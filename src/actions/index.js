@@ -105,7 +105,35 @@ export const deleteList = (authToken, listId) => async dispatch => {
 export const friendRequest = (authToken, userId) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    await axios.post(`api/v1/users/${userId}/request_friend`, {}, config);
+    await axios.post(`api/v1/users/${userId}/friend_request`, {}, config);
+    dispatch(getprofile(authToken));
+  } catch (e) {
+  }
+};
+
+export const acceptFriendRequest = (authToken, userId) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    await axios.post(`api/v1/users/${userId}/accept_friend_request`, {}, config);
+    dispatch(getprofile(authToken));
+  } catch (e) {
+  }
+};
+
+export const unfriendRequest = (authToken, userId) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    await axios.post(`api/v1/users/${userId}/unfriend_request`, {}, config);
+    dispatch(getprofile(authToken));
+  } catch (e) {
+  }
+};
+
+export const withdrawFriendRequest = (authToken, userId) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    await axios.post(`api/v1/users/${userId}/withdraw_friend_request`, {}, config);
+    dispatch(getprofile(authToken));
   } catch (e) {
   }
 };
