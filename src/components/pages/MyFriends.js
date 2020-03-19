@@ -13,6 +13,7 @@ import { getprofile } from '../../actions';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
+    textAlign: 'center'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -22,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     display: 'flex',
     '& > *': {
-      margin: theme.spacing(1),
+      marginTop: theme.spacing(1),
     },
   },
   orange: {
@@ -56,21 +57,15 @@ export default function MyFriends() {
           <div className={classes.avatar}>
             <Avatar className={classes.orange}>{friend.full_name.split(' ').map(name => name[0]).join('')}</Avatar>
           </div>
-          <Grid container className={classes.root} spacing={10}>
-            <Grid item xs={12}>
-              <Grid container justify="space-between" >
-                <Grid key="1" item>
-                  <Typography className={classes.heading}>{friend.full_name}</Typography>
-                </Grid>
-                <Grid key="2" item>
-                  <Typography className={classes.heading}>{friend.email}</Typography>
-                </Grid>
-                <Grid key="3" item>
-                  <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                </Grid>
-                <Grid key="4" item>
-                </Grid>
-              </Grid>
+          <Grid className={classes.root} container justify="space-between" >
+            <Grid item xs={12} sm>
+              <Typography className={classes.heading}>{friend.full_name}</Typography>
+            </Grid>
+            <Grid item xs={12} sm>
+              <Typography className={classes.heading}>{friend.email}</Typography>
+            </Grid>
+            <Grid item xs={12} sm>
+              <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
             </Grid>
           </Grid>
         </ExpansionPanelSummary>

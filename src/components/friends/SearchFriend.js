@@ -16,20 +16,25 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import { getprofile } from '../../actions';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%'
   },
+  dialogContent: {
+    textAlign: 'center'
+  },
   appBar: {
-    position: 'relative',
+    position: 'relative'
   },
   title: {
     marginLeft: theme.spacing(2),
-    flex: 1,
+    flex: 1
   },
   rightAligned: {
-    marginLeft: 'auto',
+    marginLeft: 'auto'
   },
   fontSize: {
     fontSize: 14
@@ -80,7 +85,7 @@ export default function SearchFriend(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
-  const profile = useSelector(state => state.profile.profile);
+  // const profile = useSelector(state => state.profile.profile);
   const [open, setOpen] = React.useState(false);
   let filteredUsers = useSelector(state => state.users.users);
 
@@ -117,33 +122,33 @@ export default function SearchFriend(props) {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <DialogContent>
+        <DialogContent className={classes.dialogContent}>
           <TextField fullWidth label="Search friends by name..." autoFocus onChange={e => searchFriendChanged(e.target.value)} />
           {filteredUsers.map((user, index) => (
-            <Grid key={`${index}-friend`} container direction="row">
-              <Grid item sm={1} xs={2}>
-                <div className={classes.avatar}>
-                  <Avatar>{user.full_name.split(' ').map(name => name[0]).join('')}</Avatar>
-                </div>
+            <ExpansionPanelSummary key={user.id} expandIcon={<ExpandMoreIcon />}>
+              <div className={classes.avatar}>
+                <Avatar>{user.full_name.split(' ').map(name => name[0]).join('')}</Avatar>
+              </div>
+              <Grid container direction="row">
+                <Grid item sm xs={12}>
+                  <Typography className={classes.heading}>{user.full_name}</Typography>
+                </Grid>
+                <Grid item sm xs={12}>
+                  <Typography className={classes.heading}>{user.email}</Typography>
+                </Grid>
+                <Grid item sm xs={12}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.addFriendButton}
+                    startIcon={<PersonAddIcon />}
+                    onClick={handleAddFriend(user.id)}
+                  >
+                    Add Friend
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item sm xs={10}>
-                <Typography className={classes.heading}>{user.full_name}</Typography>
-              </Grid>
-              <Grid item sm xs={12}>
-                <Typography className={classes.heading}>{user.email}</Typography>
-              </Grid>
-              <Grid item sm xs={12}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.addFriendButton}
-                  startIcon={<PersonAddIcon />}
-                  onClick={handleAddFriend(user.id)}
-                >
-                  Add Friend
-                </Button>
-              </Grid>
-            </Grid>
+            </ExpansionPanelSummary>
           ))}
         </DialogContent>
       </Dialog>
