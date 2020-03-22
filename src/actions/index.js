@@ -5,7 +5,7 @@ import { GET_USERS, GET_USERS_ERROR, IMAGE_URLS, IMAGE_URLS_ERROR } from './type
 
 export const signup = (formProps, callback) => async dispatch => {
   try {
-    const response = await axios.post('//api/v1/users/signup', formProps);
+    const response = await axios.post('/api/v1/users/signup', formProps);
     dispatch({ type: AUTH_USER, payload: response.data.auth_token });
     localStorage.setItem('token', response.data.auth_token);
     callback();
@@ -17,7 +17,7 @@ export const signup = (formProps, callback) => async dispatch => {
 
 export const signin = (formProps, callback) => async dispatch => {
   try {
-    const response = await axios.post('//api/v1/users/signin', formProps);
+    const response = await axios.post('/api/v1/users/signin', formProps);
     dispatch({ type: AUTH_USER, payload: response.data.auth_token });
     localStorage.setItem('token', response.data.auth_token);
     callback();
