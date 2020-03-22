@@ -5,7 +5,7 @@ import { GET_USERS, GET_USERS_ERROR, IMAGE_URLS, IMAGE_URLS_ERROR } from './type
 
 export const signup = (formProps, callback) => async dispatch => {
   try {
-    const response = await axios.post('/api/v1/users/signup', formProps);
+    const response = await axios.post('api/v1/users/signup', formProps);
     dispatch({ type: AUTH_USER, payload: response.data.auth_token });
     localStorage.setItem('token', response.data.auth_token);
     callback();
@@ -17,7 +17,7 @@ export const signup = (formProps, callback) => async dispatch => {
 
 export const signin = (formProps, callback) => async dispatch => {
   try {
-    const response = await axios.post('/api/v1/users/signin', formProps);
+    const response = await axios.post('api/v1/users/signin', formProps);
     dispatch({ type: AUTH_USER, payload: response.data.auth_token });
     localStorage.setItem('token', response.data.auth_token);
     callback();
@@ -29,7 +29,7 @@ export const signin = (formProps, callback) => async dispatch => {
 
 export const recoverpassword = formProps => async dispatch => {
   try {
-    const response = await axios.post('/api/v1/users/recover_password', formProps);
+    const response = await axios.post('api/v1/users/recover_password', formProps);
     dispatch({ type: RECOVER_PASSWORD_SUCCESS, payload: response.data.message });
     dispatch({ type: RECOVER_PASSWORD_ERROR, payload: '' });
   } catch (e) {
@@ -51,9 +51,9 @@ export const signout = () => {
 export const getprofile = authToken => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    const profile = await axios.get('/api/v1/users/profile', config);
+    const profile = await axios.get('api/v1/users/profile', config);
     dispatch({ type: GET_PROFILE, payload: profile.data });
-    const usersList = await axios.get('/api/v1/lists', config);
+    const usersList = await axios.get('api/v1/lists', config);
     dispatch({ type: CURRENT_USER_LISTS, payload: usersList.data });
   } catch (e) {
     const errorMessage = e.response.data.error;
@@ -65,7 +65,7 @@ export const getprofile = authToken => async dispatch => {
 export const searchFriends = (authToken, name) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    const users = await axios.get(`/api/v1/users?by_name=${name}&search_friends=true`, config);
+    const users = await axios.get(`api/v1/users?by_name=${name}&search_friends=true`, config);
     dispatch({ type: GET_USERS, payload: users.data });
   } catch (e) {
     const errorMessage = e.response.data.error;
@@ -76,7 +76,7 @@ export const searchFriends = (authToken, name) => async dispatch => {
 export const getImageUrls = (authToken, keyword) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    const imageUrls = await axios.get(`/api/v1/google_search?keyword=${keyword}`, config);
+    const imageUrls = await axios.get(`api/v1/google_search?keyword=${keyword}`, config);
     dispatch({ type: IMAGE_URLS, payload: imageUrls.data });
   } catch (e) {
     const errorMessage = e.response.data.error;
@@ -87,7 +87,7 @@ export const getImageUrls = (authToken, keyword) => async dispatch => {
 export const createlist = (formProps, authToken) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    await axios.post('/api/v1/lists', formProps, config);
+    await axios.post('api/v1/lists', formProps, config);
     dispatch(getprofile(authToken));
   } catch (e) {
   }
@@ -96,7 +96,7 @@ export const createlist = (formProps, authToken) => async dispatch => {
 export const deleteList = (authToken, listId) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    await axios.delete(`/api/v1/lists/${listId}`, config);
+    await axios.delete(`api/v1/lists/${listId}`, config);
     dispatch(getprofile(authToken));
   } catch (e) {
   }
@@ -105,7 +105,7 @@ export const deleteList = (authToken, listId) => async dispatch => {
 export const friendRequest = (authToken, userId) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    await axios.post(`/api/v1/users/${userId}/friend_request`, {}, config);
+    await axios.post(`api/v1/users/${userId}/friend_request`, {}, config);
     dispatch(getprofile(authToken));
   } catch (e) {
   }
@@ -114,7 +114,7 @@ export const friendRequest = (authToken, userId) => async dispatch => {
 export const acceptFriendRequest = (authToken, userId) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    await axios.post(`/api/v1/users/${userId}/accept_friend_request`, {}, config);
+    await axios.post(`api/v1/users/${userId}/accept_friend_request`, {}, config);
     dispatch(getprofile(authToken));
   } catch (e) {
   }
@@ -123,7 +123,7 @@ export const acceptFriendRequest = (authToken, userId) => async dispatch => {
 export const unfriendRequest = (authToken, userId) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    await axios.post(`/api/v1/users/${userId}/unfriend_request`, {}, config);
+    await axios.post(`api/v1/users/${userId}/unfriend_request`, {}, config);
     dispatch(getprofile(authToken));
   } catch (e) {
   }
@@ -132,7 +132,7 @@ export const unfriendRequest = (authToken, userId) => async dispatch => {
 export const withdrawFriendRequest = (authToken, userId) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    await axios.post(`/api/v1/users/${userId}/withdraw_friend_request`, {}, config);
+    await axios.post(`api/v1/users/${userId}/withdraw_friend_request`, {}, config);
     dispatch(getprofile(authToken));
   } catch (e) {
   }
