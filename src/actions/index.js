@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AUTH_USER, AUTH_ERROR, RECOVER_PASSWORD_SUCCESS, RECOVER_PASSWORD_ERROR } from './types';
-import { GET_PROFILE, GET_PROFILE_ERROR, CURRENT_USER_LISTS } from './types';
+import { GET_PROFILE, GET_PROFILE_ERROR, CURRENT_USER_LISTS, FRIEND_LISTS } from './types';
 import { GET_USERS, GET_USERS_ERROR, IMAGE_URLS, IMAGE_URLS_ERROR } from './types';
 
 export const signup = (formProps, callback) => async dispatch => {
@@ -53,6 +53,8 @@ export const getprofile = authToken => async dispatch => {
     const config = {headers: {'Authorization': authToken}}
     const profile = await axios.get('api/v1/users/profile', config);
     dispatch({ type: GET_PROFILE, payload: profile.data });
+    dispatch({ type: FRIEND_LISTS, payload: profile.data.friend_lists });
+
     const usersList = await axios.get('api/v1/lists', config);
     dispatch({ type: CURRENT_USER_LISTS, payload: usersList.data });
   } catch (e) {
