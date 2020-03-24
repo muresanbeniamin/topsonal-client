@@ -127,6 +127,10 @@ export default function SearchFriend(props) {
     dispatch(withdrawFriendRequest(authToken, userId));
   }
 
+  const handleUnblockFriend = userId => event => {
+    
+  }
+
   return (
     <div style={{ maxWidth: '200px', marginTop: '10px', marginRight: 'auto', marginLeft: 'auto' }}>
       <Button variant="contained" color="primary" onClick={handleOpenSearchFriendModal} endIcon={<AddCircleOutlineIcon />}>
@@ -160,7 +164,7 @@ export default function SearchFriend(props) {
                 </Grid>
                 <Grid item sm xs={12}>
                   {friendsIds.includes(user.id) && 
-                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddDisabledIcon />} onClick={handleAddFriend(user.id)}>
+                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddDisabledIcon />} onClick={handleUnfriendRequest(user.id)}>
                       Unfriend
                     </Button>
                   }
@@ -175,7 +179,7 @@ export default function SearchFriend(props) {
                     </Button>
                   }
                   {blockingFriendsIds.includes(user.id) && 
-                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddDisabledIcon />} onClick={handleAddFriend(user.id)}>
+                    <Button variant="contained" color="secondary" className={classes.addFriendButton} startIcon={<PersonAddDisabledIcon />} onClick={handleUnblockFriend(user.id)}>
                       Unblock
                     </Button>
                   }

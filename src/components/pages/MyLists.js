@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import CreateList from '../list-actions/CreateList';
 import ViewList from '../list-actions/ViewList';
 import requireAuth from '../auth/requireAuth';
-import * as actions from '../../actions';
 import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Avatar from '@material-ui/core/Avatar';
@@ -128,14 +125,4 @@ const myLists = function MyLists() {
   );
 }
 
-function mapStateToProps(state) {
-  return { 
-    profile: state.profile.profile,
-    profileError: state.profile.profileError,
-    currentUserLists: state.profile.currentUserLists
-  };
-}
-
-export default compose(
-  connect(mapStateToProps, actions),
-)(requireAuth(myLists));
+export default (requireAuth(myLists));
