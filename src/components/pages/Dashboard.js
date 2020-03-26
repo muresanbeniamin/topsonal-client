@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-import CreateList from '../list-actions/CreateList';
 import ViewList from '../list-actions/ViewList';
 import requireAuth from '../auth/requireAuth';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -12,10 +11,9 @@ import Avatar from '@material-ui/core/Avatar';
 import CardMedia from '@material-ui/core/CardMedia';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { getprofile, deleteList } from '../../actions';
+import { getprofile } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const myLists = function Dashboard() {
+const dashboard = function Dashboard() {
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   useEffect(() => {
@@ -57,11 +55,6 @@ const myLists = function Dashboard() {
 
   const friendLists = useSelector(state => state.profile.friendLists);
   const classes = useStyles();
-
-  const handleDeleteList = (listId, popupState) => () => {
-    dispatch(deleteList(authToken, listId));
-    popupState.close();
-  }
 
   const [open, setOpen] = React.useState(false);
   const [selectedList, setSelectedList] = React.useState(null);
@@ -97,7 +90,7 @@ const myLists = function Dashboard() {
                             <MoreVertIcon />
                           </IconButton>
                           <Menu {...bindMenu(popupState)}>
-                            <MenuItem onClick={handleDeleteList(list.id, popupState)}>Delete</MenuItem>
+                            <MenuItem>Follow</MenuItem>
                           </Menu>
                         </React.Fragment>
                       )}
@@ -117,13 +110,10 @@ const myLists = function Dashboard() {
             </Grid>
           ))}
           {selectedList && <ViewList list={selectedList} open={open} handleClose={handleClose} />}
-          <Grid key='addButton' item>
-            <CreateList/>
-          </Grid>
         </Grid>
       </Grid>
     </Grid>
   );
 }
 
-export default (requireAuth(myLists));
+export default (requireAuth(dashboard));

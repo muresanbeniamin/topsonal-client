@@ -163,7 +163,7 @@ export default function Navbar() {
           <Toolbar>
             <LeftSideMenu/>
             <Typography className={classes.title} variant="h6" noWrap>
-              DoItRight
+              Topsonal
             </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>

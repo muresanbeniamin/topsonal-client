@@ -16,7 +16,7 @@ import Container from '@material-ui/core/Container';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © DoItRight '}
+      {'Copyright © Topsonal'}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -100,7 +100,7 @@ class SignUp extends Component {
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <img height="60px" width="60px" alt="DoItRight" src="/images/doitright.png" />
+            <img height="60px" width="60px" alt="Topsonal" src="/images/topsonal.png" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign Up
