@@ -11,7 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CardMedia from '@material-ui/core/CardMedia';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { getprofile } from '../../actions';
+import { getDashboard } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
@@ -47,13 +47,13 @@ const dashboard = function Dashboard() {
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   useEffect(() => {
-    function fetchProfile() {
-      dispatch(getprofile(authToken));
+    function fetchDashboard() {
+      dispatch(getDashboard(authToken));
     }
-    fetchProfile();
+    fetchDashboard();
   }, []);
 
-  const friendLists = useSelector(state => state.profile.friendLists);
+  const dashboardLists = useSelector(state => state.dashboard.dashboardLists);
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -73,13 +73,13 @@ const dashboard = function Dashboard() {
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" spacing={2}>
-          {friendLists && friendLists.map((list) => (
+          {dashboardLists && dashboardLists.map((list) => (
             <Grid key={`${list.id}-list`} item>
               <Card className={classes.card}>
                 <CardHeader
                   avatar={
                     <Avatar aria-label="recipe">
-                      AA
+                      {list.user.full_name.split(' ').map(name => name[0]).join('')}
                     </Avatar>
                   }
                   action={

@@ -16,7 +16,6 @@ import { getprofile, deleteList } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,

@@ -10,4 +10,5 @@ export const GET_USERS = 'get_users';
 export const GET_USERS_ERROR = 'get_users_error';
 export const IMAGE_URLS = 'image_urls';
 export const IMAGE_URLS_ERROR = 'image_urls_error';
-
+export const DASHBOARD = 'dashboard';
+export const DASHBOARD_ERROR = 'dashboard_error';
