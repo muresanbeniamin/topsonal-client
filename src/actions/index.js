@@ -147,3 +147,13 @@ export const deleteList = (authToken, listId) => async dispatch => {
   } catch (e) {
   }
 };
+
+export const getList = (friendlyListId, authToken) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    const response = await axios.get(`/api/v1/lists/${friendlyListId}`, config);
+    debugger;
+    dispatch({ type: types.GET_LIST, payload: response.data });
+  } catch (e) {
+  }
+};

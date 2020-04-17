@@ -15,6 +15,7 @@ import Menu from '@material-ui/core/Menu';
 import { getprofile, deleteList } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,6 +46,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const myLists = function MyLists() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   useEffect(() => {
@@ -65,7 +67,8 @@ const myLists = function MyLists() {
   const [selectedList, setSelectedList] = React.useState(null);
 
   const handleClickOpen = list => event => {
-    setSelectedList(list)
+    setSelectedList(list);
+    history.push(`my-lists/${list.friendly_id}`);
     setOpen(true);
   };
 

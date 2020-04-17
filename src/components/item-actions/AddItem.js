@@ -14,7 +14,7 @@ import Slide from '@material-ui/core/Slide';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import AddItem from '../item-actions/AddItem';
+
 const useStyles = makeStyles(theme => ({
   appBar: {
     position: 'relative',
@@ -56,12 +56,6 @@ export default function ViewList(props) {
   const classes = useStyles();
   const currentList = props.list;
 
-  const [openAddItem, setOpenAddItem] = React.useState(false);
-
-  const handleAddItem = () => event => {
-    setOpenAddItem(true);
-  };
-
   return (
     <div className={classes.rightAligned}>
       <Dialog fullScreen open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
@@ -73,7 +67,7 @@ export default function ViewList(props) {
             <Typography variant="h6" className={classes.title}>
               {currentList.name}
             </Typography>
-            <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
+            <Button autoFocus color="secondary" variant="contained" onClick={props.handleClose}>
               Add Item
             </Button>
             <Button autoFocus color="secondary" onClick={props.handleClose}>
@@ -98,7 +92,6 @@ export default function ViewList(props) {
             </ListItem>
           ))}
         </List>
-        {openAddItem && <AddItem open={openAddItem}/>}
       </Dialog>
     </div>
   );

@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux'
 import LeftSideMenu from './LeftSideMenu';
 import { useHistory } from 'react-router-dom';
 
+
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1,
@@ -105,7 +106,7 @@ export default function Navbar() {
   };
 
   const handleSignOut = event => {
-    history.push('/signout');
+    history.push('signout');
     handleMenuClose();
   }
 
