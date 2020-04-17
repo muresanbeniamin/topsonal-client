@@ -154,7 +154,7 @@ export default function SearchFriend(props) {
           </Toolbar>
         </AppBar>
         <DialogContent className={classes.dialogContent}>
-          <TextField fullWidth label="Search friends by name..." autoFocus onChange={e => searchFriendChanged(e.target.value)} />
+          <TextField fullWidth label="Search people by name..." autoFocus onChange={e => searchFriendChanged(e.target.value)} />
           {filteredUsers.map((user, index) => (
             <ExpansionPanelSummary key={user.id} expandIcon={<ExpandMoreIcon />}>
               <div className={classes.avatar}>

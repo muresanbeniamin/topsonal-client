@@ -96,7 +96,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let CreateList = props => {
+let newList = props => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
@@ -241,8 +241,8 @@ let CreateList = props => {
   );
 }
 
-CreateList = reduxForm({
+newList = reduxForm({
   form: 'create-list-form'
-})(CreateList)
+})(newList)
 
-export default CreateList;
+export default newList;

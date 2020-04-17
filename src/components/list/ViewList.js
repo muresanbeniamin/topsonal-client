@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { getList } from '../../actions';
 import requireAuth from '../auth/requireAuth';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -43,13 +44,12 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(7),
   },
   listItem: {
-    maxWidth: '70%',
-    marginLeft: '15%',
-    marginRight: '15%'
+    marginLeft: '5%',
+    marginRight: '5%'
   }
 }));
 
-const myList = function ViewList() {
+const list = function ViewList() {
   useEffect(() => {
     function fetchList() {
       dispatch(getList(id, authToken));
@@ -57,12 +57,16 @@ const myList = function ViewList() {
     fetchList();
   }, []);
   const { id } = useParams();
+  const history = useHistory();
   const authToken = useSelector(state => state.auth.authenticated);
   const dispatch = useDispatch();
 
   const classes = useStyles();
-  debugger;
   const list = useSelector(state => state.lists.list);
+  
+  const handleAddItem = event => {
+    history.push(`${id}/new-item`);
+  }
 
   return (
     <div className={classes.rightAligned}>
@@ -73,7 +77,7 @@ const myList = function ViewList() {
               <Typography variant="h6" className={classes.title}>
                 {list.name}
               </Typography>
-              <Button autoFocus color="secondary" variant="contained">
+              <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
                 Add Item
               </Button>
             </Toolbar>
@@ -101,4 +105,4 @@ const myList = function ViewList() {
   );
 }
 
-export default (requireAuth(myList));
+export default (requireAuth(list));
