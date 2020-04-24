@@ -25,23 +25,14 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
-  rightAligned: {
-    marginLeft: 'auto',
-  },
-  fontSize: {
-    fontSize: 14
-  },
   listText: {
     paddingLeft: 10
   },
   listDescription: {
-    paddingTop: 20,
-    paddingRight: 20,
-    paddingLeft: 20
-  },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+    marginTop: 20,
+    marginLeft: '5%',
+    marginRight: '5%',
+    fontSize: 16
   },
   listItem: {
     marginLeft: '5%',
@@ -69,7 +60,7 @@ const list = function ViewList() {
   }
 
   return (
-    <div className={classes.rightAligned}>
+    <div>
       {list &&
         <div>
           <AppBar className={classes.appBar}>
@@ -83,7 +74,7 @@ const list = function ViewList() {
             </Toolbar>
           </AppBar>
 
-          <Typography className={classes.listDescription} variant="h6" gutterBottom>
+          <Typography className={classes.listDescription}>
             {list.description}
           </Typography>
           
