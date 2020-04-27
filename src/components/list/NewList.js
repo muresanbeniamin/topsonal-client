@@ -2,10 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -151,92 +147,77 @@ let newList = props => {
  
   return (
     <div>
-      <Card className={classes.card} onClick={handleOpenModal}>
-        <CardContent className={classes.centerText}>
-          <IconButton size="small" color="secondary">
-            <AddIcon style={{fontSize: 85}}/>
-          </IconButton>
-        </CardContent>
-      </Card>
-
-      <Dialog open={open} onClose={handleCloseModal} maxWidth='xs'>
-        <DialogTitle id="form-dialog-title">Create a new list</DialogTitle>
-        <DialogContent>
-          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-            <Field
-              name="name"
-              type="text"
-              label="Name of the list"
-              component={renderTextField}
-              autoComplete="none"
-              margin="normal"
-              fullWidth
-              id="name"
-              autoFocus
-              required
-              onBlur={handleChangeNameOfTheList()}
-            />
-            <Field
-              className={classes.formControl}
-              name="category"
-              component={renderSelectField}
-              label="Category"
-            >
-              <MenuItem value={'books'}>Books</MenuItem>
-              <MenuItem value={'movies'}>Movies</MenuItem>
-              <MenuItem value={'travel'}>Travel</MenuItem>
-            </Field>
-            <Field
-              name="description"
-              type="text"
-              label="Description"
-              component={renderTextField}
-              autoComplete="none"
-              margin="normal"
-              fullWidth
-              id="description"
-              required
-            />
-            <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Switch checked={state.addLinkImage} onChange={handleChangeCheckbox('addLinkImage')} value="addLinkImage" />
-                }
-                label="Add image manually"
-              />
-              <Button
-                color="primary"
-                className={classes.button}
-                startIcon={<ImageSearchIcon />}
-                onClick={handleOnShuffleImageClick}
-              >
-                Shuffle image
-              </Button>
-            </FormGroup>
-            <Field 
-              name="image_url"
-              type="text"
-              label="Image Url"
-              component={renderTextField}
-              disabled={!state.addLinkImage}
-              autoComplete="none"
-              margin="normal"
-              id="image_url" 
-              onChange={handleChangeImageUrl('linkImage')}
-              fullWidth
-            />
-            <DialogActions>
-              <Button onClick={handleCloseModal} color="secondary">
-                Cancel
-              </Button>
-              <Button type="submit" variant="contained" color="secondary">
-                Create
-              </Button>
-            </DialogActions>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <Field
+          name="name"
+          type="text"
+          label="Name of the list"
+          component={renderTextField}
+          autoComplete="none"
+          margin="normal"
+          fullWidth
+          id="name"
+          autoFocus
+          required
+          onBlur={handleChangeNameOfTheList()}
+        />
+        <Field
+          className={classes.formControl}
+          name="category"
+          component={renderSelectField}
+          label="Category"
+        >
+          <MenuItem value={'books'}>Books</MenuItem>
+          <MenuItem value={'movies'}>Movies</MenuItem>
+          <MenuItem value={'travel'}>Travel</MenuItem>
+        </Field>
+        <Field
+          name="description"
+          type="text"
+          label="Description"
+          component={renderTextField}
+          autoComplete="none"
+          margin="normal"
+          fullWidth
+          id="description"
+          required
+        />
+        <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Switch checked={state.addLinkImage} onChange={handleChangeCheckbox('addLinkImage')} value="addLinkImage" />
+            }
+            label="Add image manually"
+          />
+          <Button
+            color="primary"
+            className={classes.button}
+            startIcon={<ImageSearchIcon />}
+            onClick={handleOnShuffleImageClick}
+          >
+            Shuffle image
+          </Button>
+        </FormGroup>
+        <Field 
+          name="image_url"
+          type="text"
+          label="Image Url"
+          component={renderTextField}
+          disabled={!state.addLinkImage}
+          autoComplete="none"
+          margin="normal"
+          id="image_url" 
+          onChange={handleChangeImageUrl('linkImage')}
+          fullWidth
+        />
+        <Button onClick={handleCloseModal} color="secondary">
+          Cancel
+        </Button>
+        <Button type="submit" variant="contained" color="secondary">
+          Create
+        </Button>
+      </form>
     </div>
   );
 }

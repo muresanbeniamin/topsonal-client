@@ -15,6 +15,7 @@ import SignIn from './components/auth/SignIn';
 import RecoverPassword from './components/auth/RecoverPassword';
 import MyLists from './components/pages/MyLists';
 import List from './components/list/ViewList';
+import NewList from './components/list/NewList';
 import MyFriends from './components/pages/MyFriends';
 import NewItem from './components/item/NewItem';
 
@@ -34,8 +35,9 @@ ReactDOM.render(
           <Route path="/signout" exact component={SignOut} />
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/my-lists" exact component={MyLists} />
-          <Route path="/my-lists/:id/new-item" exact component={NewItem} />
           <Route path="/my-lists/:id" exact component={List} />
+          <Route path="/my-lists/new-list" exact component={NewList} />
+          <Route path="/my-lists/:id/new-item" exact component={NewItem} />
           <Route path="/my-friends" exact component={MyFriends} />
           <Route path="/recover-password" exact component={RecoverPassword} />
         </App>
