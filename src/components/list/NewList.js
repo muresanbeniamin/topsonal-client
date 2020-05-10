@@ -15,6 +15,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Avatar from '@material-ui/core/Avatar';
 import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import { getImageUrls } from '../../actions';
+import { useHistory } from 'react-router-dom';
 
 const renderTextField = ({
   label,
@@ -90,17 +91,12 @@ const useStyles = makeStyles(theme => ({
 
 let newList = props => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   const imageUrls = useSelector(state => state.google_search.imageUrls);
   const { handleSubmit } = props;
   const [state, setState] = React.useState({addLinkImage: false, linkImage: ''});
-
-  const handleOpenModal = () => {
-    setState({ ...state, 'linkImage': '' });
-    setOpen(true);
-  };
 
   const handleChangeNameOfTheList = () => async event => {
     if (event.target.value.length > 5) {
@@ -128,17 +124,11 @@ let newList = props => {
   const onSubmit = formProps => {
     try {
       dispatch(createlist(formProps, authToken))
-      setOpen(false);
       dispatch(reset('create-list-form'));
+      history.push('my-lists')
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const handleCloseModal = () => {
-    dispatch(reset('create-list-form'));
-    setOpen(false);
-    setState({ ...state, 'linkImage': '' });
   };
  
   return (
@@ -207,11 +197,8 @@ let newList = props => {
           onChange={handleChangeImageUrl('linkImage')}
           fullWidth
         />
-        <Button onClick={handleCloseModal} color="secondary">
-          Cancel
-        </Button>
         <Button type="submit" variant="contained" color="secondary">
-          Create
+          Save
         </Button>
       </form>
     </div>
