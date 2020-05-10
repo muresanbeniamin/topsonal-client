@@ -56,7 +56,7 @@ const list = function ViewList() {
   const list = useSelector(state => state.lists.list);
   
   const handleAddItem = event => {
-    history.push(`${id}/new-item`);
+    history.push(`/new-item/${id}`);
   }
 
   return (

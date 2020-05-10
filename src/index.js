@@ -36,8 +36,8 @@ ReactDOM.render(
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/my-lists" exact component={MyLists} />
           <Route path="/my-lists/:id" exact component={List} />
-          <Route path="/my-lists/new-list" exact component={NewList} />
-          <Route path="/my-lists/:id/new-item" exact component={NewItem} />
+          <Route path="/new-list" exact component={NewList} />
+          <Route path="/new-item/:listId" exact component={NewItem} />
           <Route path="/my-friends" exact component={MyFriends} />
           <Route path="/recover-password" exact component={RecoverPassword} />
         </App>
