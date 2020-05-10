@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   formControl: {
-    minWidth: 396,
+    width: '100%',
   },
   avatar: {
     width: '100%',
