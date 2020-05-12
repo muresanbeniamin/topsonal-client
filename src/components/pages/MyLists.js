@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-import CreateList from '../list-actions/CreateList';
-import ViewList from '../list-actions/ViewList';
 import requireAuth from '../auth/requireAuth';
 import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -15,6 +13,10 @@ import Menu from '@material-ui/core/Menu';
 import { getprofile, deleteList } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import { useHistory } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,10 +43,15 @@ const useStyles = makeStyles(theme => ({
   },
   likeIcon: {
     paddingRight: 4
+  },
+  appBar: {
+    position: 'relative',
+    textAlign: 'right'
   }
 }));
 
 const myLists = function MyLists() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   useEffect(() => {
@@ -58,69 +65,68 @@ const myLists = function MyLists() {
 
   const handleDeleteList = (listId, popupState) => () => {
     dispatch(deleteList(authToken, listId));
-    popupState.close();
   }
 
-  const [open, setOpen] = React.useState(false);
-  const [selectedList, setSelectedList] = React.useState(null);
-
   const handleClickOpen = list => event => {
-    setSelectedList(list)
-    setOpen(true);
+    history.push(`my-lists/${list.friendly_id}`);
   };
 
-  const handleClose = () => {
-    setSelectedList(null)
-    setOpen(false);
-  };
+  const handleAddList = event => {
+    history.push('/new-list');
+  }
 
   return (
-    <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="center" spacing={2}>
-          {curentUserLists.map((list) => (
-            <Grid key={`${list.id}-list`} item>
-              <Card className={classes.card}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe">
-                      {list.user.full_name.split(' ').map(name => name[0]).join('')}
-                    </Avatar>
-                  }
-                  action={
-                    <PopupState variant="popover">
-                      {popupState => (
-                        <React.Fragment>
-                          <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
-                            <MoreVertIcon />
-                          </IconButton>
-                          <Menu {...bindMenu(popupState)}>
-                            <MenuItem onClick={handleDeleteList(list.id, popupState)}>Delete</MenuItem>
-                          </Menu>
-                        </React.Fragment>
-                      )}
-                    </PopupState>
-                  }
-                  title={list.name}
-                  subheader={list.created_date}
-                />
-                <div onClick={handleClickOpen(list)}>
-                  <CardMedia
-                    className={classes.media}
-                    image={list.image_url}
+    <div>
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <Button autoFocus color="secondary" variant="contained" onClick={handleAddList}>
+            New List
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item xs={12}>
+          <Grid container justify="center" spacing={2}>
+            {curentUserLists.map((list) => (
+              <Grid key={`${list.id}-list`} item>
+                <Card className={classes.card}>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe">
+                        {list.user.full_name.split(' ').map(name => name[0]).join('')}
+                      </Avatar>
+                    }
+                    action={
+                      <PopupState variant="popover">
+                        {popupState => (
+                          <React.Fragment>
+                            <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
+                              <MoreVertIcon />
+                            </IconButton>
+                            <Menu {...bindMenu(popupState)}>
+                              <MenuItem onClick={handleDeleteList(list.id, popupState)}>Delete</MenuItem>
+                            </Menu>
+                          </React.Fragment>
+                        )}
+                      </PopupState>
+                    }
                     title={list.name}
+                    subheader={list.created_date}
                   />
-                </div>
-              </Card>
-            </Grid>
-          ))}
-          {selectedList && <ViewList list={selectedList} open={open} handleClose={handleClose} />}
-          <Grid key='addButton' item>
-            <CreateList/>
+                  <div onClick={handleClickOpen(list)}>
+                    <CardMedia
+                      className={classes.media}
+                      image={list.image_url}
+                      title={list.name}
+                    />
+                  </div>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </div>
   );
 }
 

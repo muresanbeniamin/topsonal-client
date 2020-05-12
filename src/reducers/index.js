@@ -5,6 +5,7 @@ import profile from './profile';
 import users from './users';
 import google_search from './google_search';
 import dashboard from './dashboard';
+import lists from './lists';
 
 export default combineReducers({
   auth,
@@ -12,5 +13,6 @@ export default combineReducers({
   form: formReducer,
   users: users,
   google_search: google_search,
-  dashboard: dashboard
+  dashboard: dashboard,
+  lists: lists
 });

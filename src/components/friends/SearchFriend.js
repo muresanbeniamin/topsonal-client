@@ -83,12 +83,14 @@ export default function SearchFriend(props) {
     }
     fetchProfile();
   }, []);
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   const profile = useSelector(state => state.profile.profile);
 
   let friendsIds, friendRequestsIds, friendRequestingIds, blockingFriendsIds, allUsersIds;
+
   if (profile.id) {
     friendsIds = profile.friends.map(user => user.id);
     friendRequestsIds = profile.friend_requests.map(user => user.id);
@@ -103,14 +105,17 @@ export default function SearchFriend(props) {
   const handleOpenSearchFriendModal = () => {
     setOpen(true);
   };
+
   const handleCloseSearchFriendModal = () => {
     setOpen(false);
   };
+
   const searchFriendChanged = value => {
     if (value) {
       dispatch(searchFriends(authToken, value));
     }
   };
+
   const handleAddFriend = userId => event => {
     dispatch(friendRequest(authToken, userId));
   }
@@ -149,7 +154,7 @@ export default function SearchFriend(props) {
           </Toolbar>
         </AppBar>
         <DialogContent className={classes.dialogContent}>
-          <TextField fullWidth label="Search friends by name..." autoFocus onChange={e => searchFriendChanged(e.target.value)} />
+          <TextField fullWidth label="Search people by name..." autoFocus onChange={e => searchFriendChanged(e.target.value)} />
           {filteredUsers.map((user, index) => (
             <ExpansionPanelSummary key={user.id} expandIcon={<ExpandMoreIcon />}>
               <div className={classes.avatar}>

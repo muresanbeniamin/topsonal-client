@@ -105,7 +105,7 @@ export default function Navbar() {
   };
 
   const handleSignOut = event => {
-    history.push('/signout');
+    history.push('signout');
     handleMenuClose();
   }
 

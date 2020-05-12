@@ -2,14 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import AddIcon from '@material-ui/icons/Add';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from "@material-ui/core/styles";
 import { reduxForm, Field, reset } from 'redux-form';
 import { createlist } from '../../actions';
@@ -23,6 +15,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Avatar from '@material-ui/core/Avatar';
 import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import { getImageUrls } from '../../actions';
+import { useHistory } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 const renderTextField = ({
   label,
@@ -85,7 +80,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   formControl: {
-    minWidth: 396,
+    width: '100%',
+    marginTop: 15
   },
   avatar: {
     width: '100%',
@@ -96,19 +92,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let CreateList = props => {
+let newList = props => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
   const imageUrls = useSelector(state => state.google_search.imageUrls);
   const { handleSubmit } = props;
   const [state, setState] = React.useState({addLinkImage: false, linkImage: ''});
-
-  const handleOpenModal = () => {
-    setState({ ...state, 'linkImage': '' });
-    setOpen(true);
-  };
 
   const handleChangeNameOfTheList = () => async event => {
     if (event.target.value.length > 5) {
@@ -136,67 +127,59 @@ let CreateList = props => {
   const onSubmit = formProps => {
     try {
       dispatch(createlist(formProps, authToken))
-      setOpen(false);
       dispatch(reset('create-list-form'));
+      history.push('my-lists')
     } catch (e) {
       console.log(e);
     }
   };
-
-  const handleCloseModal = () => {
-    dispatch(reset('create-list-form'));
-    setOpen(false);
-    setState({ ...state, 'linkImage': '' });
-  };
  
   return (
     <div>
-      <Card className={classes.card} onClick={handleOpenModal}>
-        <CardContent className={classes.centerText}>
-          <IconButton size="small" color="secondary">
-            <AddIcon style={{fontSize: 85}}/>
-          </IconButton>
-        </CardContent>
-      </Card>
-
-      <Dialog open={open} onClose={handleCloseModal} maxWidth='xs'>
-        <DialogTitle id="form-dialog-title">Create a new list</DialogTitle>
-        <DialogContent>
-          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-            <Field
-              name="name"
-              type="text"
-              label="Name of the list"
-              component={renderTextField}
-              autoComplete="none"
-              margin="normal"
-              fullWidth
-              id="name"
-              autoFocus
-              required
-              onBlur={handleChangeNameOfTheList()}
-            />
-            <Field
-              className={classes.formControl}
-              name="category"
-              component={renderSelectField}
-              label="Category"
-            >
-              <MenuItem value={'books'}>Books</MenuItem>
-              <MenuItem value={'movies'}>Movies</MenuItem>
-              <MenuItem value={'travel'}>Travel</MenuItem>
-            </Field>
-            <Field
-              name="description"
-              type="text"
-              label="Description"
-              component={renderTextField}
-              autoComplete="none"
-              margin="normal"
-              fullWidth
-              id="description"
-              required
-            />
+      <Container maxWidth="xl">
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="name"
+                type="text"
+                label="Name of the list"
+                component={renderTextField}
+                autoComplete="none"
+                margin="normal"
+                fullWidth
+                id="name"
+                autoFocus
+                required
+                onBlur={handleChangeNameOfTheList()}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                className={classes.formControl}
+                name="category"
+                component={renderSelectField}
+                label="Category"
+              >
+                <MenuItem value={'books'}>Books</MenuItem>
+                <MenuItem value={'movies'}>Movies</MenuItem>
+                <MenuItem value={'travel'}>Travel</MenuItem>
+              </Field>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="description"
+                label="Description"
+                component={renderTextField}
+                autoComplete="none"
+                margin="normal"
+                fullWidth
+                id="description"
+                multiline={true}
+                rows={5}
+                required
+              />
+            </Grid>
             <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
             <FormGroup row>
               <FormControlLabel
@@ -226,23 +209,18 @@ let CreateList = props => {
               onChange={handleChangeImageUrl('linkImage')}
               fullWidth
             />
-            <DialogActions>
-              <Button onClick={handleCloseModal} color="secondary">
-                Cancel
-              </Button>
-              <Button type="submit" variant="contained" color="secondary">
-                Create
-              </Button>
-            </DialogActions>
-          </form>
-        </DialogContent>
-      </Dialog>
+            <Button type="submit" variant="contained" color="secondary">
+              Save
+            </Button>
+          </Grid>
+        </form>
+      </Container>
     </div>
   );
 }
 
-CreateList = reduxForm({
+newList = reduxForm({
   form: 'create-list-form'
-})(CreateList)
+})(newList)
 
-export default CreateList;
+export default newList;
