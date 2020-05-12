@@ -16,6 +16,8 @@ import Avatar from '@material-ui/core/Avatar';
 import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import { getImageUrls } from '../../actions';
 import { useHistory } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 const renderTextField = ({
   label,
@@ -79,6 +81,7 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     width: '100%',
+    marginTop: 15
   },
   avatar: {
     width: '100%',
@@ -133,74 +136,85 @@ let newList = props => {
  
   return (
     <div>
-      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        <Field
-          name="name"
-          type="text"
-          label="Name of the list"
-          component={renderTextField}
-          autoComplete="none"
-          margin="normal"
-          fullWidth
-          id="name"
-          autoFocus
-          required
-          onBlur={handleChangeNameOfTheList()}
-        />
-        <Field
-          className={classes.formControl}
-          name="category"
-          component={renderSelectField}
-          label="Category"
-        >
-          <MenuItem value={'books'}>Books</MenuItem>
-          <MenuItem value={'movies'}>Movies</MenuItem>
-          <MenuItem value={'travel'}>Travel</MenuItem>
-        </Field>
-        <Field
-          name="description"
-          type="text"
-          label="Description"
-          component={renderTextField}
-          autoComplete="none"
-          margin="normal"
-          fullWidth
-          id="description"
-          required
-        />
-        <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
-        <FormGroup row>
-          <FormControlLabel
-            control={
-              <Switch checked={state.addLinkImage} onChange={handleChangeCheckbox('addLinkImage')} value="addLinkImage" />
-            }
-            label="Add image manually"
-          />
-          <Button
-            color="primary"
-            className={classes.button}
-            startIcon={<ImageSearchIcon />}
-            onClick={handleOnShuffleImageClick}
-          >
-            Shuffle image
-          </Button>
-        </FormGroup>
-        <Field 
-          name="image_url"
-          type="text"
-          label="Image Url"
-          component={renderTextField}
-          disabled={!state.addLinkImage}
-          autoComplete="none"
-          margin="normal"
-          id="image_url" 
-          onChange={handleChangeImageUrl('linkImage')}
-          fullWidth
-        />
-        <Button type="submit" variant="contained" color="secondary">
-          Save
-        </Button>
-      </form>
+      <Container maxWidth="xl">
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="name"
+                type="text"
+                label="Name of the list"
+                component={renderTextField}
+                autoComplete="none"
+                margin="normal"
+                fullWidth
+                id="name"
+                autoFocus
+                required
+                onBlur={handleChangeNameOfTheList()}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                className={classes.formControl}
+                name="category"
+                component={renderSelectField}
+                label="Category"
+              >
+                <MenuItem value={'books'}>Books</MenuItem>
+                <MenuItem value={'movies'}>Movies</MenuItem>
+                <MenuItem value={'travel'}>Travel</MenuItem>
+              </Field>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="description"
+                label="Description"
+                component={renderTextField}
+                autoComplete="none"
+                margin="normal"
+                fullWidth
+                id="description"
+                multiline={true}
+                rows={5}
+                required
+              />
+            </Grid>
+            <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Switch checked={state.addLinkImage} onChange={handleChangeCheckbox('addLinkImage')} value="addLinkImage" />
+                }
+                label="Add image manually"
+              />
+              <Button
+                color="primary"
+                className={classes.button}
+                startIcon={<ImageSearchIcon />}
+                onClick={handleOnShuffleImageClick}
+              >
+                Shuffle image
+              </Button>
+            </FormGroup>
+            <Field 
+              name="image_url"
+              type="text"
+              label="Image Url"
+              component={renderTextField}
+              disabled={!state.addLinkImage}
+              autoComplete="none"
+              margin="normal"
+              id="image_url" 
+              onChange={handleChangeImageUrl('linkImage')}
+              fullWidth
+            />
+            <Button type="submit" variant="contained" color="secondary">
+              Save
+            </Button>
+          </Grid>
+        </form>
+      </Container>
     </div>
   );
 }
