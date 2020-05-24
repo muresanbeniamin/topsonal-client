@@ -181,7 +181,7 @@ export default function Navbar() {
               </IconButton>
               <IconButton 
                 color="secondary"
-                href="signout"
+                href="/signout"
                 edge="end">
                 <Badge color="secondary">
                   <ExitToAppIcon />

@@ -6,6 +6,7 @@ import users from './users';
 import google_search from './google_search';
 import dashboard from './dashboard';
 import lists from './lists';
+import items from './items';
 
 export default combineReducers({
   auth,
@@ -14,5 +15,6 @@ export default combineReducers({
   users: users,
   google_search: google_search,
   dashboard: dashboard,
-  lists: lists
+  lists: lists,
+  items: items
 });

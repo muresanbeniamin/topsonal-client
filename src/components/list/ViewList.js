@@ -84,9 +84,9 @@ const list = function ViewList() {
             {list.items.map((item, index) => (
               <ListItem className={classes.listItem} alignItems="flex-start" key={`${index}-item`} button>
                 <ListItemAvatar>
-                  <Avatar alt={item.name} className={classes.large} src={item.url} />
+                  <Avatar alt={item.name} className={classes.large} src={item.image_url} />
                 </ListItemAvatar>
-                <ListItemText className={classes.listText} secondary={`${index + 1}. ${item.name}`} />
+                <ListItemText className={classes.listText} secondary={`${index + 1}. ${item.title}`} />
               </ListItem>
             ))}
           </List>

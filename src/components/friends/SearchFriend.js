@@ -24,9 +24,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%'
   },
-  dialogContent: {
-    textAlign: 'center'
-  },
   appBar: {
     position: 'relative'
   },
@@ -137,8 +134,8 @@ export default function SearchFriend(props) {
   }
 
   return (
-    <div style={{ maxWidth: '200px', marginTop: '10px', marginRight: 'auto', marginLeft: 'auto' }}>
-      <Button variant="contained" color="primary" onClick={handleOpenSearchFriendModal} endIcon={<AddCircleOutlineIcon />}>
+    <div style={{ maxWidth: '200px', marginTop: '10px', marginRight: '0', marginLeft: 'auto' }}>
+      <Button variant="contained" color="secondary" onClick={handleOpenSearchFriendModal} endIcon={<AddCircleOutlineIcon />}>
         Add New Friends
       </Button>
       <Dialog fullScreen open={open} onClose={handleCloseSearchFriendModal} maxWidth='xs'>

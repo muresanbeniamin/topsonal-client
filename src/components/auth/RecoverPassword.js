@@ -63,9 +63,9 @@ const styles = theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    width: 70,
-    height: 70,
-    backgroundColor: theme.palette.secondary.main,
+    width: 100,
+    height: 100,
+    backgroundColor: '#fff',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -103,8 +103,8 @@ class RecoverPassword extends Component {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <img height="60px" width="60px" alt="Topsonal" src="/images/topsnal.png" />
+          <Avatar variant="square" className={classes.avatar}>
+            <img height="100px" width="100px" alt="Topsonal" src="/images/topsonal.png" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Recover Password
@@ -112,18 +112,18 @@ class RecoverPassword extends Component {
           <div className={classes.redText}> {this.props.recoverPasswordErrorMessage} </div>
           <div className={classes.greenText}> {this.props.recoverPasswordSucessMessage} </div>
           <form className={classes.form} onSubmit={handleSubmit(this.onSubmit)}>
-              <Field 
-                name="email"
-                type="text"
-                label="Email"
-                component={renderTextField}
-                autoComplete="none"
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="email"
-                autoFocus
-              />
+            <Field 
+              name="email"
+              type="text"
+              label="Email"
+              component={renderTextField}
+              autoComplete="none"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="email"
+              autoFocus
+            />
             <Button type="submit" fullWidth variant="contained" color="secondary" className={classes.submit}>Recover</Button>
             <div className={classes.centeredText}>
               <Link href="/" variant="body2">
