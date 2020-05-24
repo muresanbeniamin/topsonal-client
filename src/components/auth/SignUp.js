@@ -32,9 +32,9 @@ const styles = theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    width: 70,
-    height: 70,
-    backgroundColor: theme.palette.secondary.main,
+    width: 100,
+    height: 100,
+    backgroundColor: '#fff',
   },
   form: {
     width: '100%',
@@ -99,8 +99,8 @@ class SignUp extends Component {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <img height="60px" width="60px" alt="Topsonal" src="/images/topsonal.png" />
+          <Avatar variant="square" className={classes.avatar}>
+            <img height="100px" width="100px" alt="Topsonal" src="/images/topsonal.png" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign Up

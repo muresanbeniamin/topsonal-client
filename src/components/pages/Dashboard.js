@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-import ViewList from '../list/ViewList';
 import requireAuth from '../auth/requireAuth';
 import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -14,6 +13,10 @@ import Menu from '@material-ui/core/Menu';
 import { getDashboard } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import { useHistory } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,64 +58,63 @@ const dashboard = function Dashboard() {
 
   const dashboardLists = useSelector(state => state.dashboard.dashboardLists);
   const classes = useStyles();
+  const history = useHistory();
 
-  const [open, setOpen] = React.useState(false);
-  const [selectedList, setSelectedList] = React.useState(null);
-
-  const handleClickOpen = list => event => {
-    setSelectedList(list)
-    setOpen(true);
+  const handleClickOpen = listId => event => {
+    history.push(`lists/${listId}`);
   };
-
-  const handleClose = () => {
-    setSelectedList(null)
-    setOpen(false);
-  };
-
   return (
-    <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="center" spacing={2}>
-          {dashboardLists && dashboardLists.map((list) => (
-            <Grid key={`${list.id}-list`} item>
-              <Card className={classes.card}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe">
-                      {list.user.full_name.split(' ').map(name => name[0]).join('')}
-                    </Avatar>
-                  }
-                  action={
-                    <PopupState variant="popover">
-                      {popupState => (
-                        <React.Fragment>
-                          <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
-                            <MoreVertIcon />
-                          </IconButton>
-                          <Menu {...bindMenu(popupState)}>
-                            <MenuItem>Follow</MenuItem>
-                          </Menu>
-                        </React.Fragment>
-                      )}
-                    </PopupState>
-                  }
-                  title={list.name}
-                  subheader={list.created_date}
-                />
-                <div onClick={handleClickOpen(list)}>
-                  <CardMedia
-                    className={classes.media}
-                    image={list.image_url}
+    <div>
+      <AppBar position="static" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Collections of your friends
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item xs={12}>
+          <Grid container justify="center" spacing={2}>
+            {dashboardLists && dashboardLists.map((list) => (
+              <Grid key={`${list.id}-list`} item>
+                <Card className={classes.card}>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe">
+                        {list.user.full_name.split(' ').map(name => name[0]).join('')}
+                      </Avatar>
+                    }
+                    action={
+                      <PopupState variant="popover">
+                        {popupState => (
+                          <React.Fragment>
+                            <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
+                              <MoreVertIcon />
+                            </IconButton>
+                            <Menu {...bindMenu(popupState)}>
+                              <MenuItem>Follow</MenuItem>
+                            </Menu>
+                          </React.Fragment>
+                        )}
+                      </PopupState>
+                    }
                     title={list.name}
+                    subheader={list.created_date}
                   />
-                </div>
-              </Card>
-            </Grid>
-          ))}
-          {selectedList && <ViewList list={selectedList} open={open} handleClose={handleClose} />}
+                  <div onClick={handleClickOpen(list.friendly_id)}>
+                    <CardMedia
+                      className={classes.media}
+                      image={list.image_url}
+                      title={list.name}
+                    />
+                  </div>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </div>
   );
 }
 

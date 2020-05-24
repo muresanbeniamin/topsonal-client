@@ -17,6 +17,7 @@ import { useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,8 +46,13 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 4
   },
   appBar: {
-    position: 'relative',
-    textAlign: 'right'
+    flexGrow: 1
+  },
+  newListButton: {
+    float: 'right'
+  },
+  title: {
+    flex: 1,
   }
 }));
 
@@ -77,9 +83,12 @@ const myLists = function MyLists() {
 
   return (
     <div>
-      <AppBar className={classes.appBar}>
+      <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <Button autoFocus color="secondary" variant="contained" onClick={handleAddList}>
+          <Typography variant="h6" className={classes.title}>
+            My Lists
+          </Typography>
+          <Button className={classes.newListButton} autoFocus color="secondary" variant="contained" onClick={handleAddList}>
             New List
           </Button>
         </Toolbar>

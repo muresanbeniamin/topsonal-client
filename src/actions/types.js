@@ -13,3 +13,4 @@ export const IMAGE_URLS_ERROR = 'image_urls_error';
 export const DASHBOARD = 'dashboard';
 export const DASHBOARD_ERROR = 'dashboard_error';
 export const GET_LIST = 'get_list';
+export const FIND_ITEMS = 'find_items';

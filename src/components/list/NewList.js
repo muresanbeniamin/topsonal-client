@@ -99,7 +99,7 @@ let newList = props => {
   const authToken = useSelector(state => state.auth.authenticated);
   const imageUrls = useSelector(state => state.google_search.imageUrls);
   const { handleSubmit } = props;
-  const [state, setState] = React.useState({addLinkImage: false, linkImage: ''});
+  const [state, setState] = React.useState({addLinkImage: false, linkImage: '', public: true});
 
   const handleChangeNameOfTheList = () => async event => {
     if (event.target.value.length > 5) {
@@ -109,6 +109,9 @@ let newList = props => {
 
   const handleChangeCheckbox = name => event => {
     setState({ ...state, [name]: event.target.checked });
+    if (name === 'public') {
+      props.change('is_public', event.target.checked);
+    }
   };
 
   const handleChangeImageUrl = name => event => {
@@ -137,6 +140,7 @@ let newList = props => {
   return (
     <div>
       <Container maxWidth="xl">
+        <h1>Share a new list</h1>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
@@ -176,41 +180,50 @@ let newList = props => {
                 fullWidth
                 id="description"
                 multiline={true}
-                rows={5}
-                required
+                rows={12}
+              />
+              <FormGroup row>
+                <FormControlLabel
+                  control={
+                    <Switch checked={state.public} onChange={handleChangeCheckbox('public')} value="public" />
+                  }
+                  label="Make list public"
+              />
+              </FormGroup>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
+              <FormGroup row>
+                <FormControlLabel
+                  control={
+                    <Switch checked={state.addLinkImage} onChange={handleChangeCheckbox('addLinkImage')} value="addLinkImage" />
+                  }
+                  label="Add image manually"
+                />
+                <Button
+                  color="primary"
+                  className={classes.button}
+                  startIcon={<ImageSearchIcon />}
+                  onClick={handleOnShuffleImageClick}
+                >
+                  Shuffle image
+                </Button>
+              </FormGroup>
+              <Field 
+                name="image_url"
+                type="text"
+                label="Image Url"
+                component={renderTextField}
+                disabled={!state.addLinkImage}
+                autoComplete="none"
+                margin="normal"
+                id="image_url" 
+                onChange={handleChangeImageUrl('linkImage')}
+                fullWidth
               />
             </Grid>
-            <Avatar className={classes.avatar} variant='square' src={state.linkImage}>Image</Avatar>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Switch checked={state.addLinkImage} onChange={handleChangeCheckbox('addLinkImage')} value="addLinkImage" />
-                }
-                label="Add image manually"
-              />
-              <Button
-                color="primary"
-                className={classes.button}
-                startIcon={<ImageSearchIcon />}
-                onClick={handleOnShuffleImageClick}
-              >
-                Shuffle image
-              </Button>
-            </FormGroup>
-            <Field 
-              name="image_url"
-              type="text"
-              label="Image Url"
-              component={renderTextField}
-              disabled={!state.addLinkImage}
-              autoComplete="none"
-              margin="normal"
-              id="image_url" 
-              onChange={handleChangeImageUrl('linkImage')}
-              fullWidth
-            />
             <Button type="submit" variant="contained" color="secondary">
-              Save
+              Share
             </Button>
           </Grid>
         </form>
