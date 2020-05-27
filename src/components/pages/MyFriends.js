@@ -36,6 +36,12 @@ const useStyles = makeStyles(theme => ({
   },
   panels: {
     marginTop: '20px;'
+  },
+  searchFriendButton: {
+    maxWidth: '200px',
+    marginTop: '10px',
+    marginRight: '0',
+    marginLeft: 'auto'
   }
 }));
 
@@ -64,7 +70,9 @@ export default function MyFriends() {
           <Typography variant="h6" className={classes.title}>
             Friends
           </Typography>
-          <SearchFriend/>
+          <div className={classes.searchFriendButton}>
+            <SearchFriend/>
+          </div>
         </Toolbar>
       </AppBar>
       <Container maxWidth="xl" className={classes.container}>

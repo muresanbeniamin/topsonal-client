@@ -17,6 +17,7 @@ import { useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import SearchFriend from '../friends/SearchFriend';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,6 +44,9 @@ const useStyles = makeStyles(theme => ({
   },
   likeIcon: {
     paddingRight: 4
+  },
+  inline: {
+    display: 'flex'
   }
 }));
 
@@ -56,7 +60,8 @@ const dashboard = function Dashboard() {
     fetchDashboard();
   }, []);
 
-  const dashboardLists = useSelector(state => state.dashboard.dashboardLists);
+  const dashboardLists = useSelector(state => state.dashboard.dashboard.friend_lists);
+  const numberOfFriends = useSelector(state => state.dashboard.dashboard.number_of_friends);
   const classes = useStyles();
   const history = useHistory();
 
@@ -72,6 +77,12 @@ const dashboard = function Dashboard() {
           </Typography>
         </Toolbar>
       </AppBar>
+      {!numberOfFriends && numberOfFriends === 0 && 
+        <div className={classes.centerText}>
+          <h2>You don't seem to have any friends, let's add some: </h2> 
+          <SearchFriend/>
+        </div>
+      }
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>

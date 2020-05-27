@@ -134,7 +134,7 @@ export default function SearchFriend(props) {
   }
 
   return (
-    <div style={{ maxWidth: '200px', marginTop: '10px', marginRight: '0', marginLeft: 'auto' }}>
+    <div>
       <Button variant="contained" color="secondary" onClick={handleOpenSearchFriendModal} endIcon={<AddCircleOutlineIcon />}>
         Add New Friends
       </Button>
