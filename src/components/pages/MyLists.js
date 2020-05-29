@@ -102,7 +102,7 @@ const myLists = function MyLists() {
                   <CardHeader
                     avatar={
                       <Avatar aria-label="recipe">
-                        {list.user.full_name.split(' ').map(name => name[0]).join('')}
+                        {list.user_full_name.split(' ').map(name => name[0]).join('')}
                       </Avatar>
                     }
                     action={

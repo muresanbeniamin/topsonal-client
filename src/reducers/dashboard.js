@@ -1,7 +1,9 @@
 import { DASHBOARD, DASHBOARD_ERROR } from '../actions/types';
 
 const INITIAL_STATE = {
-  dashboard: {},
+  dashboard: {
+    friend_lists: []
+  },
   dashboardError: ''
 }
 

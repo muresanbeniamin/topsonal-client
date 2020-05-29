@@ -83,6 +83,12 @@ const dashboard = function Dashboard() {
           <SearchFriend/>
         </div>
       }
+      {numberOfFriends !== 0 && dashboardLists.length === 0 &&
+        <div className={classes.centerText}>
+          <h2>Your friends don't have anything posted yet. Add more friends: </h2> 
+          <SearchFriend/>
+        </div>
+      }
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
@@ -92,7 +98,7 @@ const dashboard = function Dashboard() {
                   <CardHeader
                     avatar={
                       <Avatar aria-label="recipe">
-                        {list.user.full_name.split(' ').map(name => name[0]).join('')}
+                        {list.user_full_name.split(' ').map(name => name[0]).join('')}
                       </Avatar>
                     }
                     action={

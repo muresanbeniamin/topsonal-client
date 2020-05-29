@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { getList } from '../../actions';
 import requireAuth from '../auth/requireAuth';
 import { useHistory } from 'react-router-dom';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -47,6 +48,7 @@ const list = function ViewList() {
     }
     fetchList();
   }, []);
+  let loading = true;
   const { id } = useParams();
   const history = useHistory();
   const authToken = useSelector(state => state.auth.authenticated);
@@ -54,32 +56,34 @@ const list = function ViewList() {
 
   const classes = useStyles();
   const list = useSelector(state => state.lists.list);
-  
+  if (list.friendly_id === id) { 
+    loading = false;
+  }
   const handleAddItem = event => {
     history.push(`/new-item/${id}`);
   }
 
   return (
     <div>
-      {list &&
-        <div>
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <Typography variant="h6" className={classes.title}>
-                {list.name}
-              </Typography>
-              <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
-                Add Item
-              </Button>
-            </Toolbar>
-          </AppBar>
+      <div>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              {list && !loading && list.name}
+            </Typography>
+            <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
+              Add Item
+            </Button>
+          </Toolbar>
+        </AppBar>
+        {loading && <LinearProgress color="secondary" />}
 
-          <Typography className={classes.listDescription}>
-            {list.description}
-          </Typography>
-          
-          <Divider />
+        <Typography className={classes.listDescription}>
+          {list.description}
+        </Typography>
+        <Divider />
 
+        {list && !loading &&
           <List className={classes.list}>
             {list.items.map((item, index) => (
               <ListItem className={classes.listItem} alignItems="flex-start" key={`${index}-item`} button>
@@ -90,8 +94,9 @@ const list = function ViewList() {
               </ListItem>
             ))}
           </List>
-        </div>
-      }
+        }
+
+      </div>
     </div>
   );
 }

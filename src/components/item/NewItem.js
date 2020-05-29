@@ -24,6 +24,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Avatar from '@material-ui/core/Avatar';
 import { createItem } from '../../actions';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -88,7 +89,6 @@ let item = props => {
     'books': 'book'
   }
   const currentItemType = itemType[list.category];
-
   const onSubmit = formProps => {
     try {
       dispatch(createItem(listId, formProps, authToken))
@@ -109,9 +109,7 @@ let item = props => {
     dispatch(itemFinder(keyword, currentItemType, authToken));
   };
   const searchItemChanged = value => {
-    if (value) {
-      setKeyword(value)
-    }
+    setKeyword(value)
   };
 
   const handleChooseFoundItem = item => event => {
@@ -121,6 +119,7 @@ let item = props => {
   }
 
   const foundItems = useSelector(state => state.items.items);
+  const loading = useSelector(state => state.items.are_loading);
   
   return (
     <div>
@@ -230,12 +229,15 @@ let item = props => {
             </IconButton>
           </Toolbar>
         </AppBar>
+        {loading && <LinearProgress color="secondary" />}
         <DialogContent>
-          <Grid container>
-            <Grid item xs={9} sm={11}>
+          <Grid container 
+            alignItems="center"
+            justify="center">
+            <Grid item xs={11}>
               <TextField fullWidth label={`Search a ${currentItemType} by name...`} autoFocus onChange={e => searchItemChanged(e.target.value)}/>
             </Grid>
-            <Grid item xs={3} sm={1}>
+            <Grid item>
               <IconButton color="secondary" onClick={handleSearchItem}>
                 <SearchIcon />
               </IconButton>

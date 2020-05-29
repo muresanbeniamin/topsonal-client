@@ -18,6 +18,7 @@ import ViewList from './components/list/ViewList';
 import NewList from './components/list/NewList';
 import MyFriends from './components/pages/MyFriends';
 import NewItem from './components/item/NewItem';
+import Profile from './components/pages/Profile';
 
 const store = createStore(
   reducers, {
@@ -41,6 +42,7 @@ ReactDOM.render(
           <Route path='/new-item/:listId' exact component={NewItem} />
           <Route path='/my-friends' exact component={MyFriends} />
           <Route path='/recover-password' exact component={RecoverPassword} />
+          <Route path='/profile' exact component={Profile} />
         </App>
       </MuiThemeProvider>
     </BrowserRouter>

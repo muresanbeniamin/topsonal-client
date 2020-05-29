@@ -158,6 +158,7 @@ export const getList = (friendlyListId, authToken) => async dispatch => {
 };
 
 export const itemFinder = (keyword, itemType, authToken) => async dispatch => {
+  dispatch({ type: types.SET_ITEMS_LOADING, payload: true });
   try {
     const config = {headers: {'Authorization': authToken}}
     const response = await axios.get(`/api/v1/items/finder?keyword=${keyword}&item_type=${itemType}`, config);
@@ -165,6 +166,7 @@ export const itemFinder = (keyword, itemType, authToken) => async dispatch => {
   } catch (e) {
     console.log(e);
   }
+  dispatch({ type: types.SET_ITEMS_LOADING, payload: false });
 };
 
 export const createItem = (listId, formProps, authToken) => async dispatch => {
@@ -173,6 +175,14 @@ export const createItem = (listId, formProps, authToken) => async dispatch => {
     formProps.list_id = listId
     await axios.post(`/api/v1/items`, formProps, config);
     dispatch(getList(listId, authToken));
+  } catch (e) {
+  }
+};
+
+export const updateUser = (formProps, userId, authToken) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    await axios.patch(`/api/v1/users/${userId}`, formProps, config);
   } catch (e) {
   }
 };
