@@ -169,6 +169,18 @@ export const itemFinder = (keyword, itemType, authToken) => async dispatch => {
   dispatch({ type: types.SET_ITEMS_LOADING, payload: false });
 };
 
+export const itemDetails = (itemId, itemType, authToken) => async dispatch => {
+  dispatch({ type: types.SET_ITEMS_LOADING, payload: true });
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    const response = await axios.get(`/api/v1/omdb/${itemId}`, config);
+    dispatch({ type: types.GET_ITEM, payload: response.data });
+  } catch (e) {
+    console.log(e);
+  }
+  dispatch({ type: types.SET_ITEMS_LOADING, payload: false });
+};
+
 export const createItem = (listId, formProps, authToken) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}

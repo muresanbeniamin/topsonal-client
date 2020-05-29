@@ -17,6 +17,7 @@ import { getList } from '../../actions';
 import requireAuth from '../auth/requireAuth';
 import { useHistory } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { reset } from 'redux-form';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -86,16 +87,19 @@ const list = function ViewList() {
         {list && !loading &&
           <List className={classes.list}>
             {list.items.map((item, index) => (
-              <ListItem className={classes.listItem} alignItems="flex-start" key={`${index}-item`} button>
-                <ListItemAvatar>
-                  <Avatar alt={item.name} className={classes.large} src={item.image_url} />
-                </ListItemAvatar>
-                <ListItemText className={classes.listText} secondary={`${index + 1}. ${item.title}`} />
-              </ListItem>
+              <div>
+                <ListItem className={classes.listItem} key={`${index}-item`} button>
+                  <ListItemAvatar>
+                    <Avatar alt={item.name} className={classes.large} src={item.image_url} />
+                  </ListItemAvatar>
+                  <ListItemText primary={item.title} secondary={item.year} />
+                  <ListItemText secondary={item.author} />
+                  <ListItemText secondary={item.actors} />
+                </ListItem>
+              </div>
             ))}
           </List>
         }
-
       </div>
     </div>
   );

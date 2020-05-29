@@ -19,7 +19,7 @@ import Dialog from '@material-ui/core/Dialog';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import DialogContent from '@material-ui/core/DialogContent';
-import { itemFinder } from '../../actions';
+import { itemFinder, itemDetails } from '../../actions';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Avatar from '@material-ui/core/Avatar';
@@ -73,6 +73,7 @@ let item = props => {
   useEffect(() => {
     function fetchList() {
       dispatch(getList(listId, authToken));
+      dispatch(reset('create-list-item-form'));
     }
     fetchList();
   }, []);
@@ -92,7 +93,6 @@ let item = props => {
   const onSubmit = formProps => {
     try {
       dispatch(createItem(listId, formProps, authToken))
-      dispatch(reset('create-list-item'));
       history.push(`/my-lists/${listId}`)
     } catch (e) {
     }
@@ -113,14 +113,22 @@ let item = props => {
   };
 
   const handleChooseFoundItem = item => event => {
-    const values = Object.values(item);
-    Object.keys(item).forEach((key, index) => props.change(key, values[index]));
     setOpen(false);
+    if (currentItemType === 'movie') {
+      const currentItemId = item.imdb_id;
+      dispatch(itemDetails(item.imdb_id, currentItemType, authToken));
+    } else if (currentItemType === 'book') {
+      Object.keys(item).forEach((key, index) => props.change(key, Object.values(item)[index]));
+    }
+  }
+  const foundItem = useSelector(state => state.items.item);
+  const foundItems = useSelector(state => state.items.items);
+  const loading = useSelector(state => state.items.loading);
+
+  if (currentItemType === 'movie') {
+    Object.keys(foundItem).forEach((key, index) => props.change(key, Object.values(foundItem)[index]));
   }
 
-  const foundItems = useSelector(state => state.items.items);
-  const loading = useSelector(state => state.items.are_loading);
-  
   return (
     <div>
       <AppBar className={classes.appBar}>
@@ -133,6 +141,7 @@ let item = props => {
           </Button>
         </Toolbar>
       </AppBar>
+      {loading && <LinearProgress color="secondary" />}
       <Container maxWidth="xl">
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>
@@ -244,7 +253,7 @@ let item = props => {
             </Grid>
           </Grid>
           {foundItems.map((item, index) => (
-            <ExpansionPanelSummary key={item.title} expandIcon={<ExpandMoreIcon />}>
+            <ExpansionPanelSummary key={item.imdb_id} expandIcon={<ExpandMoreIcon />}>
               <div className={classes.avatar}>
                 <Avatar alt={item.title} src={item.image_url} />
               </div>
@@ -272,7 +281,7 @@ let item = props => {
   );
 }
 item = reduxForm({
-  form: 'create-list-item'
+  form: 'create-list-item-form'
 })(item)
 
 export default (requireAuth(item));

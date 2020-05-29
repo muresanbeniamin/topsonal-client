@@ -18,6 +18,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -101,9 +102,11 @@ const myLists = function MyLists() {
                 <Card className={classes.card}>
                   <CardHeader
                     avatar={
-                      <Avatar aria-label="recipe">
-                        {list.user_full_name.split(' ').map(name => name[0]).join('')}
-                      </Avatar>
+                      <Tooltip title={list.user_full_name} placement="top-start">
+                        <Avatar alt={list.user_full_name} aria-label="recipe">
+                          {list.user_full_name.split(' ').map(name => name[0]).join('')}
+                        </Avatar>
+                      </Tooltip>
                     }
                     action={
                       <PopupState variant="popover">
