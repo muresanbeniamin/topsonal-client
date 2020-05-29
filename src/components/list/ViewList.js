@@ -13,11 +13,13 @@ import Avatar from '@material-ui/core/Avatar';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { getList } from '../../actions';
+import { getList, deleteItem } from '../../actions';
 import requireAuth from '../auth/requireAuth';
 import { useHistory } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { reset } from 'redux-form';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -64,6 +66,10 @@ const list = function ViewList() {
     history.push(`/new-item/${id}`);
   }
 
+  const handleDeleteItem = (item) => () => {
+    dispatch(deleteItem(authToken, item));
+  }
+
   return (
     <div>
       <div>
@@ -90,11 +96,16 @@ const list = function ViewList() {
               <div>
                 <ListItem className={classes.listItem} key={`${index}-item`} button>
                   <ListItemAvatar>
-                    <Avatar alt={item.name} className={classes.large} src={item.image_url} />
+                    <Avatar alt={item.title} className={classes.large} src={item.image_url} />
                   </ListItemAvatar>
                   <ListItemText primary={item.title} secondary={item.year} />
                   <ListItemText secondary={item.author} />
                   <ListItemText secondary={item.actors} />
+                  <ListItemSecondaryAction>
+                    <IconButton onClick={handleDeleteItem(item)} edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               </div>
             ))}

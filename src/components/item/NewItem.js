@@ -115,7 +115,6 @@ let item = props => {
   const handleChooseFoundItem = item => event => {
     setOpen(false);
     if (currentItemType === 'movie') {
-      const currentItemId = item.imdb_id;
       dispatch(itemDetails(item.imdb_id, currentItemType, authToken));
     } else if (currentItemType === 'book') {
       Object.keys(item).forEach((key, index) => props.change(key, Object.values(item)[index]));

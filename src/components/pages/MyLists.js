@@ -70,7 +70,7 @@ const myLists = function MyLists() {
   const curentUserLists = useSelector(state => state.profile.currentUserLists);
   const classes = useStyles();
 
-  const handleDeleteList = (listId, popupState) => () => {
+  const handleDeleteList = (listId) => () => {
     dispatch(deleteList(authToken, listId));
   }
 

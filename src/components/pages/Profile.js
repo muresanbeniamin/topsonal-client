@@ -1,18 +1,9 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import requireAuth from '../auth/requireAuth';
-import CardHeader from '@material-ui/core/CardHeader';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Avatar from '@material-ui/core/Avatar';
-import CardMedia from '@material-ui/core/CardMedia';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import { getprofile, updateUser } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { reduxForm, Field } from 'redux-form';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
 
 const renderTextField = ({
   label,

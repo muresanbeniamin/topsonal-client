@@ -148,10 +148,19 @@ export const deleteList = (authToken, listId) => async dispatch => {
   }
 };
 
-export const getList = (friendlyListId, authToken) => async dispatch => {
+export const deleteItem = (authToken, item) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    const response = await axios.get(`/api/v1/lists/${friendlyListId}`, config);
+    const response = await axios.delete(`/api/v1/items/${item.id}`, config);
+    dispatch(getList(response.data.list.id, authToken));
+  } catch (e) {
+  }
+};
+
+export const getList = (listId, authToken) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    const response = await axios.get(`/api/v1/lists/${listId}`, config);
     dispatch({ type: types.GET_LIST, payload: response.data });
   } catch (e) {
   }
