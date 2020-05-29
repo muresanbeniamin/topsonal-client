@@ -132,6 +132,7 @@ class SignIn extends Component {
               margin="normal"
               fullWidth
               id="email"
+              required
               autoFocus
             />
             <Field
@@ -143,6 +144,7 @@ class SignIn extends Component {
               variant="outlined"
               margin="normal"
               fullWidth
+              required
               id="password"
             />
 

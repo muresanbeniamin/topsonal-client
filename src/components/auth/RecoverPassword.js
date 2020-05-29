@@ -122,6 +122,7 @@ class RecoverPassword extends Component {
               margin="normal"
               fullWidth
               id="email"
+              required
               autoFocus
             />
             <Button type="submit" fullWidth variant="contained" color="secondary" className={classes.submit}>Recover</Button>
