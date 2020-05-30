@@ -16,6 +16,7 @@ import { getList } from '../../actions';
 import requireAuth from '../auth/requireAuth';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -76,9 +77,20 @@ const list = function ViewList() {
                   <ListItemAvatar>
                     <Avatar alt={item.title} className={classes.large} src={item.image_url} />
                   </ListItemAvatar>
-                  <ListItemText primary={item.title} secondary={item.year} />
-                  <ListItemText secondary={item.author} />
-                  <ListItemText secondary={item.actors} />
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="flex-start"
+                  >
+                    <Grid item xs={12} sm={6}>
+                      <ListItemText primary={item.title} secondary={item.year} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <ListItemText secondary={item.author} />
+                      <ListItemText secondary={item.actors} />
+                    </Grid>
+                  </Grid>
                 </ListItem>
               </div>
             ))}

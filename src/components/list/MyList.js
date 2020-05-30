@@ -21,6 +21,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -89,9 +90,20 @@ const list = function MyList() {
                   <ListItemAvatar>
                     <Avatar alt={item.title} className={classes.large} src={item.image_url} />
                   </ListItemAvatar>
-                  <ListItemText primary={item.title} secondary={item.year} />
-                  <ListItemText secondary={item.author} />
-                  <ListItemText secondary={item.actors} />
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="flex-start"
+                  >
+                    <Grid item xs={12} sm={6}>
+                      <ListItemText primary={item.title} secondary={item.year} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <ListItemText secondary={item.author} />
+                      <ListItemText secondary={item.actors} />
+                    </Grid>
+                  </Grid>
                   <ListItemSecondaryAction>
                     <IconButton onClick={handleDeleteItem(item)} edge="end" aria-label="delete">
                       <DeleteIcon />
