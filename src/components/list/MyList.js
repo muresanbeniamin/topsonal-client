@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const list = function ViewList() {
+const list = function MyList() {
   useEffect(() => {
     function fetchList() {
       dispatch(getList(id, authToken));
@@ -78,6 +78,9 @@ const list = function ViewList() {
             <Typography variant="h6" className={classes.title}>
               {list && !loading && list.name}
             </Typography>
+            <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
+              Add Item
+            </Button>
           </Toolbar>
         </AppBar>
         {loading && <LinearProgress color="secondary" />}
@@ -98,6 +101,11 @@ const list = function ViewList() {
                   <ListItemText primary={item.title} secondary={item.year} />
                   <ListItemText secondary={item.author} />
                   <ListItemText secondary={item.actors} />
+                  <ListItemSecondaryAction>
+                    <IconButton onClick={handleDeleteItem(item)} edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               </div>
             ))}

@@ -62,14 +62,18 @@ export const getprofile = authToken => async dispatch => {
 };
 
 export const getDashboard = authToken => async dispatch => {
+  dispatch({ type: types.SET_LOADING, payload: true });
   try {
     const config = {headers: {'Authorization': authToken}}
     const profile = await axios.get('/api/v1/users/dashboard', config);
     dispatch({ type: types.DASHBOARD, payload: profile.data });
+    const publicLists = await axios.get('/api/v1/public_lists', config);
+    dispatch({ type: types.DASHBOARD_PUBLIC_LISTS, payload: publicLists.data });
   } catch (e) {
     const errorMessage = e.response.data.error;
     dispatch({ type: types.DASHBOARD_ERROR, payload: errorMessage });
   }
+  dispatch({ type: types.SET_LOADING, payload: false });
 };
 
 export const searchFriends = (authToken, name) => async dispatch => {
@@ -167,7 +171,7 @@ export const getList = (listId, authToken) => async dispatch => {
 };
 
 export const itemFinder = (keyword, itemType, authToken) => async dispatch => {
-  dispatch({ type: types.SET_ITEMS_LOADING, payload: true });
+  dispatch({ type: types.SET_LOADING, payload: true });
   try {
     const config = {headers: {'Authorization': authToken}}
     const response = await axios.get(`/api/v1/items/finder?keyword=${keyword}&item_type=${itemType}`, config);
@@ -175,11 +179,11 @@ export const itemFinder = (keyword, itemType, authToken) => async dispatch => {
   } catch (e) {
     console.log(e);
   }
-  dispatch({ type: types.SET_ITEMS_LOADING, payload: false });
+  dispatch({ type: types.SET_LOADING, payload: false });
 };
 
 export const itemDetails = (itemId, itemType, authToken) => async dispatch => {
-  dispatch({ type: types.SET_ITEMS_LOADING, payload: true });
+  dispatch({ type: types.SET_LOADING, payload: true });
   try {
     const config = {headers: {'Authorization': authToken}}
     const response = await axios.get(`/api/v1/omdb/${itemId}`, config);
@@ -187,7 +191,7 @@ export const itemDetails = (itemId, itemType, authToken) => async dispatch => {
   } catch (e) {
     console.log(e);
   }
-  dispatch({ type: types.SET_ITEMS_LOADING, payload: false });
+  dispatch({ type: types.SET_LOADING, payload: false });
 };
 
 export const createItem = (listId, formProps, authToken) => async dispatch => {

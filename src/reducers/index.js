@@ -7,6 +7,7 @@ import google_search from './google_search';
 import dashboard from './dashboard';
 import lists from './lists';
 import items from './items';
+import loading from './loading';
 
 export default combineReducers({
   auth,
@@ -16,5 +17,6 @@ export default combineReducers({
   google_search: google_search,
   dashboard: dashboard,
   lists: lists,
-  items: items
+  items: items,
+  loading: loading
 });

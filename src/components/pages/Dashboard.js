@@ -18,11 +18,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchFriend from '../friends/SearchFriend';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginTop: theme.spacing(5)
   },
   card: {
     width: 345,
@@ -60,8 +60,10 @@ const dashboard = function Dashboard() {
     fetchDashboard();
   }, []);
 
-  const dashboardLists = useSelector(state => state.dashboard.dashboard.friend_lists);
+  const friendLists = useSelector(state => state.dashboard.dashboard.friend_lists);
+  const dashboardPublicLists = useSelector(state => state.dashboard.dashboardPublicLists);
   const numberOfFriends = useSelector(state => state.dashboard.dashboard.number_of_friends);
+  const loading = useSelector(state => state.loading.loading);
   const classes = useStyles();
   const history = useHistory();
 
@@ -73,64 +75,118 @@ const dashboard = function Dashboard() {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Collections of your friends
+            Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
-      {!numberOfFriends && numberOfFriends === 0 && 
-        <div className={classes.centerText}>
-          <h2>You don't seem to have any friends, let's add some: </h2> 
-          <SearchFriend/>
-        </div>
-      }
-      {numberOfFriends !== 0 && dashboardLists.length === 0 &&
-        <div className={classes.centerText}>
-          <h2>Your friends don't have anything posted yet. Add more friends: </h2> 
-          <SearchFriend/>
-        </div>
-      }
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            {dashboardLists && dashboardLists.map((list) => (
-              <Grid key={`${list.id}-list`} item>
-                <Card className={classes.card}>
-                  <CardHeader
-                    avatar={
-                      <Avatar aria-label="recipe">
-                        {list.user_full_name.split(' ').map(name => name[0]).join('')}
-                      </Avatar>
-                    }
-                    action={
-                      <PopupState variant="popover">
-                        {popupState => (
-                          <React.Fragment>
-                            <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
-                              <MoreVertIcon />
-                            </IconButton>
-                            <Menu {...bindMenu(popupState)}>
-                              <MenuItem>Follow</MenuItem>
-                            </Menu>
-                          </React.Fragment>
-                        )}
-                      </PopupState>
-                    }
-                    title={list.name}
-                    subheader={list.created_date}
-                  />
-                  <div onClick={handleClickOpen(list.friendly_id)}>
-                    <CardMedia
-                      className={classes.media}
-                      image={list.image_url}
-                      title={list.name}
-                    />
-                  </div>
-                </Card>
+      {loading && <LinearProgress color="secondary" />}
+
+      {!loading &&
+        <div>
+          {!numberOfFriends && numberOfFriends === 0 && 
+            <div className={classes.centerText}>
+              <h3>You don't seem to have any friends, let's add some: </h3> 
+              <SearchFriend/>
+            </div>
+          }
+          {numberOfFriends !== 0 && friendLists.length === 0 &&
+            <div className={classes.centerText}>
+              <h3>Your friends don't have anything posted yet. Add more friends: </h3> 
+              <SearchFriend/>
+            </div>
+          }
+          <Typography variant="h6" className={classes.centerText}>
+            Friends Lists
+          </Typography>
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item xs={12}>
+              <Grid container justify="center" spacing={2}>
+                {friendLists && friendLists.map((list) => (
+                  <Grid key={`${list.id}-list`} item>
+                    <Card className={classes.card}>
+                      <CardHeader
+                        avatar={
+                          <Avatar aria-label="recipe">
+                            {list.user_full_name.split(' ').map(name => name[0]).join('')}
+                          </Avatar>
+                        }
+                        action={
+                          <PopupState variant="popover">
+                            {popupState => (
+                              <React.Fragment>
+                                <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu {...bindMenu(popupState)}>
+                                  <MenuItem>Follow</MenuItem>
+                                </Menu>
+                              </React.Fragment>
+                            )}
+                          </PopupState>
+                        }
+                        title={list.name}
+                        subheader={list.created_date}
+                      />
+                      <div onClick={handleClickOpen(list.friendly_id)}>
+                        <CardMedia
+                          className={classes.media}
+                          image={list.image_url}
+                          title={list.name}
+                        />
+                      </div>
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+          <Typography variant="h6" className={classes.centerText}>
+            Latest Public Lists
+          </Typography>
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item xs={12}>
+              <Grid container justify="center" spacing={2}>
+                {dashboardPublicLists && dashboardPublicLists.map((list) => (
+                  <Grid key={`${list.id}-list`} item>
+                    <Card className={classes.card}>
+                      <CardHeader
+                        avatar={
+                          <Avatar aria-label="recipe">
+                            {list.user_full_name.split(' ').map(name => name[0]).join('')}
+                          </Avatar>
+                        }
+                        action={
+                          <PopupState variant="popover">
+                            {popupState => (
+                              <React.Fragment>
+                                <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu {...bindMenu(popupState)}>
+                                  <MenuItem>Follow</MenuItem>
+                                </Menu>
+                              </React.Fragment>
+                            )}
+                          </PopupState>
+                        }
+                        title={list.name}
+                        subheader={list.created_date}
+                      />
+                      <div onClick={handleClickOpen(list.friendly_id)}>
+                        <CardMedia
+                          className={classes.media}
+                          image={list.image_url}
+                          title={list.name}
+                        />
+                      </div>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
+        </div>
+      }
     </div>
   );
 }

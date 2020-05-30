@@ -122,7 +122,7 @@ let item = props => {
   }
   const foundItem = useSelector(state => state.items.item);
   const foundItems = useSelector(state => state.items.items);
-  const loading = useSelector(state => state.items.loading);
+  const loading = useSelector(state => state.loading.loading);
 
   if (currentItemType === 'movie') {
     Object.keys(foundItem).forEach((key, index) => props.change(key, Object.values(foundItem)[index]));

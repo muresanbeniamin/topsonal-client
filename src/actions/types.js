@@ -15,4 +15,5 @@ export const DASHBOARD_ERROR = 'dashboard_error';
 export const GET_LIST = 'get_list';
 export const FIND_ITEMS = 'find_items';
 export const GET_ITEM = 'get_item';
-export const SET_ITEMS_LOADING = 'set_items_loading';
+export const SET_LOADING = 'set_loading';
+export const DASHBOARD_PUBLIC_LISTS = 'dashboard_public_lists';
