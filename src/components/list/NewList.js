@@ -139,7 +139,7 @@ let newList = props => {
     }
   };
 
-  if (imageUrls.length > 0 && state.linkImage == '') {
+  if (imageUrls.length > 0 && state.linkImage === '') {
     setState({ ...state, 'linkImage': imageUrls[0].src });
   }
 
