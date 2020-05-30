@@ -110,6 +110,7 @@ const list = function MyList() {
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
+                <Divider />
               </div>
             ))}
           </List>

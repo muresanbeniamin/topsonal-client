@@ -92,6 +92,7 @@ const list = function ViewList() {
                     </Grid>
                   </Grid>
                 </ListItem>
+                <Divider />
               </div>
             ))}
           </List>
