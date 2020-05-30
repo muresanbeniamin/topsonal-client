@@ -87,10 +87,6 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -105,7 +101,12 @@ export default function Navbar() {
   };
 
   const handleSignOut = event => {
-    history.push('signout');
+    history.push('/signout');
+    handleMenuClose();
+  }
+
+  const handleProfileOpen = event => {
+    history.push('/profile');
     handleMenuClose();
   }
 
@@ -142,7 +143,7 @@ export default function Navbar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleProfileOpen}>
         <IconButton aria-haspopup="true" color="inherit">
           <AccountCircle />
         </IconButton>
@@ -174,8 +175,9 @@ export default function Navbar() {
               </IconButton>
               <IconButton
                 color="secondary"
+                href="/profile"
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                onClick={handleProfileOpen}
               >
                 <AccountCircle />
               </IconButton>
