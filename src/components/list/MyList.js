@@ -20,6 +20,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -31,16 +32,6 @@ const useStyles = makeStyles(theme => ({
   },
   listText: {
     paddingLeft: 10
-  },
-  listDescription: {
-    marginTop: 20,
-    marginLeft: '5%',
-    marginRight: '5%',
-    fontSize: 16
-  },
-  listItem: {
-    marginLeft: '5%',
-    marginRight: '5%'
   }
 }));
 
@@ -72,20 +63,20 @@ const list = function MyList() {
 
   return (
     <div>
-      <div>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" className={classes.title}>
-              {list && !loading && list.name}
-            </Typography>
-            <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
-              Add Item
-            </Button>
-          </Toolbar>
-        </AppBar>
-        {loading && <LinearProgress color="secondary" />}
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            {list && !loading && list.name}
+          </Typography>
+          <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
+            Add Item
+          </Button>
+        </Toolbar>
+      </AppBar>
+      {loading && <LinearProgress color="secondary" />}
 
-        <Typography className={classes.listDescription}>
+      <Container maxWidth="xl">
+        <Typography>
           {list.description}
         </Typography>
         <Divider />
@@ -111,7 +102,7 @@ const list = function MyList() {
             ))}
           </List>
         }
-      </div>
+      </Container>
     </div>
   );
 }

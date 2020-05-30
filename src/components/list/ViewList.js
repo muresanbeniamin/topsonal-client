@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { getList } from '../../actions';
 import requireAuth from '../auth/requireAuth';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -29,13 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
   listDescription: {
     marginTop: 20,
-    marginLeft: '5%',
-    marginRight: '5%',
     fontSize: 16
-  },
-  listItem: {
-    marginLeft: '5%',
-    marginRight: '5%'
   }
 }));
 
@@ -59,26 +54,25 @@ const list = function ViewList() {
 
   return (
     <div>
-      <div>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" className={classes.title}>
-              {list && !loading && list.name}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        {loading && <LinearProgress color="secondary" />}
-
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            {list && !loading && list.name}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      {loading && <LinearProgress color="secondary" />}
+      <Container maxWidth="xl">
         <Typography className={classes.listDescription}>
           {list.description}
         </Typography>
         <Divider />
 
         {list && !loading &&
-          <List className={classes.list}>
+          <List>
             {list.items.map((item, index) => (
               <div>
-                <ListItem className={classes.listItem} key={`${index}-item`} button>
+                <ListItem key={`${index}-item`} button>
                   <ListItemAvatar>
                     <Avatar alt={item.title} className={classes.large} src={item.image_url} />
                   </ListItemAvatar>
@@ -90,7 +84,7 @@ const list = function ViewList() {
             ))}
           </List>
         }
-      </div>
+      </Container>
     </div>
   );
 }

@@ -19,6 +19,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -94,50 +95,52 @@ const myLists = function MyLists() {
           </Button>
         </Toolbar>
       </AppBar>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            {curentUserLists.map((list) => (
-              <Grid key={`${list.id}-list`} item>
-                <Card className={classes.card}>
-                  <CardHeader
-                    avatar={
-                      <Tooltip title={list.user_full_name} placement="top-start">
-                        <Avatar alt={list.user_full_name} aria-label="recipe">
-                          {list.user_full_name.split(' ').map(name => name[0]).join('')}
-                        </Avatar>
-                      </Tooltip>
-                    }
-                    action={
-                      <PopupState variant="popover">
-                        {popupState => (
-                          <React.Fragment>
-                            <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
-                              <MoreVertIcon />
-                            </IconButton>
-                            <Menu {...bindMenu(popupState)}>
-                              <MenuItem onClick={handleDeleteList(list.id, popupState)}>Delete</MenuItem>
-                            </Menu>
-                          </React.Fragment>
-                        )}
-                      </PopupState>
-                    }
-                    title={list.name}
-                    subheader={list.created_date}
-                  />
-                  <div onClick={handleClickOpen(list)}>
-                    <CardMedia
-                      className={classes.media}
-                      image={list.image_url}
+      <Container maxWidth="xl">
+        <Grid container className={classes.root} spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify="center" spacing={2}>
+              {curentUserLists.map((list) => (
+                <Grid key={`${list.id}-list`} item>
+                  <Card className={classes.card}>
+                    <CardHeader
+                      avatar={
+                        <Tooltip title={list.user_full_name} placement="top-start">
+                          <Avatar alt={list.user_full_name} aria-label="recipe">
+                            {list.user_full_name.split(' ').map(name => name[0]).join('')}
+                          </Avatar>
+                        </Tooltip>
+                      }
+                      action={
+                        <PopupState variant="popover">
+                          {popupState => (
+                            <React.Fragment>
+                              <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
+                                <MoreVertIcon />
+                              </IconButton>
+                              <Menu {...bindMenu(popupState)}>
+                                <MenuItem onClick={handleDeleteList(list.id, popupState)}>Delete</MenuItem>
+                              </Menu>
+                            </React.Fragment>
+                          )}
+                        </PopupState>
+                      }
                       title={list.name}
+                      subheader={list.created_date}
                     />
-                  </div>
-                </Card>
-              </Grid>
-            ))}
+                    <div onClick={handleClickOpen(list)}>
+                      <CardMedia
+                        className={classes.media}
+                        image={list.image_url}
+                        title={list.name}
+                      />
+                    </div>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </div>
   );
 }
