@@ -114,9 +114,6 @@ export default function MyFriends() {
                   <Grid item sm xs={12}>
                     <Typography className={classes.heading}>{friend.email}</Typography>
                   </Grid>
-                  <Grid item sm xs={12}>
-                    <Typography className={classes.heading}>Friend Since: 12/12/2019</Typography>
-                  </Grid>
                 </Grid>
               </ExpansionPanelSummary>
             ))}

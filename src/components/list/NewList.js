@@ -105,9 +105,9 @@ let newList = props => {
   const authToken = useSelector(state => state.auth.authenticated);
   const imageUrls = useSelector(state => state.google_search.imageUrls);
   const { handleSubmit } = props;
-  const [state, setState] = React.useState({addLinkImage: false, linkImage: '', public: true});
+  const [state, setState] = React.useState({addLinkImage: false, linkImage: '', public: true, imageUrlIndex: 0});
 
-  const handleChangeNameOfTheList = () => async event => {
+  const handleOnBlurName = () => async event => {
     if (event.target.value.length > 5) {
       dispatch(getImageUrls(authToken, event.target.value));
     }
@@ -124,14 +124,24 @@ let newList = props => {
     setState({ ...state, [name]: event.target.value });
   };
 
-  const handleOnShuffleImageClick = () => {
-    if (imageUrls.length > 0) {
-      // get a random image url
-      const imageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)].src;
-      setState({ ...state, 'linkImage': imageUrl });
+  const shuffleImages = () => {
+    const imageUrlsLength = imageUrls.length;
+    if (imageUrlsLength > 0) {
+      let nextIndex;
+      if (state.imageUrlIndex + 1 === imageUrlsLength) {
+        nextIndex = 0;
+      } else {
+        nextIndex = state.imageUrlIndex + 1;
+      }
+      const imageUrl = imageUrls[nextIndex].src;
+      setState({ ...state, 'linkImage': imageUrl, 'imageUrlIndex': nextIndex });
       props.change('image_url', imageUrl);
     }
   };
+
+  if (imageUrls.length > 0 && state.linkImage == '') {
+    setState({ ...state, 'linkImage': imageUrls[0].src });
+  }
 
   const onSubmit = formProps => {
     try {
@@ -167,7 +177,7 @@ let newList = props => {
                 id="name"
                 autoFocus
                 required
-                onBlur={handleChangeNameOfTheList()}
+                onBlur={handleOnBlurName()}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -216,7 +226,7 @@ let newList = props => {
                   color="primary"
                   className={classes.button}
                   startIcon={<ImageSearchIcon />}
-                  onClick={handleOnShuffleImageClick}
+                  onClick={shuffleImages}
                 >
                   Shuffle image
                 </Button>

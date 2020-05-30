@@ -20,14 +20,18 @@ import Typography from '@material-ui/core/Typography';
 import SearchFriend from '../friends/SearchFriend';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // flexGrow: 1,
+    flexGrow: 1,
   },
   card: {
     width: 345,
     height: 280
+  },
+  title: {
+    flex: 1,
   },
   media: {
     height: 0,
@@ -71,6 +75,11 @@ const dashboard = function Dashboard() {
   const handleClickOpen = listId => event => {
     history.push(`lists/${listId}`);
   };
+
+  const handleAddList = event => {
+    history.push('/new-list');
+  };
+  
   return (
     <div>
       <AppBar position="static" className={classes.appBar}>
@@ -78,6 +87,9 @@ const dashboard = function Dashboard() {
           <Typography variant="h6" className={classes.title}>
             Dashboard
           </Typography>
+          <Button className={classes.newListButton} autoFocus color="secondary" variant="contained" onClick={handleAddList}>
+            New List
+          </Button>
         </Toolbar>
       </AppBar>
       {loading && <LinearProgress color="secondary" />}
