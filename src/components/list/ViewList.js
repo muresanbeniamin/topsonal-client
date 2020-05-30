@@ -17,6 +17,15 @@ import requireAuth from '../auth/requireAuth';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Collapse from '@material-ui/core/Collapse';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -53,6 +62,14 @@ const list = function ViewList() {
     loading = false;
   }
 
+  const [open, setOpen] = React.useState({});
+  const handleClick = (item) => event => {
+    if (open[item.id] === undefined) {
+      setOpen({...open, [item.id] : false })
+    }
+    setOpen({...open, [item.id] : !open[item.id] })
+  };
+
   return (
     <div>
       <AppBar className={classes.appBar}>
@@ -73,7 +90,7 @@ const list = function ViewList() {
           <List>
             {list.items.map((item, index) => (
               <div>
-                <ListItem key={`${index}-item`} button>
+                <ListItem key={`${index}-item`} button onClick={handleClick(item)}>
                   <ListItemAvatar>
                     <Avatar alt={item.title} className={classes.large} src={item.image_url} />
                   </ListItemAvatar>
@@ -91,7 +108,15 @@ const list = function ViewList() {
                       <ListItemText secondary={item.actors} />
                     </Grid>
                   </Grid>
+                  {open[item.id] ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
+                <Collapse in={open[item.id]} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItem className={classes.nested}>
+                      <ListItemText primary={'Description:'} secondary={item.description} />
+                    </ListItem>
+                  </List>
+                </Collapse>
                 <Divider />
               </div>
             ))}
