@@ -21,6 +21,7 @@ import SearchFriend from '../friends/SearchFriend';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -119,9 +120,11 @@ const dashboard = function Dashboard() {
                       <Card className={classes.card}>
                         <CardHeader
                           avatar={
-                            <Avatar aria-label="recipe">
-                              {list.user_full_name.split(' ').map(name => name[0]).join('')}
-                            </Avatar>
+                            <Tooltip title={list.user_full_name} placement="top-start">
+                              <Avatar alt={list.user_full_name} aria-label="recipe">
+                                {list.user_full_name.split(' ').map(name => name[0]).join('')}
+                              </Avatar>
+                            </Tooltip>
                           }
                           action={
                             <PopupState variant="popover">
@@ -164,9 +167,11 @@ const dashboard = function Dashboard() {
                       <Card className={classes.card}>
                         <CardHeader
                           avatar={
-                            <Avatar aria-label="recipe">
-                              {list.user_full_name.split(' ').map(name => name[0]).join('')}
-                            </Avatar>
+                            <Tooltip title={list.user_full_name} placement="top-start">
+                              <Avatar alt={list.user_full_name} aria-label="recipe">
+                                {list.user_full_name.split(' ').map(name => name[0]).join('')}
+                              </Avatar>
+                            </Tooltip>
                           }
                           action={
                             <PopupState variant="popover">
