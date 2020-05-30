@@ -18,6 +18,9 @@ import { getImageUrls } from '../../actions';
 import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 const renderTextField = ({
   label,
@@ -89,6 +92,9 @@ const useStyles = makeStyles(theme => ({
   },
   floatRight: {
     float: 'right'
+  },
+  appBar: {
+    position: 'relative'
   }
 }));
 
@@ -139,8 +145,14 @@ let newList = props => {
  
   return (
     <div>
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Share a new list 
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Container maxWidth="xl">
-        <h1>Share a new list</h1>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>

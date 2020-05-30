@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
@@ -13,13 +12,9 @@ import Avatar from '@material-ui/core/Avatar';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { getList, deleteItem } from '../../actions';
+import { getList } from '../../actions';
 import requireAuth from '../auth/requireAuth';
-import { useHistory } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -53,7 +48,6 @@ const list = function ViewList() {
   }, []);
   let loading = true;
   const { id } = useParams();
-  const history = useHistory();
   const authToken = useSelector(state => state.auth.authenticated);
   const dispatch = useDispatch();
 
@@ -61,13 +55,6 @@ const list = function ViewList() {
   const list = useSelector(state => state.lists.list);
   if (list.friendly_id === id) { 
     loading = false;
-  }
-  const handleAddItem = event => {
-    history.push(`/new-item/${id}`);
-  }
-
-  const handleDeleteItem = (item) => () => {
-    dispatch(deleteItem(authToken, item));
   }
 
   return (
