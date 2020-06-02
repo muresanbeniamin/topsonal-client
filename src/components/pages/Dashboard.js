@@ -109,53 +109,57 @@ const dashboard = function Dashboard() {
                 <SearchFriend/>
               </div>
             }
-            <Typography variant="h6" className={classes.centerText}>
-              Friends Lists
-            </Typography>
-            <Grid container className={classes.root} spacing={2}>
-              <Grid item xs={12}>
-                <Grid container justify="center" spacing={2}>
-                  {friendLists && friendLists.map((list) => (
-                    <Grid key={`${list.id}-list`} item>
-                      <Card className={classes.card}>
-                        <CardHeader
-                          avatar={
-                            <Tooltip title={list.user_full_name} placement="top-start">
-                              <Avatar alt={list.user_full_name} aria-label="recipe">
-                                {list.user_full_name.split(' ').map(name => name[0]).join('')}
-                              </Avatar>
-                            </Tooltip>
-                          }
-                          action={
-                            <PopupState variant="popover">
-                              {popupState => (
-                                <React.Fragment>
-                                  <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
-                                    <MoreVertIcon />
-                                  </IconButton>
-                                  <Menu {...bindMenu(popupState)}>
-                                    <MenuItem>Follow</MenuItem>
-                                  </Menu>
-                                </React.Fragment>
-                              )}
-                            </PopupState>
-                          }
-                          title={list.name}
-                          subheader={list.created_date}
-                        />
-                        <div onClick={handleClickOpen(list.friendly_id)}>
-                          <CardMedia
-                            className={classes.media}
-                            image={list.image_url}
-                            title={list.name}
-                          />
-                        </div>
-                      </Card>
+            {friendLists &&
+              <div>
+                <Typography variant="h6" className={classes.centerText}>
+                  Friends Lists
+                </Typography>
+                <Grid container className={classes.root} spacing={2}>
+                  <Grid item xs={12}>
+                    <Grid container justify="center" spacing={2}>
+                      {friendLists.map((list) => (
+                        <Grid key={`${list.id}-list`} item>
+                          <Card className={classes.card}>
+                            <CardHeader
+                              avatar={
+                                <Tooltip title={list.user_full_name} placement="top-start">
+                                  <Avatar alt={list.user_full_name} aria-label="recipe">
+                                    {list.user_full_name.split(' ').map(name => name[0]).join('')}
+                                  </Avatar>
+                                </Tooltip>
+                              }
+                              action={
+                                <PopupState variant="popover">
+                                  {popupState => (
+                                    <React.Fragment>
+                                      <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
+                                        <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu {...bindMenu(popupState)}>
+                                        <MenuItem>Follow</MenuItem>
+                                      </Menu>
+                                    </React.Fragment>
+                                  )}
+                                </PopupState>
+                              }
+                              title={list.name}
+                              subheader={list.created_date}
+                            />
+                            <div onClick={handleClickOpen(list.friendly_id)}>
+                              <CardMedia
+                                className={classes.media}
+                                image={list.image_url}
+                                title={list.name}
+                              />
+                            </div>
+                          </Card>
+                        </Grid>
+                      ))}
                     </Grid>
-                  ))}
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Grid>
+              </div>
+            }
             <Typography variant="h6" className={classes.centerText}>
               Latest Public Lists
             </Typography>
