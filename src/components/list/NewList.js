@@ -220,7 +220,7 @@ let newList = props => {
                   control={
                     <Switch checked={state.addLinkImage} onChange={handleChangeCheckbox('addLinkImage')} value="addLinkImage" />
                   }
-                  label="Add image manually"
+                  label="Add image url manually"
                 />
                 <Button
                   color="primary"

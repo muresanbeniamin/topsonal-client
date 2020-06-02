@@ -92,7 +92,7 @@ const myLists = function MyLists() {
           <Typography variant="h6" className={classes.title}>
             My Lists
           </Typography>
-          <Button className={classes.newListButton} autoFocus color="secondary" variant="contained" onClick={handleAddList}>
+          <Button className={classes.newListButton} color="secondary" variant="contained" onClick={handleAddList}>
             New List
           </Button>
         </Toolbar>

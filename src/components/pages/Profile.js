@@ -116,8 +116,8 @@ let profile = function Profile(props) {
           <Typography variant="h6" className={classes.title}>
             My Profile
           </Typography>
-          <Button className={classes.newListButton} autoFocus color="secondary" variant="contained" onClick={handleAddList}>
-            Add New List
+          <Button className={classes.newListButton} color="secondary" variant="contained" onClick={handleAddList}>
+            New List
           </Button>
         </Toolbar>
       </AppBar>

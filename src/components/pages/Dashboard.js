@@ -88,7 +88,7 @@ const dashboard = function Dashboard() {
           <Typography variant="h6" className={classes.title}>
             Dashboard
           </Typography>
-          <Button className={classes.newListButton} autoFocus color="secondary" variant="contained" onClick={handleAddList}>
+          <Button className={classes.newListButton} color="secondary" variant="contained" onClick={handleAddList}>
             New List
           </Button>
         </Toolbar>
@@ -112,7 +112,7 @@ const dashboard = function Dashboard() {
             {friendLists &&
               <div>
                 <Typography variant="h6" className={classes.centerText}>
-                  Friends Lists
+                  Collections of your friends
                 </Typography>
                 <Grid container className={classes.root} spacing={2}>
                   <Grid item xs={12}>
