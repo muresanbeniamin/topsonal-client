@@ -47,6 +47,7 @@ export const signout = () => {
 };
 
 export const getprofile = authToken => async dispatch => {
+  dispatch({ type: types.SET_LOADING, payload: true });
   try {
     const config = {headers: {'Authorization': authToken}}
     const profile = await axios.get('/api/v1/users/profile', config);
@@ -59,6 +60,7 @@ export const getprofile = authToken => async dispatch => {
     const errorMessage = e.response.data.error;
     dispatch({ type: types.GET_PROFILE_ERROR, payload: errorMessage });
   }
+  dispatch({ type: types.SET_LOADING, payload: false });
 };
 
 export const getDashboard = authToken => async dispatch => {
