@@ -22,6 +22,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import UpdateListForm from '../list/forms/UpdateListForm';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -33,17 +34,20 @@ const useStyles = makeStyles(theme => ({
   },
   listText: {
     paddingLeft: 10
+  },
+  formControl: {
+    width: '100%',
+    marginTop: 15
   }
 }));
 
-const list = function MyList() {
+let myList = function MyList(props) {
   useEffect(() => {
     function fetchList() {
       dispatch(getList(id, authToken));
     }
     fetchList();
   }, []);
-  let loading = true;
   const { id } = useParams();
   const history = useHistory();
   const authToken = useSelector(state => state.auth.authenticated);
@@ -51,9 +55,9 @@ const list = function MyList() {
 
   const classes = useStyles();
   const list = useSelector(state => state.lists.list);
-  if (list.friendly_id === id) { 
-    loading = false;
-  }
+  const loading = useSelector(state => state.loading.loading);
+
+
   const handleAddItem = event => {
     history.push(`/new-item/${id}`);
   }
@@ -67,7 +71,7 @@ const list = function MyList() {
       <AppBar className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            {list && !loading && list.name}
+            {!loading && list.name}
           </Typography>
           <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
             Add Item
@@ -75,15 +79,11 @@ const list = function MyList() {
         </Toolbar>
       </AppBar>
       {loading && <LinearProgress color="secondary" />}
-
-      <Container maxWidth="xl">
-        <Typography>
-          {list.description}
-        </Typography>
-        <Divider />
-
-        {list && !loading &&
+      {!loading &&
+        <Container maxWidth="xl">
+          <UpdateListForm initialValues={list} enableReinitialize={true} />
           <List className={classes.list}>
+            <Typography variant="h6">Items</Typography>
             {list.items.map((item, index) => (
               <div>
                 <ListItem className={classes.listItem} key={`${index}-item`} button>
@@ -114,10 +114,10 @@ const list = function MyList() {
               </div>
             ))}
           </List>
-        }
-      </Container>
+        </Container>
+      }
     </div>
   );
 }
 
-export default (requireAuth(list));
+export default (requireAuth(myList));

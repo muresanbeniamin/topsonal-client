@@ -145,6 +145,15 @@ export const createlist = (formProps, authToken) => async dispatch => {
   }
 };
 
+export const updateList = (id, formProps, authToken) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    const response = await axios.patch(`/api/v1/lists/${id}`, formProps, config);
+    dispatch({ type: types.GET_LIST, payload: response.data });
+  } catch (e) {
+  }
+};
+
 export const deleteList = (authToken, listId) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
@@ -164,12 +173,14 @@ export const deleteItem = (authToken, item) => async dispatch => {
 };
 
 export const getList = (listId, authToken) => async dispatch => {
+  dispatch({ type: types.SET_LOADING, payload: true });
   try {
     const config = {headers: {'Authorization': authToken}}
     const response = await axios.get(`/api/v1/lists/${listId}`, config);
     dispatch({ type: types.GET_LIST, payload: response.data });
   } catch (e) {
   }
+  dispatch({ type: types.SET_LOADING, payload: false });
 };
 
 export const itemFinder = (keyword, itemType, authToken) => async dispatch => {
