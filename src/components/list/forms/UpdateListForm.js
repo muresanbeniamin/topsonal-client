@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { updateList } from '../../../actions';
 import requireAuth from '../../auth/requireAuth';
 import Snackbar from '@material-ui/core/Snackbar';
+import Checkbox from '@material-ui/core/Checkbox'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -86,10 +87,24 @@ const renderSelectField = ({
   </FormControl>
 )
 
+const renderCheckbox = ({ input, label }) => (
+  <div>
+    <FormControlLabel
+      control={
+        <Checkbox
+          checked={input.value ? true : false}
+          onChange={input.onChange}
+        />
+      }
+      label={label}
+    />
+  </div>
+)
+
 let UpdateListForm = props => {
   const {handleSubmit, pristine, submitting} = props;
   const classes = useStyles();
-  const [state, setState] = React.useState({public: true});
+  const [state, setState] = React.useState({public: props.is_public});
   const [openSnackBar, setOpenSnackBar] = React.useState(false);
 
   const handleClose = (event, reason) => {
@@ -132,7 +147,6 @@ let UpdateListForm = props => {
               margin="normal"
               fullWidth
               id="name"
-              autoFocus
               required
             />
             <Field
@@ -168,14 +182,7 @@ let UpdateListForm = props => {
               id="image_url" 
               fullWidth
             />
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Switch checked={state.public} onChange={handleChangeCheckbox('public')} value="public" />
-                }
-                label="Public List"
-            />
-            </FormGroup>
+            <Field name="is_public" component={renderCheckbox} label="Public list" />
             <Button type="submit" disabled={pristine || submitting} variant="contained" color="secondary">
               Update
             </Button>

@@ -23,6 +23,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import UpdateListForm from '../list/forms/UpdateListForm';
+import Checkbox from '@material-ui/core/Checkbox'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -73,7 +74,7 @@ let myList = function MyList(props) {
           <Typography variant="h6" className={classes.title}>
             {!loading && list.name}
           </Typography>
-          <Button autoFocus color="secondary" variant="contained" onClick={handleAddItem}>
+          <Button color="secondary" variant="contained" onClick={handleAddItem}>
             Add Item
           </Button>
         </Toolbar>
