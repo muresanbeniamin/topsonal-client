@@ -1,2 +1,1 @@
-Topsonal project
-Still in development
+Topsonal client
