@@ -140,7 +140,9 @@ let newList = props => {
   };
 
   if (imageUrls.length > 0 && state.linkImage === '') {
-    setState({ ...state, 'linkImage': imageUrls[0].src });
+    const imageUrl = imageUrls[0].src;
+    setState({ ...state, 'linkImage': imageUrl });
+    props.change('image_url', imageUrl);
   }
 
   const onSubmit = formProps => {
