@@ -103,7 +103,7 @@ let newList = props => {
   const history = useHistory();
   const dispatch = useDispatch();
   const authToken = useSelector(state => state.auth.authenticated);
-  const imageUrls = useSelector(state => state.google_search.imageUrls);
+  const imageUrls = useSelector(state => state.google_image_search.imageUrls);
   const { handleSubmit } = props;
   const [state, setState] = React.useState({addLinkImage: false, linkImage: '', public: true, imageUrlIndex: 0});
 

@@ -128,7 +128,7 @@ export const withdrawFriendRequest = (authToken, userId) => async dispatch => {
 export const getImageUrls = (authToken, keyword) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
-    const imageUrls = await axios.get(`/api/v1/google_search?keyword=${keyword}`, config);
+    const imageUrls = await axios.get(`/api/v1/google_image_search?keyword=${keyword}`, config);
     dispatch({ type: types.IMAGE_URLS, payload: imageUrls.data });
   } catch (e) {
     const errorMessage = e.response.data.error;

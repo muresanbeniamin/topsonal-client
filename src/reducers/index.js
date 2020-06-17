@@ -3,7 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import auth from './auth';
 import profile from './profile';
 import users from './users';
-import google_search from './google_search';
+import google_image_search from './google_image_search';
 import dashboard from './dashboard';
 import lists from './lists';
 import items from './items';
@@ -14,7 +14,7 @@ export default combineReducers({
   profile: profile,
   form: formReducer,
   users: users,
-  google_search: google_search,
+  google_image_search: google_image_search,
   dashboard: dashboard,
   lists: lists,
   items: items,
