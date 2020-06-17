@@ -52,7 +52,6 @@ export const getprofile = authToken => async dispatch => {
     const config = {headers: {'Authorization': authToken}}
     const profile = await axios.get('/api/v1/users/profile', config);
     dispatch({ type: types.GET_PROFILE, payload: profile.data });
-    dispatch({ type: types.FRIEND_LISTS, payload: profile.data.friend_lists });
 
     const usersList = await axios.get('/api/v1/lists', config);
     dispatch({ type: types.CURRENT_USER_LISTS, payload: usersList.data });
@@ -64,18 +63,21 @@ export const getprofile = authToken => async dispatch => {
 };
 
 export const getDashboard = authToken => async dispatch => {
-  dispatch({ type: types.SET_LOADING, payload: true });
   try {
     const config = {headers: {'Authorization': authToken}}
-    const profile = await axios.get('/api/v1/users/dashboard', config);
-    dispatch({ type: types.DASHBOARD, payload: profile.data });
+    dispatch({ type: types.DASHBOARD_LOADING, payload: true });
+    const dashboard = await axios.get('/api/v1/users/dashboard', config);
+    dispatch({ type: types.DASHBOARD, payload: dashboard.data });
+    dispatch({ type: types.DASHBOARD_LOADING, payload: false });
+
+    dispatch({ type: types.PUBLIC_LISTS_LOADING, payload: true });
     const publicLists = await axios.get('/api/v1/public_lists', config);
-    dispatch({ type: types.DASHBOARD_PUBLIC_LISTS, payload: publicLists.data });
+    dispatch({ type: types.PUBLIC_LISTS, payload: publicLists.data });
+    dispatch({ type: types.PUBLIC_LISTS_LOADING, payload: false });
   } catch (e) {
     const errorMessage = e.response.data.error;
     dispatch({ type: types.DASHBOARD_ERROR, payload: errorMessage });
   }
-  dispatch({ type: types.SET_LOADING, payload: false });
 };
 
 export const searchFriends = (authToken, name) => async dispatch => {

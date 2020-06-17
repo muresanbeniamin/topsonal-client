@@ -67,9 +67,10 @@ const dashboard = function Dashboard() {
   }, []);
 
   const friendLists = useSelector(state => state.dashboard.dashboard.friend_lists);
-  const dashboardPublicLists = useSelector(state => state.dashboard.dashboardPublicLists);
+  const publicLists = useSelector(state => state.dashboard.public_lists);
   const numberOfFriends = useSelector(state => state.dashboard.dashboard.number_of_friends);
-  const loading = useSelector(state => state.loading.loading);
+  const dashboardLoading = useSelector(state => state.loading.dashboard);
+  const publicListsLoading = useSelector(state => state.loading.public_lists);
   const classes = useStyles();
   const history = useHistory();
 
@@ -93,11 +94,11 @@ const dashboard = function Dashboard() {
           </Button>
         </Toolbar>
       </AppBar>
-      {loading && <LinearProgress color="secondary" />}
+      {dashboardLoading || publicListsLoading && <LinearProgress color="secondary" />}
       <Container maxWidth="xl">
-        {!loading &&
+        {!dashboardLoading && !publicListsLoading && 
           <div>
-            {!numberOfFriends && numberOfFriends === 0 && 
+            {numberOfFriends === 0  && 
               <div className={classes.centerText}>
                 <h3>You don't seem to have any friends, let's add some: </h3> 
                 <SearchFriend/>
@@ -109,7 +110,7 @@ const dashboard = function Dashboard() {
                 <SearchFriend/>
               </div>
             }
-            {friendLists &&
+            {friendLists.length > 0 &&
               <div>
                 <Typography variant="h6" className={classes.centerText}>
                   Collections of your friends
@@ -166,7 +167,7 @@ const dashboard = function Dashboard() {
             <Grid container className={classes.root} spacing={2}>
               <Grid item xs={12}>
                 <Grid container justify="center" spacing={2}>
-                  {dashboardPublicLists && dashboardPublicLists.map((list) => (
+                  {publicLists && publicLists.map((list) => (
                     <Grid key={`${list.id}-list`} item>
                       <Card className={classes.card}>
                         <CardHeader

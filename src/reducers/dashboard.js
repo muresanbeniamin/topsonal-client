@@ -1,10 +1,10 @@
-import { DASHBOARD, DASHBOARD_PUBLIC_LISTS, DASHBOARD_ERROR } from '../actions/types';
+import { DASHBOARD, PUBLIC_LISTS, DASHBOARD_ERROR } from '../actions/types';
 
 const INITIAL_STATE = {
   dashboard: {
-    friend_lists: []
+    friend_lists: [],
   },
-  dashboardPublicLists: [],
+  public_lists: [],
   dashboardError: ''
 }
 
@@ -12,8 +12,8 @@ export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case DASHBOARD:
       return { ...state, dashboard: action.payload }
-    case DASHBOARD_PUBLIC_LISTS:
-        return { ...state, dashboardPublicLists: action.payload }
+    case PUBLIC_LISTS:
+      return { ...state, public_lists: action.payload }
     case DASHBOARD_ERROR:
         return { ...state, dashboardError: action.payload }
     default:
