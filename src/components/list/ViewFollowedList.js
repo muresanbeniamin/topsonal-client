@@ -48,16 +48,12 @@ const list = function ViewFollowedList() {
     }
     fetchList();
   }, []);
-  let loading = true;
   const { id } = useParams();
   const authToken = useSelector(state => state.auth.authenticated);
   const dispatch = useDispatch();
   const classes = useStyles();
-  const list = useSelector(state => state.lists.list);
-  if (list.friendly_id === id) { 
-    loading = false;
-  }
-
+  const list = useSelector(state => state.followed_lists.list);
+  const loading = useSelector(state => state.loading.loading);
   const [open, setOpen] = React.useState({});
   const handleClick = (item) => event => {
     if (open[item.id] === undefined) {
@@ -82,7 +78,7 @@ const list = function ViewFollowedList() {
       <AppBar className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            {list && !loading && list.name}
+            {!loading && list.name}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -93,7 +89,7 @@ const list = function ViewFollowedList() {
         </Typography>
         <Divider />
 
-        {list && !loading &&
+        {!loading &&
           <List>
             {list.items.map((item, index) => (
               <div>

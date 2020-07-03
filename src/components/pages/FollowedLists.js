@@ -71,7 +71,6 @@ const followedLists = function FollowedLists() {
     fetchFollowedLists();
   }, []);
   const userFollowedLists = useSelector(state => state.followed_lists.lists);
-  debugger
   const classes = useStyles();
   const loading = useSelector(state => state.loading.loading);
 
@@ -79,8 +78,9 @@ const followedLists = function FollowedLists() {
     dispatch(unfollowList(listId, authToken))
   }
 
-  const handleClickOpen = list => event => {
-    history.push(`followed-lists/${list.friendly_id}`);
+  const handleClickOpen = userFollowedList => event => {
+    debugger
+    history.push(`followed-lists/${userFollowedList.id}`);
   };
 
   const handleAddList = event => {
@@ -105,30 +105,30 @@ const followedLists = function FollowedLists() {
           <Grid container className={classes.root} spacing={2}>
             <Grid item xs={12}>
               <Grid container justify="center" spacing={2}>
-                {userFollowedLists.map((list) => (
-                  <Grid key={`${list.id}-list`} item>
+                {userFollowedLists.map((userFollowedList) => (
+                  <Grid key={`${userFollowedList.list.id}-list`} item>
                     <Card className={classes.card}>
                       <CardHeader
                         avatar={
-                          <Tooltip title={list.user_full_name} placement="top-start">
-                            <Avatar alt={list.user_full_name} aria-label="recipe">
-                               {list.user_full_name.split(' ').map(name => name[0]).join('')}
+                          <Tooltip title={userFollowedList.list.user_full_name} placement="top-start">
+                            <Avatar alt={userFollowedList.list.user_full_name} aria-label="recipe">
+                               {userFollowedList.list.user_full_name.split(' ').map(name => name[0]).join('')}
                              </Avatar>
                           </Tooltip>
                         }
                         action={
-                          <IconButton onClick={handleUnfollowList(list.id)} aria-label="unfollow">
+                          <IconButton onClick={handleUnfollowList(userFollowedList.list.id)} aria-label="unfollow">
                             <AddToQueueIcon color="secondary" />
                           </IconButton>
                         }
-                        title={list.name}
-                        subheader={list.created_date}
+                        title={userFollowedList.list.name}
+                        subheader={userFollowedList.list.created_date}
                       />
-                      <div onClick={handleClickOpen(list)}>
+                      <div onClick={handleClickOpen(userFollowedList)}>
                         <CardMedia
                           className={classes.media}
-                          image={list.image_url}
-                          title={list.name}
+                          image={userFollowedList.list.image_url}
+                          title={userFollowedList.list.name}
                         />
                       </div>
                     </Card>

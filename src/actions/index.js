@@ -255,18 +255,18 @@ export const getFollowedList = (listId, authToken) => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
     const response = await axios.get(`/api/v1/user_followed_lists/${listId}`, config);
-    dispatch({ type: types.GET_LIST, payload: response.data });
+    dispatch({ type: types.GET_FOLLOWED_LIST, payload: response.data });
   } catch (e) {
   }
   dispatch({ type: types.SET_LOADING, payload: false });
 };
 
-export const getFollowedLists = (listId, authToken) => async dispatch => {
+export const getFollowedLists = (authToken) => async dispatch => {
   dispatch({ type: types.SET_LOADING, payload: true });
   try {
     const config = {headers: {'Authorization': authToken}}
-    const response = await axios.get(`/api/v1/user_followed_lists/${listId}`, config);
-    dispatch({ type: types.GET_LIST, payload: response.data });
+    const response = await axios.get(`/api/v1/user_followed_lists`, config);
+    dispatch({ type: types.GET_FOLLOWED_LISTS, payload: response.data });
   } catch (e) {
   }
   dispatch({ type: types.SET_LOADING, payload: false });
