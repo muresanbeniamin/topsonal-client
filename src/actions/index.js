@@ -51,6 +51,7 @@ export const getprofile = authToken => async dispatch => {
   try {
     const config = {headers: {'Authorization': authToken}}
     const profile = await axios.get('/api/v1/users/profile', config);
+
     dispatch({ type: types.GET_PROFILE, payload: profile.data });
 
     const usersList = await axios.get('/api/v1/lists', config);
@@ -225,4 +226,48 @@ export const updateUser = (formProps, userId, authToken) => async dispatch => {
     await axios.patch(`/api/v1/users/${userId}`, formProps, config);
   } catch (e) {
   }
+};
+
+export const followList = (listId, authToken) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    await axios.post(`/api/v1/lists/${listId}/follow`, {}, config);
+    dispatch({ type: types.FOLLOW_LIST_OK, payload: 'Successfully followed list' });
+    dispatch(getprofile(authToken));
+  } catch (e) {
+    dispatch({ type: types.FOLLOW_LIST_ERROR, payload: 'Already following list' });
+  }
+};
+
+export const unfollowList = (listId, authToken) => async dispatch => {
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    await axios.post(`/api/v1/lists/${listId}/unfollow`, {}, config);
+    dispatch({ type: types.FOLLOW_LIST_OK, payload: 'Successfully unfollowed list' });
+    dispatch(getprofile(authToken));
+  } catch (e) {
+    dispatch({ type: types.FOLLOW_LIST_ERROR, payload: 'Failed unfollowing list' });
+  }
+};
+
+export const getFollowedList = (listId, authToken) => async dispatch => {
+  dispatch({ type: types.SET_LOADING, payload: true });
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    const response = await axios.get(`/api/v1/user_followed_lists/${listId}`, config);
+    dispatch({ type: types.GET_LIST, payload: response.data });
+  } catch (e) {
+  }
+  dispatch({ type: types.SET_LOADING, payload: false });
+};
+
+export const getFollowedLists = (listId, authToken) => async dispatch => {
+  dispatch({ type: types.SET_LOADING, payload: true });
+  try {
+    const config = {headers: {'Authorization': authToken}}
+    const response = await axios.get(`/api/v1/user_followed_lists/${listId}`, config);
+    dispatch({ type: types.GET_LIST, payload: response.data });
+  } catch (e) {
+  }
+  dispatch({ type: types.SET_LOADING, payload: false });
 };

@@ -12,6 +12,7 @@ import Link from '@material-ui/core/Link';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import GroupIcon from '@material-ui/icons/Group';
+import AddToQueueIcon from '@material-ui/icons/AddToQueue';
 
 const useStyles = makeStyles(theme => ({
   list: {
@@ -60,6 +61,14 @@ export default function LeftSideMenu() {
               <PlaylistAddCheckIcon color="secondary" />
               </ListItemIcon>
             <ListItemText primary="My lists" />
+          </ListItem>
+        </Link>
+        <Link className={classes.link} href="/followed-lists">
+          <ListItem button key="followed-lists">
+            <ListItemIcon>
+              <AddToQueueIcon color="secondary" />
+              </ListItemIcon>
+            <ListItemText primary="Followed Lists" />
           </ListItem>
         </Link>
         <Link className={classes.link} href="/my-friends">

@@ -20,6 +20,8 @@ import NewList from './components/list/NewList';
 import MyFriends from './components/pages/MyFriends';
 import NewItem from './components/item/NewItem';
 import Profile from './components/pages/Profile';
+import FollowedLists from './components/pages/FollowedLists';
+import ViewFollowedList from './components/list/ViewFollowedList';
 
 const store = createStore(
   reducers, {
@@ -37,6 +39,8 @@ ReactDOM.render(
           <Route path='/signout' exact component={SignOut} />
           <Route path='/dashboard' exact component={Dashboard} />
           <Route path='/my-lists' exact component={MyLists} />
+          <Route path='/followed-lists' exact component={FollowedLists} />
+          <Route path='/followed-lists/:id' exact component={ViewFollowedList} />
           <Route path='/my-lists/:id' exact component={MyList} />
           <Route path='/lists/:id' exact component={ViewList} />
           <Route path='/new-list' exact component={NewList} />

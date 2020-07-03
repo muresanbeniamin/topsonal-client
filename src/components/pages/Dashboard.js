@@ -10,7 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CardMedia from '@material-ui/core/CardMedia';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { getDashboard } from '../../actions';
+import { getDashboard, followList, unfollowList, getprofile } from '../../actions';
 import { useDispatch, useSelector } from "react-redux";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { useHistory } from 'react-router-dom';
@@ -22,6 +22,9 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
+import Snackbar from '@material-ui/core/Snackbar';
+import AddToQueueIcon from '@material-ui/icons/AddToQueue';
+import CardActions from '@material-ui/core/CardActions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     width: 345,
-    height: 280
+    height: 320
   },
   title: {
     flex: 1,
@@ -62,15 +65,19 @@ const dashboard = function Dashboard() {
   useEffect(() => {
     function fetchDashboard() {
       dispatch(getDashboard(authToken));
+      dispatch(getprofile(authToken));
     }
     fetchDashboard();
   }, []);
-
+  const [openSnackBar, setOpenSnackBar] = React.useState(false);
+  
   const friendLists = useSelector(state => state.dashboard.dashboard.friend_lists);
   const publicLists = useSelector(state => state.dashboard.public_lists);
   const numberOfFriends = useSelector(state => state.dashboard.dashboard.number_of_friends);
   const dashboardLoading = useSelector(state => state.loading.dashboard);
   const publicListsLoading = useSelector(state => state.loading.public_lists);
+  const followListStatus = useSelector(state => state.lists.follow_list_status);
+  const followedListsIds = useSelector(state => state.profile.profile.followed_lists.map(list => list.id));
   const classes = useStyles();
   const history = useHistory();
 
@@ -80,6 +87,22 @@ const dashboard = function Dashboard() {
 
   const handleAddList = event => {
     history.push('/new-list');
+  };
+
+  const handleFollowList = (listId, popupState) => async event => {
+    await dispatch(followList(listId, authToken));
+    setOpenSnackBar(true);
+  }
+
+  const handleUnfollowList = (listId) => () => {
+    dispatch(unfollowList(listId, authToken))
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackBar(false);
   };
   
   return (
@@ -129,20 +152,6 @@ const dashboard = function Dashboard() {
                                   </Avatar>
                                 </Tooltip>
                               }
-                              action={
-                                <PopupState variant="popover">
-                                  {popupState => (
-                                    <React.Fragment>
-                                      <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
-                                        <MoreVertIcon />
-                                      </IconButton>
-                                      <Menu {...bindMenu(popupState)}>
-                                        <MenuItem>Follow</MenuItem>
-                                      </Menu>
-                                    </React.Fragment>
-                                  )}
-                                </PopupState>
-                              }
                               title={list.name}
                               subheader={list.created_date}
                             />
@@ -153,6 +162,24 @@ const dashboard = function Dashboard() {
                                 title={list.name}
                               />
                             </div>
+                            <CardActions disableSpacing>
+                              {!followedListsIds.includes(list.id) &&
+                                <div>
+                                  <IconButton onClick={handleFollowList(list.id)} aria-label="unfollow">
+                                    <AddToQueueIcon color="primary" />
+                                  </IconButton>
+                                  Follow
+                                </div>
+                              }
+                              {followedListsIds.includes(list.id) &&
+                                <div>
+                                  <IconButton onClick={handleUnfollowList(list.id)} aria-label="unfollow">
+                                    <AddToQueueIcon color="secondary" />
+                                  </IconButton>
+                                  Unfollow
+                                </div>
+                              }
+                            </CardActions>
                           </Card>
                         </Grid>
                       ))}
@@ -178,20 +205,6 @@ const dashboard = function Dashboard() {
                               </Avatar>
                             </Tooltip>
                           }
-                          action={
-                            <PopupState variant="popover">
-                              {popupState => (
-                                <React.Fragment>
-                                  <IconButton variant="contained" color="primary" {...bindTrigger(popupState)}>
-                                    <MoreVertIcon />
-                                  </IconButton>
-                                  <Menu {...bindMenu(popupState)}>
-                                    <MenuItem>Follow</MenuItem>
-                                  </Menu>
-                                </React.Fragment>
-                              )}
-                            </PopupState>
-                          }
                           title={list.name}
                           subheader={list.created_date}
                         />
@@ -202,6 +215,24 @@ const dashboard = function Dashboard() {
                             title={list.name}
                           />
                         </div>
+                        <CardActions disableSpacing>
+                          {!followedListsIds.includes(list.id) &&
+                            <div>
+                              <IconButton onClick={handleFollowList(list.id)} aria-label="unfollow">
+                                <AddToQueueIcon color="primary" />
+                              </IconButton>
+                              Follow
+                            </div>
+                          }
+                          {followedListsIds.includes(list.id) &&
+                            <div>
+                              <IconButton onClick={handleUnfollowList(list.id)} aria-label="unfollow">
+                                <AddToQueueIcon color="secondary" />
+                              </IconButton>
+                              Unfollow
+                            </div>
+                          }
+                        </CardActions>
                       </Card>
                     </Grid>
                   ))}
@@ -211,6 +242,16 @@ const dashboard = function Dashboard() {
           </div>
         }
       </Container>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        open={openSnackBar}
+        autoHideDuration={1000}
+        onClose={handleClose}
+        message={followListStatus}
+      />
     </div>
   );
 }

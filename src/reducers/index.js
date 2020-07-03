@@ -8,6 +8,7 @@ import dashboard from './dashboard';
 import lists from './lists';
 import items from './items';
 import loading from './loading';
+import followed_lists from './followed_lists';
 
 export default combineReducers({
   auth,
@@ -18,5 +19,6 @@ export default combineReducers({
   dashboard: dashboard,
   lists: lists,
   items: items,
+  followed_lists: followed_lists,
   loading: loading
 });

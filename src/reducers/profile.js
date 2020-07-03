@@ -1,7 +1,9 @@
 import { GET_PROFILE, GET_PROFILE_ERROR, CURRENT_USER_LISTS, FRIEND_LISTS } from '../actions/types';
 
 const INITIAL_STATE = {
-  profile: {},
+  profile: {
+    followed_lists: []
+  },
   profileError: '',
   currentUserLists: [],
   friendLists: []
