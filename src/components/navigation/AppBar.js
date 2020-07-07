@@ -14,6 +14,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { useSelector } from 'react-redux'
 import LeftSideMenu from './LeftSideMenu';
 import { useHistory } from 'react-router-dom';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -82,10 +84,12 @@ export default function Navbar() {
   const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorNotifications, setAnchorNotifications] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const authenticated = useSelector(state => state.auth.authenticated);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isNotificationsMenuOpen = Boolean(anchorNotifications);
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -110,6 +114,14 @@ export default function Navbar() {
     handleMenuClose();
   }
 
+  const handleNotificationsMenu = (event) => {
+    setAnchorNotifications(event.currentTarget);
+  };
+
+  const handleNotificationsClose = () => {
+    setAnchorNotifications(null);
+  };
+  
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -168,11 +180,34 @@ export default function Navbar() {
             </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="secondary">
-                {/* <Badge badgeContent={1} color="secondary"> */}
-                  <NotificationsIcon />
-                {/* </Badge> */}
-              </IconButton>
+              <div>
+                <IconButton color="secondary" onClick={handleNotificationsMenu}>
+                  <Badge 
+                    badgeContent={2} 
+                    color="secondary"
+                    aria-haspopup="true"
+                  >
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+                <Menu
+                  anchorEl={anchorNotifications}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={isNotificationsMenuOpen}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  onClose={handleNotificationsClose}
+                >
+                  <MenuItem onClick={handleNotificationsClose}><PersonAddIcon/><p> <b>David G</b> wants to be your friend</p></MenuItem>
+                  <MenuItem onClick={handleNotificationsClose}><PlaylistAddCheckIcon/><p> <b>Marian</b> followed your <b> Best movies ever</b> list</p></MenuItem>
+                </Menu>
+              </div>
               <IconButton
                 color="secondary"
                 href="/profile"
