@@ -5,7 +5,7 @@
   },
   "proxies": {
     "/api/v1/": {
-      "origin": "https://topsonal-server.herokuapp.com/api/v1"
+      "origin": "https://topsonal-v1.herokuapp.com/api/v1"
     }
   }
 }
